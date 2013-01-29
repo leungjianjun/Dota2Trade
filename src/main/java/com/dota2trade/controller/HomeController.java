@@ -1,5 +1,10 @@
 package com.dota2trade.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ljj-lab
@@ -7,5 +12,12 @@ package com.dota2trade.controller;
  * Time: 下午8:21
  * To change this template use File | Settings | File Templates.
  */
+
+@Controller
 public class HomeController {
+
+    @RequestMapping(value="/index.html", method= RequestMethod.GET)
+    public String home(ModelMap model){
+        return "index";
+    }
 }
