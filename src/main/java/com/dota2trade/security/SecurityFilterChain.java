@@ -1,6 +1,7 @@
 package com.dota2trade.security;
 
 import com.dota2trade.dao.UserDao;
+import com.dota2trade.model.User;
 import jcifs.ntlmssp.Type3Message;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -10,6 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +28,37 @@ public class SecurityFilterChain extends OncePerRequestFilter implements Filter 
     @Override
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         System.out.println("filter work!");
+        SAuthentication au = (SAuthentication) request.getSession().getAttribute("sauthentication");
+        String requestUrl = request.getRequestURI();
+        System.out.println(requestUrl);
+        if (requestUrl.equals(DomainSecurity.dologinUrl)){
+            //进行登录动作
+            String account = request.getParameter("account");
+            String password = request.getParameter("password");
+            String referer = getReferer(request.getHeader("Referer"));
+            if (referer == null){
+                referer = "/";
+            }
+            User user = userDao.getUser(account,password);
+            if (user == null){
+                //login fail
+                response.sendRedirect(DomainSecurity.permissionRedirect+"?referer="+referer);
+            }else {
+                //login success
+                SAuthentication newau = new SAuthentication();
+                newau.setAccount(user.getAccount());
+                request.getSession().setAttribute("sauthentication",newau);
+                response.sendRedirect(referer);
+            }
+            return ;
+        }
+        if (au == null && !DomainSecurity.contains(DomainSecurity.whitelist,requestUrl)){
+            //not login access domain not in whitlist redirect
+            response.sendRedirect(DomainSecurity.permissionRedirect+"?referer="+requestUrl);
+            return;
+        }else{
+            //if have access priority
+        }
         /*String auth = request.getHeader("Authorization");
         if (auth == null){
             response.setHeader("WWW-Authenticate", "NTLM");
@@ -56,6 +91,16 @@ public class SecurityFilterChain extends OncePerRequestFilter implements Filter 
             }
         }*/
         chain.doFilter(request,  response);
+    }
+
+    public static String getReferer(String url)
+    {
+        int a = url.indexOf("referer=");
+        if (a == -1){
+            return  null;
+        }else{
+            return url.substring(a + 8);
+        }
     }
 
     //===========setter and getter method

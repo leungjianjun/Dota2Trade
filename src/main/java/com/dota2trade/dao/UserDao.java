@@ -1,5 +1,7 @@
 package com.dota2trade.dao;
 
+import com.dota2trade.model.User;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ljj-lab
@@ -8,4 +10,6 @@ package com.dota2trade.dao;
  * To change this template use File | Settings | File Templates.
  */
 public interface UserDao {
+
+    public User getUser(String account,String password);
 }
