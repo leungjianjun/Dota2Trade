@@ -24,7 +24,7 @@ public class SecurityFilterChain extends OncePerRequestFilter implements Filter 
     @Override
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         System.out.println("filter work!");
-        String auth = request.getHeader("Authorization");
+        /*String auth = request.getHeader("Authorization");
         if (auth == null){
             response.setHeader("WWW-Authenticate", "NTLM");
             response.setStatus(response.SC_UNAUTHORIZED);
@@ -54,7 +54,7 @@ public class SecurityFilterChain extends OncePerRequestFilter implements Filter 
                 System.out.println("osDomain: " + type3.getDomain());
 
             }
-        }
+        }*/
         chain.doFilter(request,  response);
     }
 
