@@ -10,6 +10,5 @@ import com.dota2trade.model.User;
  * To change this template use File | Settings | File Templates.
  */
 public interface UserDao {
-
     public User getUser(String account,String password);
 }
