@@ -9,7 +9,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/manage_schema?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"/>
         <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="password" value="900425xaip"/>
     </bean>
 
     <!-- Security Configuration-->
