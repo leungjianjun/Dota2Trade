@@ -1,8 +1,8 @@
 package com.dota2trade.dao;
 
-import com.dota2trade.model.Attachment;
-import com.dota2trade.model.Literature;
-import com.dota2trade.model.LiteratureMeta;
+import com.dota2trade.model.*;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,4 +19,10 @@ public interface LiteratureDao {
     boolean addLiteratureMeta(LiteratureMeta literatureMeta);
     /**添加文献附件信息*/
     boolean addAttachment(Attachment attachment);
+    /**添加出版社信息*/
+    int addPublisher(Publisher publisher);
+    /**添加文献出版社对应关系信息*/
+    boolean addLiteraturePublisher(int literatureid,int publisherid);
+    /**添加文献的引用关系*/
+    boolean addCiteRelationship(List<CiteRelationship> citeRelationshipList);
 }
