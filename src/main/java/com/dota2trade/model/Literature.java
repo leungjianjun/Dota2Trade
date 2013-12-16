@@ -1,5 +1,7 @@
 package com.dota2trade.model;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: liyan.code@gmail.com
@@ -18,9 +20,12 @@ public class Literature {
 
     /**通用基本信息*/
     private LiteratureMeta literatureMeta;
-
+    /**出版社信息*/
+    private Publisher publisher;
     /**附件信息*/
     private Attachment attachment;
+    /**引用关系*/
+    private List<CiteRelationship> citeRelationshipList;
 
     public Attachment getAttachment() {
         return attachment;
@@ -76,5 +81,22 @@ public class Literature {
 
     public void setLiteratureMeta(LiteratureMeta literatureMeta) {
         this.literatureMeta = literatureMeta;
+    }
+
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<CiteRelationship> getCiteRelationshipList() {
+        return citeRelationshipList;
+    }
+
+    public void setCiteRelationshipList(List<CiteRelationship> citeRelationshipList) {
+        this.citeRelationshipList = citeRelationshipList;
     }
 }
