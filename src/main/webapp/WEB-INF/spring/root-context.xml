@@ -22,4 +22,8 @@
         <property name="userDao"><ref bean="userDao"/></property>
     </bean>
 
+    <bean id="literatureDao" class="com.dota2trade.dao.impl.LiteratureDaoImpl">
+        <constructor-arg><ref bean="dataSource"/></constructor-arg>
+    </bean>
+
 </beans>
