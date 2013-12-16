@@ -9,11 +9,26 @@ package com.dota2trade.model;
  * 文献
  */
 public class Literature {
-    private int id;
-    private int creatorid;
-    private int updaterid;
-    private String status;
-    private int literaturetypeid;
+    /**简单信息*/
+    private int id;     //key
+    private int creatorid;    //创建者id
+    private int updaterid;    //修改者id
+    private int status;    //是否保存为草稿 0:不是 1：是
+    private int literaturetypeid;    //文献类别id
+
+    /**通用基本信息*/
+    private LiteratureMeta literatureMeta;
+
+    /**附件信息*/
+    private Attachment attachment;
+
+    public Attachment getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(Attachment attachment) {
+        this.attachment = attachment;
+    }
 
     public int getId() {
         return id;
@@ -39,11 +54,11 @@ public class Literature {
         this.updaterid = updaterid;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -53,5 +68,13 @@ public class Literature {
 
     public void setLiteraturetypeid(int literaturetypeid) {
         this.literaturetypeid = literaturetypeid;
+    }
+
+    public LiteratureMeta getLiteratureMeta() {
+        return literatureMeta;
+    }
+
+    public void setLiteratureMeta(LiteratureMeta literatureMeta) {
+        this.literatureMeta = literatureMeta;
     }
 }
