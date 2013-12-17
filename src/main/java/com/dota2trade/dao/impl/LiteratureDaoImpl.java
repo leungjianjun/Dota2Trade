@@ -3,6 +3,7 @@ package com.dota2trade.dao.impl;
 import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -28,7 +29,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         setDataSource(dataSource);
     }
 
-    /***************************add methods*****************************/
+    /***************************add() methods*****************************/
     @Override
     public boolean createLiterature(final Literature literature) {
 
@@ -186,18 +187,121 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         return r;
     }
 
-    /***************************update methods*****************************/
+    /**********************delete() methods********************/
     @Override
-    public boolean updateLiterature(Literature literature) {
-        String sql="update literature set updaterid=?,status=?,literaturetypeid=? where id=?";
-        int updateCount=this.getJdbcTemplate().update(
-                sql,
-                literature.getUpdaterid(),
-                literature.getStatus(),
-                literature.getLiteraturetypeid(),
-                literature.getId()
-        );
-        return (updateCount>0)?true:false;
+    public boolean deleteLiterature(int literatureid) {
+
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public boolean deleteLiteratureMeta(int literatureid) {
+        String sql="DELETE FROM literaturemeta WHERE literatureid='"+literatureid+"'" ;
+        int delteResult=this.getJdbcTemplate().update(sql);
+        return (delteResult>0)?true:false;
+    }
+
+    @Override
+    public boolean deleteAttachmentByLiteratureId(int literatureid) {
+        String sql="DELETE FROM attachment WHERE literatureid='"+literatureid+"'" ;
+        int delteResult=this.getJdbcTemplate().update(sql);
+        return (delteResult>0)?true:false;
+    }
+
+    @Override
+    public boolean deleteAttachmentByAttachmentId(int attachmentid) {
+        String sql="DELETE FROM attachment WHERE id='"+attachmentid+"'" ;
+        int delteResult=this.getJdbcTemplate().update(sql);
+        return (delteResult>0)?true:false;
+    }
+
+    @Override
+    public boolean deleteLiteraturePublisher(int literatureid) {
+        String sql="DELETE FROM literature_publisher WHERE literatureid='"+literatureid+"'" ;
+        int delteResult=this.getJdbcTemplate().update(sql);
+        return (delteResult>0)?true:false;
+    }
+
+    @Override
+    public boolean deleteCiteRelationshipById(int citeRelationshipid) {
+        String sql="DELETE FROM cited WHERE id='"+citeRelationshipid+"'" ;
+        int delteResult=this.getJdbcTemplate().update(sql);
+        return (delteResult>0)?true:false;
+    }
+
+    @Override
+    public boolean deleteACiteRelationshipByLiteratureId(int literatureid) {
+        String sql="DELETE FROM cited WHERE literatureid='"+literatureid+"'" ;
+        int delteResult=this.getJdbcTemplate().update(sql);
+        return (delteResult>0)?true:false;
+    }
+
+
+    /***********************update() methods************************/
+    @Override
+    public boolean updateLiterature(Literature literature) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateLiteratureMeta(LiteratureMeta literatureMeta) {
+        String sql="UPDATE literatureMeta SET " +
+                "title='"+literatureMeta.getTitle()+"'," +
+                "abstract='"+literatureMeta.getAuthor()+"'," +
+                "author='"+literatureMeta.getAuthor()+"'," +
+                "published_year='"+literatureMeta.getPublished_year()+"'," +
+                "keywords='"+literatureMeta.getKey_words()+"'," +
+                "link='"+literatureMeta.getLink()+"'," +
+                "pages='"+literatureMeta.getPages()+"'" +
+                "WHERE literatureid='"+literatureMeta.getLiteratureid()+"'" ;
+        int updateResult=this.getJdbcTemplate().update(sql);
+        return (updateResult>0)?true:false;
+    }
+
+    @Override
+    public int updatePublisher(Publisher publisher) {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateLiteraturePublisher(int literatureid, int publisherid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateAttachment(Attachment attachment) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateCiteRelationship(List<CiteRelationship> citeRelationshipList) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /**************************get() methods*****************************/
+    @Override
+    public Literature getLiteratureById(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public LiteratureMeta getLiteratureMetaByLiteratureId(int literatureid) {
+        String sql="SELECT * FROM literaturemeta WHERE literatureid='"+literatureid+"'";
+        return this.getJdbcTemplate().queryForObject(sql,new BeanPropertyRowMapper<LiteratureMeta>(LiteratureMeta.class));
+    }
+
+    @Override
+    public Publisher getPublisherByLiteratureId(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<Attachment> getAllAttachmentByLiteratureId(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<CiteRelationship> getAllCiteRelationshipByLiteratureId(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

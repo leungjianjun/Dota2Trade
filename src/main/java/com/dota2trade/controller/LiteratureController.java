@@ -18,12 +18,12 @@ public class LiteratureController {
     private LiteratureDao literatureDao;
 
     @RequestMapping(value = "/sTest.html",method = RequestMethod.GET)
-    public String savepTest(@RequestParam("name") String name,Model model){
-        Publisher publisher=new Publisher();
-        publisher.setName(name);
-        int x=literatureDao.addPublisher(publisher);
-        model.addAttribute("x",x);
-        System.out.println("savepublisherTest, x= "+x);
+    public String savepTest(@RequestParam("lid") int id,Model model){
+       /* Publisher publisher=new Publisher();
+        publisher.setName(name);*/
+        boolean x=literatureDao.deleteAttachmentByLiteratureId(id);
+        /*model.addAttribute("x",x);*/
+        System.out.println("deleteTest, x= "+x);
         return "/saveptest";
     }
 
