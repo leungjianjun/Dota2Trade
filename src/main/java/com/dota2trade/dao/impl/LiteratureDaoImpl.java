@@ -28,7 +28,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         setDataSource(dataSource);
     }
 
-    /***************************add methods*****************************/
+    /***************************add() methods*****************************/
     @Override
     public boolean createLiterature(final Literature literature) {
 
@@ -186,18 +186,91 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         return r;
     }
 
-    /***************************update methods*****************************/
+    /**********************delete() methods********************/
     @Override
-    public boolean updateLiterature(Literature literature) {
-        String sql="update literature set updaterid=?,status=?,literaturetypeid=? where id=?";
-        int updateCount=this.getJdbcTemplate().update(
-                sql,
-                literature.getUpdaterid(),
-                literature.getStatus(),
-                literature.getLiteraturetypeid(),
-                literature.getId()
-        );
-        return (updateCount>0)?true:false;
+    public boolean deleteLiterature(int literatureid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public boolean deleteLiteratureMeta(int literatureid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean deleteAttachmentByLiteratureId(int literatureid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean deleteAttachmentByAttachmentId(int attachmentid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean deleteLiteraturePublisher(int literatureid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean deleteCiteRelationshipById(int citeRelationshipid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /***********************update() methods************************/
+    @Override
+    public boolean updateLiterature(Literature literature) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateLiteratureMeta(LiteratureMeta literatureMeta) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public int updatePublisher(Publisher publisher) {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateLiteraturePublisher(int literatureid, int publisherid) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateAttachment(Attachment attachment) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateCiteRelationship(List<CiteRelationship> citeRelationshipList) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /**************************get() methods*****************************/
+    @Override
+    public Literature getLiteratureById(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public LiteratureMeta getLiteratureMetaByLiteratureId(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Publisher getPublisherByLiteratureId(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<Attachment> getAllAttachmentByLiteratureId(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<CiteRelationship> getAllCiteRelationshipByLiteratureId(int literatureid) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
