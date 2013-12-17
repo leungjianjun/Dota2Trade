@@ -12,6 +12,11 @@ public class Attachment {
     private String link;
     private int creatorid;
     private int literatureid;
+    private int type;//附件类型，0表示论文，1表示其他
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;
