@@ -40,6 +40,8 @@ public interface LiteratureDao {
     boolean deleteLiteraturePublisher(int literatureid);
     /**删除一条引用关系*/
     boolean deleteCiteRelationshipById(int citeRelationshipid);
+    /**删除一个文献的所有引用关系*/
+    boolean deleteACiteRelationshipByLiteratureId(int literatureid);
 
 
     /*********************update methods*********************************/
