@@ -1,0 +1,19 @@
+.add_right{float: left;margin-left: 50px;}
+.add_right .title{
+    margin: 0px 0px 22px;
+    font-weight: 600;
+    color: rgb(124, 124, 124);
+    line-height: 30px;
+    font-size: 26px;
+    border-bottom: 2px solid rgb(216, 216, 216);
+}
+.add_right .main label{
+    float: left;
+    margin-right: 15px;
+    font-size: 14px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 88px;
+}
+.add_right .submit{margin-top:20px;}

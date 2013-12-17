@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.ModelMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,12 +19,12 @@ public class LiteratureController {
     private LiteratureDao literatureDao;
 
     @RequestMapping(value = "/sTest.html",method = RequestMethod.GET)
-    public String savepTest(@RequestParam("name") String name,Model model){
-        Publisher publisher=new Publisher();
-        publisher.setName(name);
-        int x=literatureDao.addPublisher(publisher);
-        model.addAttribute("x",x);
-        System.out.println("savepublisherTest, x= "+x);
+    public String savepTest(@RequestParam("lid") int id,Model model){
+       /* Publisher publisher=new Publisher();
+        publisher.setName(name);*/
+        boolean x=literatureDao.deleteAttachmentByLiteratureId(id);
+        /*model.addAttribute("x",x);*/
+        System.out.println("deleteTest, x= "+x);
         return "/saveptest";
     }
 
@@ -34,5 +35,9 @@ public class LiteratureController {
     @Autowired
     public void setLiteratureDao(LiteratureDao literatureDao) {
         this.literatureDao = literatureDao;
+    }
+    @RequestMapping(value="/addLiterature.html", method= RequestMethod.GET)
+    public String addLiterature(ModelMap model){
+        return "addLiterature";
     }
 }
