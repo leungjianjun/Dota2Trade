@@ -23,16 +23,16 @@ public class Literature {
     /**出版社信息*/
     private Publisher publisher;
     /**附件信息*/
-    private Attachment attachment;
+    private List<Attachment> attachmentList;
     /**引用关系*/
     private List<CiteRelationship> citeRelationshipList;
 
-    public Attachment getAttachment() {
-        return attachment;
+    public List<Attachment> getAttachmentList() {
+        return attachmentList;
     }
 
-    public void setAttachment(Attachment attachment) {
-        this.attachment = attachment;
+    public void setAttachmentList(List<Attachment> attachmentList) {
+        this.attachmentList = attachmentList;
     }
 
     public int getId() {
