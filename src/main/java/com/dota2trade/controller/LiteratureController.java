@@ -35,4 +35,8 @@ public class LiteratureController {
     public void setLiteratureDao(LiteratureDao literatureDao) {
         this.literatureDao = literatureDao;
     }
+    @RequestMapping(value="/addLiterature.html", method= RequestMethod.GET)
+    public String addLiterature(ModelMap model){
+        return "addLiterature";
+    }
 }
