@@ -1,0 +1,14 @@
+/*----global_css----*/
+body{
+    font: 12px/1.5 tahoma,arial;
+    background: none repeat scroll 0% 0% rgb(253, 253, 253);
+    color: rgb(124, 124, 124);
+}
+.container0{
+    margin: 30px auto;
+    width: 94%;}
+ul,li,dd,dl{padding:0;margin:0;list-style:none;text-align:left;}
+.clear:after{content:'\20';display:block;height:0;clear:both;}
+.clear{*zoom:1;font-size:0;clear:both;height:0;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+img{vertical-align: middle;}
