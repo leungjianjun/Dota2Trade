@@ -22,6 +22,11 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping(value="/", method= RequestMethod.GET)
+    public String defaultHome(ModelMap model){
+        return "index";
+    }
+
     @RequestMapping(value="/login.html", method= RequestMethod.GET)
     public String login(ModelMap model){
         return "login";
