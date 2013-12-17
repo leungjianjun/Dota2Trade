@@ -1,6 +1,7 @@
 package com.dota2trade.controller;
 
 import com.dota2trade.dao.LiteratureDao;
+import com.dota2trade.model.LiteratureMeta;
 import com.dota2trade.model.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +23,9 @@ public class LiteratureController {
     public String savepTest(@RequestParam("lid") int id,Model model){
        /* Publisher publisher=new Publisher();
         publisher.setName(name);*/
-        boolean x=literatureDao.deleteAttachmentByLiteratureId(id);
+        LiteratureMeta lm=literatureDao.getLiteratureMetaByLiteratureId(id);
         /*model.addAttribute("x",x);*/
-        System.out.println("deleteTest, x= "+x);
+        System.out.println("lm: "+lm.getAuthor()+";"+lm.getKey_words()+";"+lm.getLiterature_abstract());
         return "/saveptest";
     }
 
