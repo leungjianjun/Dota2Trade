@@ -1,4 +1,4 @@
-.add_right{float: left;margin-left: 50px;}
+.add_right{float: left;margin-left: 50px;width: 56%;}
 .add_right .title{
     margin: 0px 0px 22px;
     font-weight: 600;
@@ -17,3 +17,4 @@
     width: 88px;
 }
 .add_right .submit{margin-top:20px;}
+.add_right .main input,.add_right .main texarea{width:500px;}
