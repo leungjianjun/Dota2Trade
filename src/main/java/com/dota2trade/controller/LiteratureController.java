@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: liyan.code@gmail.com
@@ -26,6 +28,27 @@ public class LiteratureController {
         LiteratureMeta lm=literatureDao.getLiteratureMetaByLiteratureId(id);
         /*model.addAttribute("x",x);*/
         System.out.println("lm: "+lm.getAuthor()+";"+lm.getKey_words()+";"+lm.getLiterature_abstract());
+        return "/saveptest";
+    }
+
+    /**笨方法*/
+    @RequestMapping(value = "/doAddLiterature",method = RequestMethod.POST)
+    public String doAddLiterature(
+            @RequestParam("literaturetypeid") int literaturetypeid,
+            @RequestParam("title") String title,
+            @RequestParam("author") String author,
+            @RequestParam("published_year") Date published_year,
+            @RequestParam("pages") String pages,
+            @RequestParam("literature_abstract") String literature_abstract,
+            @RequestParam("key_words") String key_words,
+            @RequestParam("publisher_name") String publisher_name,
+            @RequestParam("link") String link
+    ){
+        Publisher publisher=new Publisher();
+        publisher.setName(publisher_name);
+        int pid=literatureDao.addPublisher(publisher);
+        /*model.addAttribute("x",x);*/
+        System.out.println("pid: "+pid);
         return "/saveptest";
     }
 
