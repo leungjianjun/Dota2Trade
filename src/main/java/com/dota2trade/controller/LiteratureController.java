@@ -40,4 +40,8 @@ public class LiteratureController {
     public String addLiterature(ModelMap model){
         return "addLiterature";
     }
+    @RequestMapping(value="/editCite.html",method=RequestMethod.GET)
+    public String editCite(ModelMap model){
+        return "editCite";
+    }
 }

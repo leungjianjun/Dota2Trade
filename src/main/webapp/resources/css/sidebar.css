@@ -3,6 +3,7 @@
     float: left;
     overflow: visible;
     min-height:650px;
+    height: auto;
     background: none repeat scroll 0% 0% rgb(242, 243, 244);
     box-shadow: 0px 0px 3px 2px rgb(240, 240, 240);
     border-right: 1px solid rgb(216, 216, 216);
