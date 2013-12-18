@@ -174,59 +174,42 @@
 
                                </div>
                                <div id="tabComment" class="tab-pane widget-body-regular">
-                               <div class="adv-table">
-                               <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
-                               <thead>
-                               <tr>
-                                   <th>Rendering engine</th>
-                                   <th>Browser</th>
-                                   <th class="hidden-phone">Platform(s)</th>
-                                   <th class="hidden-phone">Engine version</th>
-                                   <th class="hidden-phone">CSS grade</th>
-                               </tr>
-                               </thead>
-                               <tbody>
+                                   <div class="adv-table">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                                           <thead>
+                                           <tr>
+                                               <th>评论文献</th>
+                                               <th>评论时间</th>
+                                               <th>操作</th>
+                                           </tr>
+                                           </thead>
+                                           <tbody>
 
-                               <tr class="gradeA">
-                                   <td>Webkit</td>
-                                   <td>Safari 1.2</td>
-                                   <td class="hidden-phone">OSX.3</td>
-                                   <td class="center hidden-phone">125.5</td>
-                                   <td class="center hidden-phone">A</td>
-                               </tr>
-                               <tr class="gradeA">
-                                   <td>Webkit</td>
-                                   <td>Safari 1.3</td>
-                                   <td class="hidden-phone">OSX.3</td>
-                                   <td class="center hidden-phone">312.8</td>
-                                   <td class="center hidden-phone">A</td>
-                               </tr>
-                               <tr class="gradeA">
-                                   <td>Webkit</td>
-                                   <td>Safari 2.0</td>
-                                   <td class="hidden-phone">OSX.4+</td>
-                                   <td class="center hidden-phone">419.3</td>
-                                   <td class="center hidden-phone">A</td>
-                               </tr>
-                               <tr class="gradeA">
-                                   <td>Webkit</td>
-                                   <td>Safari 3.0</td>
-                                   <td class="hidden-phone">OSX.4+</td>
-                                   <td class="center hidden-phone">522.1</td>
-                                   <td class="center hidden-phone">A</td>
-                               </tr>
-                               <tr class="gradeA">
-                                   <td>Webkit</td>
-                                   <td>OmniWeb 5.5</td>
-                                   <td class="hidden-phone">OSX.4+</td>
-                                   <td class="center hidden-phone">420</td>
-                                   <td class="center hidden-phone">A</td>
-                               </tr>
+                                           <tr>
+                                               <td><a href="#">大教堂与集市</a></td>
+                                               <td>2012/12/18 10:00</td>
+                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                           </tr>
+                                           <tr>
+                                               <td><a href="#">人月神话</a></td>
+                                               <td>2012/12/18 11:00</td>
+                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                           </tr>
+                                           <tr>
+                                               <td><a href="#">编程珠玑</a></td>
+                                               <td>2012/12/18 12:00</td>
+                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                           </tr>
+                                           <tr>
+                                               <td><a href="#">Thinking in Java</a></td>
+                                               <td>2012/12/18 13:00</td>
+                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                           </tr>
 
-                               </tbody>
-                               </table>
+                                           </tbody>
+                                       </table>
 
-                               </div>
+                                   </div>
                                </div>
 
                            </div>
