@@ -2,6 +2,21 @@
 <head>
     <meta charset="utf-8">
     <title>搜索结果</title>
+    <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/searchResult.css"></link>
+    <!-- Bootstrap -->
+    <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/css/responsive.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+    <!-- JQueryUI -->
+    <link href="../resources/common/theme/scripts/plugins/system/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+    <!-- Main Theme Stylesheet :: CSS -->
+    <link href="../resources/common/theme/css/style-light.css?1369753442" rel="stylesheet" />
+    <!-- Uniform Pretty Checkboxes -->
+    <link href="../resources/common/theme/scripts/plugins/forms/pixelmatrix-uniform/css/uniform.default.css" rel="stylesheet" />
+    <script src="../resources/js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
     #include("header.vm")
@@ -13,8 +28,94 @@
         <li><a class="modify" href=""><i></i><span>文献修改</span></a></li>
         <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
     </ul>
-    <div class="add_right">
-
+    <div class="result_right">
+        <div class="title">查询结果<a href="./searchLiterature.html">返回</a></div>
+        <div class="result_main">
+            <div class="total">共有23个查询结果，耗时0.1秒</div>
+            <ul>
+                <li>
+                    <div class="name"><a href="/literatureDetail.html">云计算安全研究</a></div>
+                    <div class="author">冯登国， 张敏， 张妍， 徐震 - 软件学报, 2011 - chinacloud.cn</div>
+                    <div class="content">
+                        ... 由于云计算代表未来信息技术领域的核心竞争力,当前世界各国政府都十分重视本国云计算的发展,
+                        力争 在未来信息技术的制高点占据一席之地.例如,2009 年9 月,美国总统奥巴马宣布将执行云计算
+                        政策,希望借助应 用虚拟化来压缩美国政府的经济支出;韩国政府计划向云计算领域投资6 ...
+                    </div>
+                    <div class="info">
+                        <span>上传人：梁建均</span>
+                        <span>最后修改时间：2013-12-18</span>
+                        <span>评分：4.8</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="name"><a href="/literatureDetail.html">云计算技术现状与发展趋势分析</a></div>
+                    <div class="author">胡慧， 王辉 - 软件导刊, 2009 - rjdk.org</div>
+                    <div class="content">
+                        ... 算模式将被新兴的“云计算”模式代替。 最后，随着IT 技术的发展，云计算的广泛普及和深入应用
+                        已经变得呼之欲出。在这样的情况下，国内IT 行业应该加强对 云计算的研究，开展相关产品的研发，
+                        使中国的云计算技术研 究和云计算产品在世界IT 领域占有一席之地。 参考文献: ...
+                    </div>
+                    <div class="info">
+                        <span>上传人：丁玲娟</span>
+                        <span>最后修改时间：2013-12-18</span>
+                        <span>评分：4.7</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="name"><a href="/literatureDetail.html">云计算-体系架构与关键技术[J]</a></div>
+                    <div class="author">罗军舟， 金嘉晖， 宋爱波 - 通信学报, 2011 - jnrtvu.com</div>
+                    <div class="content">
+                        Page 1. 2011 年7 月 Journal on Communications July 2011 第32 卷第7 期 通信学报 Vol.32
+                        No.7 云计算：体系架构与关键技术 罗军舟，金嘉晖，宋爱波，东方 (东南大学计算机科学与工程
+                        学院，江苏南京211189) ... 图1 云计算与相关技术的联系 2 云计算体系架构 ...
+                    </div>
+                    <div class="info">
+                        <span>上传人：戴娟</span>
+                        <span>最后修改时间：2013-12-18</span>
+                        <span>评分：4.9</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="name"><a href="/literatureDetail.html">浅析云计算与信息安全</a></div>
+                    <div class="author">谢四江， 冯雁 - 北京电子科技学院学报, 2008 - chinacloud.cn</div>
+                    <div class="content">
+                        ... asp? ArticleID =1. [3]中国云计算网, http: / /www. cloudcomputing - china. cn. [4]云计算风云乍起
+                        计算机世界报2008年04月21日第14期12 - 13. [5 ]Assessing the Security Risks of Cloud Computing,
+                        2008, http: / /www. gartner. com /DisplayDocument? id = 685308. ...
+                    </div>
+                    <div class="info">
+                        <span>上传人：李琰</span>
+                        <span>最后修改时间：2013-12-18</span>
+                        <span>评分：4.6</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="name"><a href="/literatureDetail.html">浅析云计算与信息安全</a></div>
+                    <div class="author">谢四江， 冯雁 - 北京电子科技学院学报, 2008 - chinacloud.cn</div>
+                    <div class="content">
+                        ... asp? ArticleID =1. [3]中国云计算网, http: / /www. cloudcomputing - china. cn. [4]云计算风云乍起
+                        计算机世界报2008年04月21日第14期12 - 13. [5 ]Assessing the Security Risks of Cloud Computing,
+                        2008, http: / /www. gartner. com /DisplayDocument? id = 685308. ...
+                    </div>
+                    <div class="info">
+                        <span>上传人：李琰</span>
+                        <span>最后修改时间：2013-12-18</span>
+                        <span>评分：4.6</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="pagination pagination-centered margin-none">
+            <ul>
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 </body>
