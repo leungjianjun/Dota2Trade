@@ -18,4 +18,9 @@ public class AdminController {
     public String group(ModelMap model){
         return "admin";
     }
+
+    @RequestMapping(value="/paperConfig.html",method= RequestMethod.GET)
+    public String paperConfig(ModelMap model){
+        return "paperConfig";
+    }
 }
