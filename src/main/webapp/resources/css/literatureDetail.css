@@ -23,3 +23,10 @@
 .detail_right .list_title .more{margin-left: 100px;font-size: 12px;}
 .detail_right .list_title span{float:left;width:16px;height:18px;background: url("images/cite_logo.png") 0 0 no-repeat;}
 .detail_right .cite_list ul{margin-left: 16px;}
+.left .widget.widget-tabs-double-2 > .widget-head {
+    height:40px;
+}
+
+.left .widget.widget-tabs-double-2 > .widget-head ul li a span {
+    line-height: 40px;
+}

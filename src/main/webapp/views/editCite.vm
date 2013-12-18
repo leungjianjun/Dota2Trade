@@ -17,7 +17,7 @@
     <link href="../resources/common/theme/css/style-light.css?1369753442" rel="stylesheet" />
     <!-- Uniform Pretty Checkboxes -->
     <link href="../resources/common/theme/scripts/plugins/forms/pixelmatrix-uniform/css/uniform.default.css" rel="stylesheet" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
+    <script src="../resources/js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
     #include("header.vm")
@@ -46,31 +46,32 @@
                 <ul>
                     <li>
                         <a class="desc" href="#">《Cloud Computing》-T,J L,Tom 2012</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
+                        <a class="add_cite first" href="javascript:void(0)" onclick="add_cite('cite',this)"></a>
+                        <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cited',this)"></a>
                     </li>
                     <li>
                         <a class="desc" href="#">《Hadoop》-Tick L,Tom 2011</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
+                        <a class="add_cite first" href="javascript:void(0)" onclick="add_cite('cite',this)"></a>
+                        <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cited',this)"></a>
                     </li>
                     <li>
                         <a class="desc" href="#">《HBase》-Jack L,Tom 2012</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
+                        <a class="add_cite first" href="javascript:void(0)" onclick="add_cite('cite',this)"></a>
+                        <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cited',this)"></a>
                     </li>
                     <li>
                         <a class="desc" href="#">《HCI is good》-T,J L,Tom 2012</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
+                        <a class="add_cite first" href="javascript:void(0)" onclick="add_cite('cite',this)"></a>
+                        <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cited',this)"></a>
                     </li>
                 </ul>
             </div>
             <div class="e_right">
+                <form name="" method="" action="">
                 <div class="lit_title">文献标题：云计算与世界</div>
                 <div class="cite_list">
                     <div class="list_title"><span></span>本文引用的文献</div>
-                    <ul>
+                    <ul id="cite">
                         <li>
                             <a href="#">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
                             <div class="widget-body uniformjs">
@@ -80,19 +81,19 @@
                                     简单提及
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="2" checked="checked" />
                                     相关
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="3" checked="checked" />
                                     使用
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="4" checked="checked" />
                                     对比
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="5" checked="checked" />
                                     不确定
                                 </label>
                             </div>
@@ -106,19 +107,19 @@
                                     简单提及
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="2" checked="checked" />
                                     相关
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="3" checked="checked" />
                                     使用
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="4" checked="checked" />
                                     对比
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="5" checked="checked" />
                                     不确定
                                 </label>
                             </div>
@@ -132,19 +133,19 @@
                                     简单提及
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="2" checked="checked" />
                                     相关
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="3" checked="checked" />
                                     使用
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="4" checked="checked" />
                                     对比
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="5" checked="checked" />
                                     不确定
                                 </label>
                             </div>
@@ -153,7 +154,7 @@
                 </div>
                 <div class="cite_list">
                     <div class="list_title"><span></span>引用本文的文献</div>
-                    <ul>
+                    <ul id="cited">
                         <li>
                             <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
                             <div class="widget-body uniformjs">
@@ -163,19 +164,19 @@
                                     简单提及
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="2" checked="checked" />
                                     相关
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="3" checked="checked" />
                                     使用
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="4" checked="checked" />
                                     对比
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="5" checked="checked" />
                                     不确定
                                 </label>
                             </div>
@@ -189,33 +190,57 @@
                                     简单提及
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="2" checked="checked" />
                                     相关
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="3" checked="checked" />
                                     使用
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                    <input type="checkbox" class="checkbox" value="4" checked="checked" />
                                     对比
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" />
+                                    <input type="checkbox" class="checkbox" value="5" />
                                     不确定
                                 </label>
                             </div>
                         </li>
                     </ul>
                 </div>
+                <div class="submit">
+                    <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 20px;">确认修改</button>
+                    <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+                </div>
+            </form>
             </div>
-        </div>
-        <div class="submit">
-            <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 235px;">确认修改</button>
-            <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
         </div>
     </div>
 </div>
+<script>
+    function add_cite(id,e){
+        $("#"+id).append(
+                '<li><a href="#">'+$(e).parent().children('.desc').text()+'</a>'+
+                        '<div class="widget-body uniformjs"><label>引用关系类型：</label>' +
+                        '<label class="checkbox">' +
+                        '<div class="checker" id="uniform-undefined"><span><input type="checkbox" class="checkbox" value="1" style="opacity: 0;"></span></div>' +
+                        '&nbsp;简单提及</label>'+
+                        '<label class="checkbox">'+
+                        '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="2" checked="checked" style="opacity: 0;"></span></div>'+
+                        '&nbsp;相关</label>'+
+                        '<label class="checkbox">'+
+                        '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="3" checked="checked" style="opacity: 0;"></span></div>'+
+                        '&nbsp;使用</label>'+
+                        '<label class="checkbox">'+
+                        '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="4" checked="checked" style="opacity: 0;"></span></div>'+
+                        '&nbsp;对比</label>'+
+                        '<label class="checkbox">'+
+                        '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="5" checked="checked" style="opacity: 0;"></span></div>'+
+                        '&nbsp;不确定</label></div></li>'
+            )
+    }
+</script>
 <!-- JQuery -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
 
