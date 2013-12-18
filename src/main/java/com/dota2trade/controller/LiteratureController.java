@@ -63,26 +63,34 @@ public class LiteratureController {
             Model model
     ) throws IOException {
         System.out.println(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
-        String paperFileName = System.currentTimeMillis()+fileAttachment.getOriginalFilename();
+        String paperFileName = System.currentTimeMillis()+
+                new String (fileAttachment.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8");
         FileUploadHelper.uploadFile(fileAttachment,paperFileName);
 
         if (!otherAttachment1.isEmpty()){
-            String otherFile1Name = System.currentTimeMillis()+otherAttachment1.getOriginalFilename();
+            String otherFile1Name = System.currentTimeMillis()+
+                    new String (otherAttachment1.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8");
             FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name);
         }
 
         if (!otherAttachment2.isEmpty()){
-            String otherFile2Name = System.currentTimeMillis()+otherAttachment2.getOriginalFilename();
+            String otherFile2Name = System.currentTimeMillis()+
+            new String (otherAttachment2.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8");
             FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name);
         }
 
         if (!otherAttachment3.isEmpty()){
-            String otherFile3Name = System.currentTimeMillis()+otherAttachment3.getOriginalFilename();
+            String otherFile3Name = System.currentTimeMillis()+
+                    new String ( otherAttachment3.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8")
+                   ;
             FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name);
         }
 
         if (!otherAttachment4.isEmpty()){
-            String otherFile4Name = System.currentTimeMillis()+otherAttachment4.getOriginalFilename();
+            String otherFile4Name = System.currentTimeMillis()+
+                    new String ( otherAttachment4.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8")
+                    ;
+
             FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name);
         }
 
