@@ -17,7 +17,7 @@
 
 .doc-relate{
     float:left;
-    width:50%
+    width:54%
 }
 
 .doc-relate .widget.widget-tabs-double-2 > .widget-head {
@@ -109,7 +109,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .comments .dataTables_filter, .comments .dataTables_paginate{
-    margin-left: 92px;
+    margin-left: 132px;
 }
 .comments .dataTables_paginate a{
     margin-left: 10px;
