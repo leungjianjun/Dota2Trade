@@ -61,6 +61,8 @@ public interface LiteratureDao {
     /*********************get methods************************************/
     /**获取一个文献*/
     Literature getLiteratureById(int literatureid);
+    /**根据userid获取到该用户上传的所有文献的基本信息*/
+    List<LiteratureMeta> getAllLiteratureMetaByUserid(int userid);
     /**获取一个文献的基本信息*/
     LiteratureMeta getLiteratureMetaByLiteratureId(int literatureid);
     /**获取一个文献的出版社信息*/
@@ -69,4 +71,6 @@ public interface LiteratureDao {
     List<Attachment> getAllAttachmentByLiteratureId(int literatureid);
     /**获取一个文献的所有引用关系*/
     List<CiteRelationship> getAllCiteRelationshipByLiteratureId(int literatureid);
+    /**获取组内所有文献的基本信息*/
+    List<LiteratureMeta> getAllLiteratureMeta();
 }

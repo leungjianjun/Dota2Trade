@@ -76,52 +76,14 @@
 
                                                <!-- Table body -->
                                                <tbody>
-
-                                               <!-- Table row -->
-                                               <tr class="gradeX">
-                                                   <td>1</td>
-                                                   <td><a href="#">大教堂与集市</a></td>
-                                                   <td>2013/12/17 16:58</td>
-                                                   <td class="center">X</td>
-                                               </tr>
-                                               <!-- // Table row END -->
-
-                                               <!-- Table row -->
-                                               <tr class="gradeC">
-                                                   <td>2</td>
-                                                   <td>Internet Explorer 5.0</td>
-                                                   <td>2013/12/17 16:58</td>
-                                                   <td class="center">C</td>
-                                               </tr>
-                                               <!-- // Table row END -->
-
-                                               <!-- Table row -->
-                                               <tr class="gradeA">
-                                                   <td>3</td>
-                                                   <td>Internet Explorer 5.5</td>
-                                                   <td>2013/12/17 16:58</td>
-                                                   <td class="center">A</td>
-                                               </tr>
-                                               <!-- // Table row END -->
-
-                                               <!-- Table row -->
-                                               <tr class="gradeA">
-                                                   <td>4</td>
-                                                   <td>Internet Explorer 6</td>
-                                                   <td>2013/12/17 16:58</td>
-                                                   <td class="center">A</td>
-                                               </tr>
-                                               <!-- // Table row END -->
-
-                                               <!-- Table row -->
-                                               <tr class="gradeA">
-                                                   <td>5</td>
-                                                   <td>Internet Explorer 7</td>
-                                                   <td>2013/12/17 16:58</td>
-                                                   <td class="center">A</td>
-                                               </tr>
-                                               <!-- // Table row END -->
-
+                                                   #foreach($literatureMeta in $literatureMetaList)
+                                                   <tr class="gradeX">
+                                                       <td>$literatureMeta.literatureid</td>
+                                                       <td><a href="#">$literatureMeta.title</a></td>
+                                                       <td>$literatureMeta.published_year</td>
+                                                       <td class="center">X</td>
+                                                   </tr>
+                                                   #end
                                                </tbody>
                                                <!-- // Table body END -->
 

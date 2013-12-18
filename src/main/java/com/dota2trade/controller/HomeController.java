@@ -23,10 +23,10 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value="/profile.html",method= RequestMethod.GET)
+   /* @RequestMapping(value="/profile.html",method= RequestMethod.GET)
     public String group(ModelMap model){
         return "profile";
-    }
+    }*/
 
     @RequestMapping(value="/login.html", method= RequestMethod.GET)
     public String login(ModelMap model){

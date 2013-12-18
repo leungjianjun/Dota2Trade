@@ -21,6 +21,7 @@
     <link rel="stylesheet" media="screen" href="../resources/css/listLiterature.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
+
 </head>
 
 <body>
@@ -70,8 +71,21 @@
 
                                         <!-- Table body -->
                                         <tbody>
-
-                                        <!-- Table row -->
+                                            #foreach($literatureMeta in $literatureMetaList)
+                                            <tr class="gradeX">
+                                                <td>$literatureMeta.literatureid</td>
+                                                <td><a href="#">$literatureMeta.title</a></td>
+                                                <td>$literatureMeta.published_year</td>
+                                                <td class="center">6</td>
+                                                <td><div class="op">
+                                                    <button alt-data="$literatureMeta.literatureid" class="btn  edit-literature btn-primary">编辑文献内容及附件</button>
+                                                    <button alt-data="$literatureMeta.literatureid" class="btn  edit_cite btn-primary">编辑引用关系</button>
+                                                    <button alt-data="$literatureMeta.literatureid" class="btn  delete btn-primary">删除</button>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            #end
+                                        #*<!-- Table row -->
                                         <tr class="gradeX">
                                             <td>1</td>
                                             <td><a href="#">大教堂与集市</a></td>
@@ -180,7 +194,7 @@
                                             <td>6</td>
                                             <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
 
-                                        </tr>
+                                        </tr>*#
                                         <!-- // Table row END -->
                                         </tbody>
                                         <!-- // Table body END -->
@@ -249,6 +263,18 @@
         $('#self_upload').dataTable( {
             "aaSorting": [[ 4, "asc" ]]
         } );
-    } );
+
+        $('.edit-literature').click(function(){
+            window.open("/a.html?id="+$(this).attr('alt-data'))
+        });
+        console.log($('.edit_cite ').parent().html())
+        $('.edit-cite').click(function(){
+            console.log("ca")
+            //window.open("/editCite.html?literatureid="+$(this).attr('alt-data'))
+        });
+        /*$('.edit-paper').click(function(){
+            window.open("/a.html?id="+$(this).attr('alt-data'))
+        })*/
+    });
 </script>
 </body>

@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import com.dota2trade.security.SAuthentication;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -83,21 +84,15 @@ public class LiteratureController {
         return "/editCite";
     }
 
-    public LiteratureDao getLiteratureDao() {
-        return literatureDao;
+    /**个人信息*/
+    @RequestMapping(value = "/profile.html" , method = RequestMethod.GET)
+    public String getProfile( @ModelAttribute("sauthentication") SAuthentication sAuthentication,Model model){
+        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
+        List<LiteratureMeta> literatureMetaList=literatureDao.getAllLiteratureMetaByUserid(userid);
+        model.addAttribute("literatureMetaList",literatureMetaList);
+        return "profile";
     }
 
-    @Autowired
-    public void setLiteratureDao(LiteratureDao literatureDao) {
-        this.literatureDao = literatureDao;
-    }
-    public UserDao getUserDao() {
-        return userDao;
-    }
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
     @RequestMapping(value="/addLiterature.html", method= RequestMethod.GET)
     public String addLiterature(ModelMap model){
         return "addLiterature";
@@ -119,9 +114,27 @@ public class LiteratureController {
         return "literatureDetail";
     }
 
-
+    /**文献修改*/
     @RequestMapping(value="/listLiterature.html", method= RequestMethod.GET)
-    public String login(ModelMap model){
+    public String login(Model model){
+        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         return "listLiterature";
+    }
+
+
+    public LiteratureDao getLiteratureDao() {
+        return literatureDao;
+    }
+
+    @Autowired
+    public void setLiteratureDao(LiteratureDao literatureDao) {
+        this.literatureDao = literatureDao;
+    }
+    public UserDao getUserDao() {
+        return userDao;
+    }
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 }

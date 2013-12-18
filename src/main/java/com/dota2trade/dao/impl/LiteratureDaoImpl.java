@@ -338,6 +338,16 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     }
 
     @Override
+    public List<LiteratureMeta> getAllLiteratureMetaByUserid(int userid) {
+        String sql="SELECT * FROM literaturemeta,literature " +
+                "WHERE literature.creatorid='"+userid+"' AND " +
+                "literaturemeta.literatureid =literature.id "; //
+                //"(SELECT id FROM literature WHERE creatorid='"+userid+"'";
+        List<LiteratureMeta> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(LiteratureMeta.class));
+        return list;
+    }
+
+    @Override
     public LiteratureMeta getLiteratureMetaByLiteratureId(int literatureid) {
         String sql="SELECT * FROM literaturemeta WHERE literatureid='"+literatureid+"'";
         return (LiteratureMeta)this.getJdbcTemplate().queryForObject(sql,new BeanPropertyRowMapper(LiteratureMeta.class));
@@ -362,6 +372,13 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     public List<CiteRelationship> getAllCiteRelationshipByLiteratureId(int literatureid) {
         String sql="SELECT * FROM cited WHERE literatureid='"+literatureid+"'";
         List<CiteRelationship> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(CiteRelationship.class));
+        return list;
+    }
+
+    @Override
+    public List<LiteratureMeta> getAllLiteratureMeta() {
+        String sql="SELECT * FROM literaturemeta";
+        List<LiteratureMeta> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(LiteratureMeta.class));
         return list;
     }
 }
