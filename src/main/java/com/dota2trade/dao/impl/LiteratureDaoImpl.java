@@ -141,7 +141,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                         p.setId(rs.getInt("id"));
                         p.setName(rs.getString("name"));
 
-                        return p;  //To change body of implemented methods use File | Settings | File Templates.
+                        return p;
                     }
                 }
         );
@@ -199,7 +199,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     @Override
     public boolean deleteLiterature(int literatureid) {
 
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
     }
 
     @Override
@@ -248,7 +248,17 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     /***********************update() methods************************/
     @Override
     public boolean updateLiterature(Literature literature) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        String sql="UPDATE literature SET " +
+                "creatorid='"+literature.getCreatorid()+"'," +
+                "updaterid='"+literature.getUpdaterid()+"'," +
+                "status='"+literature.getStatus()+"'," +
+                "literaturetypeid='"+literature.getLiteraturetypeid()+"'" +
+                "WHERE id='"+literature.getId()+"'";
+        int r=this.getJdbcTemplate().update(sql);
+        if(r>0){
+
+        }
+        return false;
     }
 
     @Override
@@ -268,28 +278,63 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
 
     @Override
     public int updatePublisher(Publisher publisher) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.addPublisher(publisher);
     }
 
     @Override
     public boolean updateLiteraturePublisher(int literatureid, int publisherid) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        String sql="UPDATE literature_publisher SET publisherid='"+publisherid+"' WHERE literatureid='"+literatureid+"'";
+        int r=this.getJdbcTemplate().update(sql);
+        return (r>0)?true:false;
     }
 
     @Override
     public boolean updateAttachment(Attachment attachment) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        String sql="UPDATE attachment SET " +
+                "name='"+attachment.getName()+"' " +
+                "link='"+attachment.getLink()+"'" +
+                "creatorid='"+attachment.getCreatorid()+"'" +
+                "literatureid='"+attachment.getLiteratureid()+"'" +
+                "type='"+attachment.getType()+"'" +
+                "WHERE id='"+attachment.getId()+"'";
+        int r=this.getJdbcTemplate().update(sql);
+        return (r>0)?true:false;
     }
 
     @Override
     public boolean updateCiteRelationship(List<CiteRelationship> citeRelationshipList) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        String sql_update="UPDATE cited SET citedtypeid=? WHERE literatureid=? AND citedbyid=? ";
+        String sql_insert="INSERT INTO cited (literatureid,citedbyid,citedtypeid) VALUES (?,?,?)";
+        boolean r=true;
+        for(CiteRelationship citeRelationship:citeRelationshipList){
+            int updateCount=this.getJdbcTemplate().update(sql_update,
+                    citeRelationship.getCitedtypeid(),
+                    citeRelationship.getLiteratureid(),
+                    citeRelationship.getCitedbyid());
+            if(updateCount>0){
+                continue;
+            }else{
+                int insertCount=this.getJdbcTemplate().update(sql_insert,
+                        citeRelationship.getLiteratureid(),
+                        citeRelationship.getCitedbyid(),
+                        citeRelationship.getCitedtypeid());
+                r=(r==true&&insertCount>0);
+            }
+        }
+        return r;
     }
 
     /**************************get() methods*****************************/
     @Override
     public Literature getLiteratureById(int literatureid) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        String sql="SELECT * FROM literature WHERE id='"+literatureid+"'";
+        Literature literature=(Literature)this.getJdbcTemplate().queryForObject(sql,new BeanPropertyRowMapper(Literature.class));
+        literature.setLiteratureMeta(this.getLiteratureMetaByLiteratureId(literatureid));
+        literature.setPublisher(this.getPublisherByLiteratureId(literatureid));
+        literature.setAttachmentList(this.getAllAttachmentByLiteratureId(literatureid));
+        literature.setCiteRelationshipList(this.getAllCiteRelationshipByLiteratureId(literatureid));
+
+        return literature;
     }
 
     @Override
