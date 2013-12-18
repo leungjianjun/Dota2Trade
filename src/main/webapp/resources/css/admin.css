@@ -1,4 +1,8 @@
-.admin .op .btn{margin-left: 72px;padding: 3px 19px;}
+.admin .btn{margin-left: 72px;padding: 3px 19px;vertical-align: top;}
+
+.paper-config{
+    width:521px;
+}
 
 .add-user{
     margin-bottom: 20px;
@@ -11,7 +15,8 @@
 
 .admin .row{
     margin-left:0;
-    height:80px;
+    height: 160px;
+    display:block;
 }
 
 .form-control {
@@ -34,4 +39,27 @@
 }
 small, .small {
     font-size: 85%;
+}
+
+.admin .add-div{
+
+}
+.admin .add-div input{
+    width:342px;
+}
+
+.admin label{
+    width:120px;
+}
+
+.admin .checkbox-group{
+    display:block;
+    margin-top:35px;
+    padding-bottom:10px;
+    width:356px;
+    border:#e2e2e2 solid 1px;
+}
+
+.admin .checkbox-group .checkbox,.admin .checkbox-group span{
+    margin-right:18px;
 }
