@@ -20,6 +20,7 @@
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/profile.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
 
 
@@ -32,7 +33,7 @@
            <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
            <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
            <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
-           <li><a class="modify" href=""><i></i><span>文献修改</span></a></li>
+           <li><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
            <li class="active"><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
        </ul>
        <div class="main-right">
@@ -65,7 +66,7 @@
                                                <!-- Table heading -->
                                                <thead>
                                                <tr>
-                                                   <th>ID</th>
+                                                   <th>SSN</th>
                                                    <th>文献名称</th>
                                                    <th>上传时间</th>
                                                    <th>评分</th>
@@ -264,7 +265,6 @@
                            </div>
                        </div>
                    </div>
-               </div>
            </div>
            <div class="self-info">
 
