@@ -249,9 +249,9 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     @Override
     public boolean updateLiterature(Literature literature) {
         String sql="UPDATE literature SET " +
-                "creatorid='"+literature.getCreatorid()+"'," +
-                "updaterid='"+literature.getUpdaterid()+"'," +
-                "status='"+literature.getStatus()+"'" +
+                //"creatorid='"+literature.getCreatorid()+"'," +
+                "updaterid='"+literature.getUpdaterid()+"'" +
+                //"status='"+literature.getStatus()+"'" +
                 //"literaturetypeid='"+literature.getLiteraturetypeid()+"'" +
                 "WHERE id='"+literature.getId()+"'";
         int r=this.getJdbcTemplate().update(sql);

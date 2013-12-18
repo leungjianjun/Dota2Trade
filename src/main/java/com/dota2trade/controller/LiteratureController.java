@@ -175,15 +175,14 @@ public class LiteratureController {
 
         Literature literature=new Literature();
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
-        literature.setCreatorid(userid);
+        //literature.setCreatorid(userid);
         literature.setUpdaterid(userid);
-        literature.setStatus(0);
+        //literature.setStatus(0);
         //literature.setLiteraturetypeid(literaturetypeid);
         literature.setLiteratureMeta(literatureMeta);
         literature.setPublisher(publisher);
         literatureDao.updateLiterature(literature);
 
-       // model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         return "listLiterature";
     }
