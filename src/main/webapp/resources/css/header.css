@@ -18,6 +18,10 @@
     padding-top:15px;
 }
 
+.top-menu {
+    margin-right: 40px;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
