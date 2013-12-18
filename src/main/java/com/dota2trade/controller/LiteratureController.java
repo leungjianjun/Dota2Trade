@@ -97,9 +97,36 @@ public class LiteratureController {
     public String addLiterature(ModelMap model){
         return "addLiterature";
     }
+
     @RequestMapping(value="/editCite.html",method=RequestMethod.GET)
-    public String editCite(ModelMap model){
+    public String editCite(@RequestParam("literatureid")int literatureid,ModelMap model){
+        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         return "editCite";
+    }
+    /**修改文献基本信息页面*/
+    @RequestMapping(value="/reviseLitera.html",method=RequestMethod.GET)
+    public String reviseLiterature(@RequestParam("literatureid")int literatureid,ModelMap model){
+        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
+        return "reviseLitera";
+    }
+
+    /**执行文献基本信息修改*/
+    @RequestMapping(value="/doEditLiterature",method=RequestMethod.POST)
+    public String doEditLiterature(
+           // @RequestParam("literatureid")int literatureid,
+           @RequestParam("author") String author,
+           @RequestParam("published_year") Date published_year,
+           @RequestParam("pages") String pages,
+           @RequestParam("literature_abstract") String literature_abstract,
+           @RequestParam("key_words") String key_words,
+           @RequestParam("publisher_name") String publisher_name,
+           @RequestParam("link") String link,
+           @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            Model model){
+
+       // model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
+        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+        return "listLiterature";
     }
     @RequestMapping(value="/searchLiterature.html",method=RequestMethod.GET)
     public String searchLiterature(ModelMap model){

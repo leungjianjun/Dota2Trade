@@ -37,8 +37,9 @@
         <div class="content">
             <form method="POST" action="/doEditLiterature">
                 <div class="unable-revise">
+                    <div style="display: none"><input type="text" name="literatureid" value="$literature.id"></div>
                     <div class="doc-title">
-                        云计算与世界
+                        $literature.literatureMeta.title
                     </div>
                     <div class="doc-type">
                         论文
@@ -46,31 +47,31 @@
                 </div>
                 <div>
                     <label>作者</label>
-                    <input type="text" name="author" placeholder="多个作者用‘;’隔开" class="span12" value="aaa;bbb;ccc">
+                    <input type="text" name="author" placeholder="多个作者用‘;’隔开" class="span12" value="$literature.literatureMeta.author">
                 </div>
                 <div>
                     <label>出版年份</label>
-                    <input type="text" name="published_year"id="datepicker" value="1999" />
+                    <input type="text" name="published_year"id="datepicker" value="$literature.literatureMeta.published_year" />
                 </div>
                 <div>
                     <label>页码</label>
-                    <input type="text" name="pages" class="span12" value="12-34">
+                    <input type="text" name="pages" class="span12" value="$literature.literatureMeta.pages">
                 </div>
                 <div>
                     <label>摘要</label>
-                    <textarea cols="3" name="literature_abstract" rows="5">lalalalalllalallalal</textarea>
+                    <textarea cols="3" name="literature_abstract" rows="5">$literature.literatureMeta.literature_abstract</textarea>
                 </div>
                 <div>
                     <label>关键字</label>
-                    <input type="text" name="key_words" placeholder="多个关键字用‘;’隔开" class="span12" value="云计算">
+                    <input type="text" name="key_words" placeholder="多个关键字用‘;’隔开" class="span12" value="$literature.literatureMeta.key_words">
                 </div>
                 <div>
                     <label>出版社</label>
-                    <input type="text" name="publisher_name" class="span12" value="机械工业出版社">
+                    <input type="text" name="publisher_name" class="span12" value="$literature.publisher.name">
                 </div>
                 <div>
                     <label>文献在线链接</label>
-                    <input type="text" name="link" class="span12" value="www.baidu.com">
+                    <input type="text" name="link" class="span12" value="$literature.literatureMeta.link">
                 </div>
                 <div class="exist-attachments">
                     <label>已有附件</label>

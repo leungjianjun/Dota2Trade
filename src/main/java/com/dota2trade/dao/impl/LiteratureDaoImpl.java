@@ -355,9 +355,9 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
 
     @Override
     public Publisher getPublisherByLiteratureId(int literatureid) {
-        String sql="SELECT * FROM publisher WHERE publisherid=(" +
-                "SELECT publisherid FROM literature_publisher WHERE literatureid='"+literatureid+"'" +
-                ")";
+        String sql="SELECT * FROM publisher,literature_publisher " +
+                "WHERE literature_publisher.literatureid='"+literatureid+"' AND " +
+                "publisher.id=literature_publisher.publisherid";
         return (Publisher)this.getJdbcTemplate().queryForObject(sql,new BeanPropertyRowMapper(Publisher.class));
     }
 

@@ -77,7 +77,7 @@
                                                 <td>$literatureMeta.published_year</td>
                                                 <td class="center">6</td>
                                                 <td><div class="op">
-                                                    <button alt-data="$literatureMeta.literatureid" class="btn  edit-literature btn-primary">编辑文献内容及附件</button>
+                                                    <button alt-data="$literatureMeta.literatureid" class="btn  edit_literature btn-primary">编辑文献内容及附件</button>
                                                     <button alt-data="$literatureMeta.literatureid" class="btn  edit_cite btn-primary">编辑引用关系</button>
                                                     <button alt-data="$literatureMeta.literatureid" class="btn  delete btn-primary">删除</button>
                                                 </div>
@@ -263,12 +263,12 @@
             "aaSorting": [[ 4, "asc" ]]
         } );
 
-        $('.edit-literature').click(function(){
-            window.open("/a.html?id="+$(this).attr('alt-data'))
+        $('.edit_literature').click(function(){
+            window.location.href="/reviseLitera.html?literatureid="+$(this).attr('alt-data')
         });
-        console.log($('.edit_cite ').parent().html())
-        $('.edit-cite').click(function(){
-            console.log("ca")
+
+        $('.edit_cite').click(function(){
+            window.location.href="/editCite.html?literatureid="+$(this).attr('alt-data')
             //window.open("/editCite.html?literatureid="+$(this).attr('alt-data'))
         });
         /*$('.edit-paper').click(function(){
