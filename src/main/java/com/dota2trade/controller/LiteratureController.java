@@ -160,6 +160,29 @@ public class LiteratureController {
            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model){
 
+        LiteratureMeta literatureMeta=new LiteratureMeta();
+        //literatureMeta.setTitle(title);
+        literatureMeta.setAuthor(author);
+        literatureMeta.setPublished_year(published_year);
+        literatureMeta.setPages(pages);
+        literatureMeta.setLiterature_abstract(literature_abstract);
+        literatureMeta.setKey_words(key_words);
+        literatureMeta.setLink(link);
+
+
+        Publisher publisher=new Publisher();
+        publisher.setName(publisher_name);
+
+        Literature literature=new Literature();
+        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
+        literature.setCreatorid(userid);
+        literature.setUpdaterid(userid);
+        literature.setStatus(0);
+        //literature.setLiteraturetypeid(literaturetypeid);
+        literature.setLiteratureMeta(literatureMeta);
+        literature.setPublisher(publisher);
+        literatureDao.updateLiterature(literature);
+
        // model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         return "listLiterature";
