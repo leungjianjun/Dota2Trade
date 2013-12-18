@@ -15,6 +15,7 @@ import com.dota2trade.security.SAuthentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -86,17 +87,17 @@ public class LiteratureController {
         }
 
         LiteratureMeta literatureMeta=new LiteratureMeta();
-        literatureMeta.setTitle(title);
-        literatureMeta.setAuthor(author);
+        literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
+        literatureMeta.setAuthor(new String (author.getBytes ("iso-8859-1"), "UTF-8"));
         literatureMeta.setPublished_year(published_year);
         literatureMeta.setPages(pages);
-        literatureMeta.setLiterature_abstract(literature_abstract);
-        literatureMeta.setKey_words(key_words);
-        literatureMeta.setLink(link);
+        literatureMeta.setLiterature_abstract(new String (literature_abstract .getBytes("iso-8859-1"), "UTF-8"));
+        literatureMeta.setKey_words(new String (key_words.getBytes("iso-8859-1"), "UTF-8"));
+        literatureMeta.setLink(new String (link .getBytes("iso-8859-1"), "UTF-8"));
 
 
         Publisher publisher=new Publisher();
-        publisher.setName(publisher_name);
+        publisher.setName(new String (publisher_name .getBytes ("iso-8859-1"), "UTF-8"));
 
         Literature literature=new Literature();
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
@@ -159,20 +160,20 @@ public class LiteratureController {
            @RequestParam("publisher_name") String publisher_name,
            @RequestParam("link") String link,
            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
-            Model model){
+            Model model) throws UnsupportedEncodingException {
 
         LiteratureMeta literatureMeta=new LiteratureMeta();
-        //literatureMeta.setTitle(title);
-        literatureMeta.setAuthor(author);
+       // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
+        literatureMeta.setAuthor(new String (author.getBytes ("iso-8859-1"), "UTF-8"));
         literatureMeta.setPublished_year(published_year);
         literatureMeta.setPages(pages);
-        literatureMeta.setLiterature_abstract(literature_abstract);
-        literatureMeta.setKey_words(key_words);
-        literatureMeta.setLink(link);
+        literatureMeta.setLiterature_abstract(new String (literature_abstract .getBytes ("iso-8859-1"), "UTF-8"));
+        literatureMeta.setKey_words(new String (key_words.getBytes ("iso-8859-1"), "UTF-8"));
+        literatureMeta.setLink(new String (link .getBytes ("iso-8859-1"), "UTF-8"));
 
 
         Publisher publisher=new Publisher();
-        publisher.setName(publisher_name);
+        publisher.setName(new String (publisher_name .getBytes ("iso-8859-1"), "UTF-8"));
 
         Literature literature=new Literature();
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
