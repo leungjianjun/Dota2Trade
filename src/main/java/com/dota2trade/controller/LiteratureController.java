@@ -83,7 +83,12 @@ public class LiteratureController {
 
 
     @RequestMapping(value="/listLiterature.html", method= RequestMethod.GET)
-    public String login(ModelMap model){
+    public String listLiterature(ModelMap model){
         return "listLiterature";
+    }
+
+    @RequestMapping(value="/reviseLitera.html", method= RequestMethod.GET)
+    public String reviseLiterature(ModelMap model){
+        return "reviseLitera";
     }
 }

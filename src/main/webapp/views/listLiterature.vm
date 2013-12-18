@@ -18,7 +18,6 @@
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
-    <link rel="stylesheet" media="screen" href="../resources/css/listLiterature.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
 </head>
@@ -74,10 +73,10 @@
                                         <!-- Table row -->
                                         <tr class="gradeX">
                                             <td>1</td>
-                                            <td><a href="#">大教堂与集市</a></td>
+                                            <td><a href="/literatureDetail.html">云计算与世界</a></td>
                                             <td>2013/12/17 16:58</td>
                                             <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary" onClick="location.href='/reviseLitera.html'">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -87,17 +86,17 @@
                                             <td>Internet Explorer 5.0lalalalalhhahhahahahahahahahjdkadfjakldfjakldjf</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary" onClick="location.href='/reviseLitera.html'">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
                                         <!-- Table row -->
                                         <tr class="gradeA">
                                             <td>3</td>
-                                            <td>Internet Explorer 5.5</td>
+                                            <td>大教堂与集市</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>7</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -107,7 +106,7 @@
                                             <td>Internet Explorer 6</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>9</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -117,7 +116,7 @@
                                             <td>Internet Explorer 7</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>10</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -127,7 +126,7 @@
                                             <td>AOL browser (AOL desktop)</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>1</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -137,7 +136,7 @@
                                             <td>Firefox 1.0</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>2</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -147,7 +146,7 @@
                                             <td>Firefox 1.5</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>4</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
 
                                         </tr>
                                         <!-- // Table row END -->
@@ -158,7 +157,7 @@
                                             <td>Firefox 2.0</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -168,7 +167,7 @@
                                             <td>Firefox 3.0</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -178,7 +177,7 @@
                                             <td>Camino 1.0</td>
                                             <td>2013/12/17 16:58</td>
                                             <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
 
                                         </tr>
                                         <!-- // Table row END -->
