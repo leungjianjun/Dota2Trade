@@ -48,7 +48,11 @@ public class SecurityFilterChain extends OncePerRequestFilter implements Filter 
                 SAuthentication newau = new SAuthentication();
                 newau.setAccount(user.getAccount());
                 request.getSession().setAttribute("sauthentication",newau);
-                response.sendRedirect(referer);
+                if (user.getAccount().equals("admin")){
+                    response.sendRedirect("/admin.html");
+                }else{
+                    response.sendRedirect(referer);
+                }
             }
             return ;
         }
