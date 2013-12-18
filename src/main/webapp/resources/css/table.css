@@ -92,3 +92,22 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 .main-right .adv-table th{
     text-align:center;
 }
+
+.main-right .adv-table .dataTables_length,.main-right .adv-table .dataTables_filter,.main-right .adv-table .dataTables_info, .main-right .dataTables_paginate{
+    display: inline-block;
+}
+
+.main-right .adv-table .dataTables_filter label input {
+    width:66%;
+}
+
+.main-right .adv-table td{
+    min-width: 20px;
+}
+
+.main-right .dataTables_filter, .main-right .dataTables_paginate{
+    float:right;
+}
+.main-right .dataTables_paginate a{
+    margin-left: 10px;
+}

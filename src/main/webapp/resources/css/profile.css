@@ -7,24 +7,6 @@
     width:54%
 }
 
-.comments .adv-table .dataTables_length,.comments .adv-table .dataTables_filter,.comments .adv-table .dataTables_info, .comments .dataTables_paginate{
-    display: inline-block;
-}
-
-.comments .dataTables_filter, .comments .dataTables_paginate{
-    margin-left: 100px;
-}
-.comments .dataTables_paginate a{
-    margin-left: 10px;
-}
-
-.comments .adv-table .dataTables_filter label input {
-    width:66%;
-}
-
-.comments .adv-table td{
-    min-width: 20px;
-}
 
 .op .btn{
     margin-left:15px;
