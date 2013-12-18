@@ -61,6 +61,7 @@ public class LiteratureController {
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model
     ) throws IOException {
+        System.out.println(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         String paperFileName = System.currentTimeMillis()+fileAttachment.getOriginalFilename();
         FileUploadHelper.uploadFile(fileAttachment,paperFileName);
 
