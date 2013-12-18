@@ -5,13 +5,16 @@ import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.Literature;
 import com.dota2trade.model.LiteratureMeta;
 import com.dota2trade.model.Publisher;
+import com.dota2trade.util.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import com.dota2trade.security.SAuthentication;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -49,9 +52,37 @@ public class LiteratureController {
             @RequestParam("key_words") String key_words,
             @RequestParam("publisher_name") String publisher_name,
             @RequestParam("link") String link,
+            @RequestParam("fileAttachment") MultipartFile fileAttachment,
+            @RequestParam("otherAttachment1") MultipartFile otherAttachment1,
+            @RequestParam("otherAttachment2") MultipartFile otherAttachment2,
+            @RequestParam("otherAttachment3") MultipartFile otherAttachment3,
+            @RequestParam("otherAttachment4") MultipartFile otherAttachment4,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model
-    ){
+    ) throws IOException {
+        String paperFileName = System.currentTimeMillis()+fileAttachment.getOriginalFilename();
+        FileUploadHelper.uploadFile(fileAttachment,paperFileName);
+
+        if (!otherAttachment1.isEmpty()){
+            String otherFile1Name = System.currentTimeMillis()+otherAttachment1.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name);
+        }
+
+        if (!otherAttachment2.isEmpty()){
+            String otherFile2Name = System.currentTimeMillis()+otherAttachment2.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name);
+        }
+
+        if (!otherAttachment3.isEmpty()){
+            String otherFile3Name = System.currentTimeMillis()+otherAttachment3.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name);
+        }
+
+        if (!otherAttachment4.isEmpty()){
+            String otherFile4Name = System.currentTimeMillis()+otherAttachment4.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name);
+        }
+
         LiteratureMeta literatureMeta=new LiteratureMeta();
         literatureMeta.setTitle(title);
         literatureMeta.setAuthor(author);

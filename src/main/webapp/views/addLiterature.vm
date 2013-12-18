@@ -36,7 +36,7 @@
     <div class="add_right">
         <div class="title">录入文献</div>
         <div class="main">
-            <form method="POST" action="/doAddLiterature">
+            <form method="POST" action="/doAddLiterature" enctype="multipart/form-data" >
                 <div>
                     <label>文献类别</label>
                     <select name="literaturetypeid" class="selectpicker span6" data-style="btn-default">
@@ -92,7 +92,7 @@
                             <span class="btn btn-default btn-file">
                                 <span class="fileupload-new">选择文件</span>
                                 <span class="fileupload-exists">修改</span>
-                                <input type="file" />
+                                <input type="file" name="paperAttachment"/>
                             </span>
                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">删除</a>
                         </div>
@@ -109,7 +109,7 @@
                             <span class="btn btn-default btn-file">
                                 <span class="fileupload-new">选择文件</span>
                                 <span class="fileupload-exists">修改</span>
-                                <input type="file" />
+                                <input type="file" name="otherAttachment1"/>
                             </span>
                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">删除</a>
                         </div>
