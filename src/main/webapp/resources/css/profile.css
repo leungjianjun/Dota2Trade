@@ -7,14 +7,3 @@
     width:54%
 }
 
-
-.op .btn{
-    margin-left:15px;
-    padding: 3px 5px;
-    float:left;
-    font-size:12px;
-}
-
-.op .btn + .btn:not(.btn-block) {
-    margin: 0 0 0 20px;
-}

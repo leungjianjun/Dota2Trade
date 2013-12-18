@@ -66,7 +66,7 @@
                                                <!-- Table heading -->
                                                <thead>
                                                <tr>
-                                                   <th>ID</th>
+                                                   <th>SSN</th>
                                                    <th>文献名称</th>
                                                    <th>上传时间</th>
                                                    <th>评分</th>
