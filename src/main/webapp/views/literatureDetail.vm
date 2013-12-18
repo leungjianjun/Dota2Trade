@@ -1,7 +1,7 @@
 <!doctype html>
 <head xmlns="http://www.w3.org/1999/html">
     <meta charset="utf-8">
-    <title>搜索结果</title>
+    <title>文献详情</title>
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
@@ -47,18 +47,39 @@
                             <ul>
                                 <li class="active"><a class="glyphicons user" href="#tabSimple" data-toggle="tab"><span>简单评论</span></a></li>
                                 <li ><a class="glyphicons list" href="#tabDetail" data-toggle="tab"><span>详细评论</span></a></li>
+                                <li><a class="glyphicons" href="#tabTag" data-toggle="tab"><span>添加标签</span></a></li>
                             </ul>
                         </div>
                         <div class="widget-body">
                             <div class="tab-content">
                                 <div id="tabSimple" class="active tab-pane widget-body-regular">
                                     <form name="" action="" method="get">
+                                        <div class="rating clearfix">
+                                            <span>打个分数吧（可选）：</span>
+                                            <span class="stars">
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                            </span>
+                                        </div>
                                         <textarea cols="2" rows="3" style="width: 362px;"></textarea>
                                         <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
                                     </form>
                                 </div>
                                 <div id="tabDetail" class="tab-pane widget-body-regular">
                                     <form name="" action="" method="get">
+                                        <div class="rating clearfix">
+                                            <span>打个分数吧（可选）：</span>
+                                            <span class="stars">
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                              <span class="star"></span>
+                                            </span>
+                                        </div>
                                         <div>
                                             <label>解决问题</label>
                                             <textarea cols="3" rows="2"></textarea>
@@ -82,9 +103,56 @@
                                         <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
                                     </form>
                                 </div>
+                                <div id="tabTag" class="tab-pane widget-body-regular">
+                                    <form name="" action="" method="get">
+                                        <div>标签（多个标签用空格分开）</div>
+                                        <div>
+                                            <textarea cols="3" class="tag12"></textarea>
+                                        </div>
+                                        <div class="mytags clearfix">
+                                            <div class="l">我的标签：</div>
+                                            <div class="r">
+                                                <a href="#">Cloud Computing</a>
+                                                <a href="#">HCI</a>
+                                                <a href="#">Hadoop</a>
+                                                <a href="#">Java</a>
+                                            </div>
+                                        </div>
+                                        <div class="mytags clearfix">
+                                            <div class="l">常用标签：</div>
+                                            <div class="r">
+                                                <a href="#">Java EE</a>
+                                                <a href="#">Linux</a>
+                                                <a href="#">Github</a>
+                                                <a href="#">Html/css</a>
+                                                <a href="#">Database</a>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="otherComments">
+                    <div class="t">其他人的评论</div>
+                    <ul>
+                        <li>
+                            <div class="info"><a class="name">梁建均</a><span>评分：4</span><span>2013-11-20</span></div>
+                            <div>好文章，必须赞～</div>
+                        </li>
+                        <li>
+                            <div class="info"><a class="name">戴娟</a><span>评分：4</span><span>2013-11-20</span></div>
+                            <div>云计算技术以其强大的功能已在世界的一些商业领域得到了初步的应用。在不久的将来,
+                                云计算技术也将在图书馆中得到大规模的普及应用。文章在分析云计算与图书馆的关系
+                                基础上,探讨了云计算技术在图书馆建设与服务中的应用</div>
+                        </li>
+                        <li>
+                            <div class="info"><a class="name">丁玲娟</a><span>评分：5</span><span>2013-11-20</span></div>
+                            <div>好文章，必须赞～</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="right">
