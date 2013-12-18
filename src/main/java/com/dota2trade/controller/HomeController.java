@@ -70,5 +70,4 @@ public class HomeController {
         return new FileSystemResource(new File("attachment/"+s2+"."+type));
     }
 
-
 }
