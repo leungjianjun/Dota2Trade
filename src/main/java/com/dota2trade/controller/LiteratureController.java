@@ -44,4 +44,12 @@ public class LiteratureController {
     public String editCite(ModelMap model){
         return "editCite";
     }
+    @RequestMapping(value="/searchLiterature.html",method=RequestMethod.GET)
+    public String searchLiterature(ModelMap model){
+        return "searchLiterature";
+    }
+    @RequestMapping(value="searchResult.html",method=RequestMethod.GET)
+    public String searchResult(ModelMap model){
+        return "searchResult";
+    }
 }

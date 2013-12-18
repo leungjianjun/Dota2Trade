@@ -1,0 +1,28 @@
+.add_right{float: left;margin-left: 50px;width: 56%;}
+.add_right .title{
+    margin: 0px 0px 22px;
+    font-weight: 600;
+    color: rgb(124, 124, 124);
+    line-height: 30px;
+    font-size: 26px;
+    border-bottom: 2px solid rgb(216, 216, 216);
+}
+.add_right input.span12{width: 400px;margin: 0 5px 0 0;padding: 8px;}
+.add_right .btn{padding: 8px 12px;}
+.add_right .simple_search{margin-top: 80px;margin-left: 46px;}
+.add_right .advance{margin-left: 227px;font-size: 14px;}
+.advance_panel{position: absolute;top: 137px;left: 323px;border: 1px solid #ccc;background: #fff;padding: 15px;}
+.advance_panel label{float: left;width: 200px;height: 30px;line-height: 30px;}
+.advance_panel .span12{width: 350px;}
+.advance_panel .span12.time0{width: 85px;}
+.advance_panel .radio{font-size: 14px;}
+.advance_panel .widget-body{margin-bottom: 10px;color: #8ec657;}
+.advance_panel .btn{padding: 4px 7px;}
+.advance_panel .a_title{margin:0 0 5px 0;}
+.advance_panel .a_title .left{float: left;font-size: 14px;font-weight: bold;}
+.advance_panel .a_title .right{
+    float: right;
+    background: url("../common/bootstrap/img/glyphicons-halflings.png") -308px 0 no-repeat;
+    height: 12px;
+    width: 24px;
+}

@@ -28,10 +28,10 @@
 <div class="container0 clearfix">
     <ul class="menu">
         <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
-        <li><a class="search" href=""><i></i><span>文献查询</span></a></li>
+        <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
         <li class="active"><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
         <li><a class="modify" href=""><i></i><span>文献修改</span></a></li>
-        <li><a class="info" href=""><i></i><span>个人信息</span></a></li>
+        <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
     </ul>
     <div class="add_right">
         <div class="title">录入文献</div>
@@ -39,7 +39,7 @@
             <form name="" method="POST" action="javascript:showhint();">
                 <div>
                     <label>文献类别</label>
-                    <select class="selectpicker span6" data-style="btn-default" style="display: none;">
+                    <select class="selectpicker span6" data-style="btn-default">
                         <option>图书</option>
                         <option>图书章节</option>
                         <option>期刊</option>
@@ -161,4 +161,6 @@
 <script src="../resources/common/bootstrap/extend/jasny-bootstrap/js/bootstrap-fileupload.js"></script>
 <!-- DateTimePicker Plugin -->
 <script src="../resources/common/theme/scripts/plugins/forms/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
 </body>
