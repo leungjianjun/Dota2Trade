@@ -109,7 +109,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .comments .dataTables_filter, .comments .dataTables_paginate{
-    margin-left: 132px;
+    margin-left: 100px;
 }
 .comments .dataTables_paginate a{
     margin-left: 10px;
