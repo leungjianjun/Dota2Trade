@@ -265,8 +265,30 @@
                            </div>
                        </div>
                    </div>
+               </div>
            </div>
            <div class="self-info">
+               <aside class="profile-nav col-lg-3">
+                   <section class="panel">
+                       <div class="user-heading round">
+                           <a href="#">
+                               <img src="../resources/css/images/avatar.jpg" alt="">
+                           </a>
+                           <h1> 梁 建均 </h1>
+                           <p> jsmith@flatlab.com</p>
+                           <p> 云计算方向</p>
+                           <p> 硕士研究生</p>
+                       </div>
+
+                       <ul class="nav nav-pills nav-stacked">
+                           <li><a href="profile.html"> <i class="icon-user"></i> 编辑个人信息</a></li>
+                           <li><a href="profile-edit.html"> <i class="icon-edit"></i> 编辑登录信息</a></li>
+                       </ul>
+
+                   </section>
+               </aside>
+               <div class="edit-info"></div>
+               <div class="edit-login"></div>
 
            </div>
 
