@@ -67,7 +67,7 @@
                 </ul>
             </div>
             <div class="e_right">
-                <div class="lit_title">文献标题：云计算与世界</div>
+                <div class="lit_title">文献标题: ${literature.literatureMeta.title}</div>
                 <div class="cite_list">
                     <div class="list_title"><span></span>本文引用的文献</div>
                     <ul>
