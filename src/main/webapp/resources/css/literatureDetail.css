@@ -30,3 +30,5 @@
 .left .widget.widget-tabs-double-2 > .widget-head ul li a span {
     line-height: 40px;
 }
+.left textarea,.left .span12{width: 262px;}
+.left label{display: inline-block;width: 90px;}

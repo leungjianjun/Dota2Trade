@@ -51,11 +51,36 @@
                         </div>
                         <div class="widget-body">
                             <div class="tab-content">
-                                <div id="tabSimple" class="tab-pane widget-body-regular">
-                                    dsf
+                                <div id="tabSimple" class="active tab-pane widget-body-regular">
+                                    <form name="" action="" method="get">
+                                        <textarea cols="2" rows="3" style="width: 362px;"></textarea>
+                                        <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
+                                    </form>
                                 </div>
-                                <div id="tabDetail" class="tab-pane active widget-body-regular">
-                                    d
+                                <div id="tabDetail" class="tab-pane widget-body-regular">
+                                    <form name="" action="" method="get">
+                                        <div>
+                                            <label>解决问题</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>主要思路</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>实验结果</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>贡献</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>改进</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
