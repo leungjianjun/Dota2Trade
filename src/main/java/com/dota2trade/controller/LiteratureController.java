@@ -1,6 +1,8 @@
 package com.dota2trade.controller;
 
 import com.dota2trade.dao.LiteratureDao;
+import com.dota2trade.dao.UserDao;
+import com.dota2trade.model.Literature;
 import com.dota2trade.model.LiteratureMeta;
 import com.dota2trade.model.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
+import com.dota2trade.security.SAuthentication;
 
 import java.util.Date;
 
@@ -18,7 +21,9 @@ import java.util.Date;
  * Time: 下午3:05
  */
 @Controller
+@SessionAttributes("sauthentication")
 public class LiteratureController {
+    private UserDao userDao;
     private LiteratureDao literatureDao;
 
     @RequestMapping(value = "/sTest.html",method = RequestMethod.GET)
@@ -42,14 +47,40 @@ public class LiteratureController {
             @RequestParam("literature_abstract") String literature_abstract,
             @RequestParam("key_words") String key_words,
             @RequestParam("publisher_name") String publisher_name,
-            @RequestParam("link") String link
+            @RequestParam("link") String link,
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            Model model
     ){
+        LiteratureMeta literatureMeta=new LiteratureMeta();
+        literatureMeta.setTitle(title);
+        literatureMeta.setAuthor(author);
+        literatureMeta.setPublished_year(published_year);
+        literatureMeta.setPages(pages);
+        literatureMeta.setLiterature_abstract(literature_abstract);
+        literatureMeta.setKey_words(key_words);
+        literatureMeta.setLink(link);
+
+
         Publisher publisher=new Publisher();
         publisher.setName(publisher_name);
-        int pid=literatureDao.addPublisher(publisher);
-        /*model.addAttribute("x",x);*/
-        System.out.println("pid: "+pid);
-        return "/saveptest";
+
+        Literature literature=new Literature();
+        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
+        literature.setCreatorid(userid);
+        literature.setUpdaterid(userid);
+        literature.setStatus(0);
+        literature.setLiteraturetypeid(literaturetypeid);
+        literature.setLiteratureMeta(literatureMeta);
+        literature.setPublisher(publisher);
+
+        model.addAttribute("literature",literature);
+
+        boolean r=literatureDao.createLiterature(literature);
+
+
+        System.out.println("result:"+r);
+
+        return "/editCite";
     }
 
     public LiteratureDao getLiteratureDao() {
@@ -59,6 +90,13 @@ public class LiteratureController {
     @Autowired
     public void setLiteratureDao(LiteratureDao literatureDao) {
         this.literatureDao = literatureDao;
+    }
+    public UserDao getUserDao() {
+        return userDao;
+    }
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
     @RequestMapping(value="/addLiterature.html", method= RequestMethod.GET)
     public String addLiterature(ModelMap model){
