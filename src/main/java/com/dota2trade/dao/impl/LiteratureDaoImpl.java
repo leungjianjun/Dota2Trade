@@ -251,20 +251,33 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         String sql="UPDATE literature SET " +
                 "creatorid='"+literature.getCreatorid()+"'," +
                 "updaterid='"+literature.getUpdaterid()+"'," +
-                "status='"+literature.getStatus()+"'," +
-                "literaturetypeid='"+literature.getLiteraturetypeid()+"'" +
+                "status='"+literature.getStatus()+"'" +
+                //"literaturetypeid='"+literature.getLiteraturetypeid()+"'" +
                 "WHERE id='"+literature.getId()+"'";
         int r=this.getJdbcTemplate().update(sql);
         if(r>0){
-
+            boolean r2=this.updateLiteratureMeta(literature.getLiteratureMeta());
+            if(r2){
+                boolean r3=this.updateLiteraturePublisher(literature.getId(),
+                        this.updatePublisher(literature.getPublisher()));
+                if(r3){
+                    //this.updateAttachment()
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
         }
-        return false;
     }
 
     @Override
     public boolean updateLiteratureMeta(LiteratureMeta literatureMeta) {
         String sql="UPDATE literatureMeta SET " +
-                "title='"+literatureMeta.getTitle()+"'," +
+                //"title='"+literatureMeta.getTitle()+"'," +
                 "abstract='"+literatureMeta.getAuthor()+"'," +
                 "author='"+literatureMeta.getAuthor()+"'," +
                 "published_year='"+literatureMeta.getPublished_year()+"'," +
