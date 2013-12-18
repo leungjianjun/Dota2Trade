@@ -25,6 +25,10 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping(value="/", method= RequestMethod.GET)
+    public String defaultHome(ModelMap model){
+        return "redirect:/index.html";
+    }
 
     @RequestMapping(value="/profile.html",method= RequestMethod.GET)
     public String group(ModelMap model){
