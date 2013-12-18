@@ -59,7 +59,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                     //添加文献-出版社关系信息
                     boolean addLitPubResult=this.addLiteraturePublisher(keyid,publisherId);
                     if(addLitPubResult==true){
-                        for(Attachment at:literature.getAttachmentList()){
+                        /*for(Attachment at:literature.getAttachmentList()){
                             at.setLiteratureid(keyid);
                         }
                         //添加文档的附件信息
@@ -71,7 +71,9 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                         } else{
                             System.out.println("--error05--添加文档的附件信息出错！");
                             return false;
-                        }
+                        }*/
+                        System.out.println("--success04--添加文献-出版社关系成功！");
+                        return true;
                     }else{
                         System.out.println("--error04--添加文献-出版社关系出错！");
                         return false;
