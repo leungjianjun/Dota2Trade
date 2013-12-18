@@ -80,4 +80,10 @@ public class LiteratureController {
     public String literatureDetail(ModelMap model){
         return "literatureDetail";
     }
+
+
+    @RequestMapping(value="/listLiterature.html", method= RequestMethod.GET)
+    public String login(ModelMap model){
+        return "listLiterature";
+    }
 }
