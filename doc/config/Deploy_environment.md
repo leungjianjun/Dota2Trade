@@ -12,4 +12,5 @@
 - 直接把doc/data文件按里面的sql文件导入数据库
 
 ###3 运行jar
-在命令行中输入 java -jar [war文件]
+在命令行中输入 java -jar [war文件],弹出服务器的控制界面，点击start即可
+![](images/deploy1.png?raw=true)

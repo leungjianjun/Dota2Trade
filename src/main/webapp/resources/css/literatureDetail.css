@@ -11,7 +11,7 @@
 .detail_right .main .t{font-size: 14px;color: #8ec657;}
 .detail_right .main .left{float: left;width: 400px;}
 .detail_right .main .left li{margin: 3px 0;}
-.detail_right .main .right{float: left;margin-left: 32px;margin-top: 21px;}
+.detail_right .main .right{float: left;margin-left: 50px;margin-top: 21px;}
 .detail_right .main .right .row1 li{margin: 3px 0;}
 .detail_right .main .right .row1 .download .l{float: left;width: 58px;}
 .detail_right .main .right .row1 .download .r{float: left;}
@@ -23,3 +23,20 @@
 .detail_right .list_title .more{margin-left: 100px;font-size: 12px;}
 .detail_right .list_title span{float:left;width:16px;height:18px;background: url("images/cite_logo.png") 0 0 no-repeat;}
 .detail_right .cite_list ul{margin-left: 16px;}
+.left .widget.widget-tabs-double-2 > .widget-head {height:40px;}
+.left .widget.widget-tabs-double-2 > .widget-head ul li a span {line-height: 40px;}
+.left textarea,.left .span12{width: 262px;}
+.left label{display: inline-block;width: 90px;}
+.comment{margin-top: 13px;}
+.comment .rating{margin: 5px 0;}
+.comment .rating span{float:left;height: 25px;line-height: 25px;}
+.comment .stars{margin-left: 10px;}
+.comment .star{display: inline-block;background: url("images/like-dislike.png") 0 0 no-repeat;width: 25px;height: 25px;}
+.comment .tag12{width:362px; }
+.comment .mytags{margin-bottom: 10px;}
+.comment .mytags .l{float: left;width: 60px;}
+.comment .mytags .r{float: left;}
+.comment .mytags .r a{float: left;margin-right: 10px;}
+.comment .t{margin: 3px 0;}
+.otherComments .info span{margin-left: 15px;}
+.otherComments .info .name{float: left;width: 40px;}

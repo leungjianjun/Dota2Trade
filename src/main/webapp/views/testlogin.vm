@@ -1,0 +1,5 @@
+<form action="douploadtest.html" enctype="multipart/form-data"  method="post">
+    <input type="text" name="name" value="a"/>
+    <input type="file" name="file" />
+    <button name="tiji" type="submit">ca</button>
+</form>

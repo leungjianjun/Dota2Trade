@@ -14,7 +14,7 @@
                 </a>
                 <ul class="dropdown-menu extended logout">
                     <div class="log-arrow-up"></div>
-                    <li><a href="#"><i class=" icon-suitcase"></i>个人信息</a></li>
+                    <li><a href="/profile.html"><i class=" icon-suitcase"></i>个人信息</a></li>
                     <li><a href="login.html"><i class="icon-key"></i> 登出</a></li>
                 </ul>
             </li>

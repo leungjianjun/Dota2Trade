@@ -124,3 +124,8 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 .op .btn + .btn:not(.btn-block) {
     margin: 0 0 0 20px;
 }
+
+/**listLiterature**/
+.list-self .op .btn{
+    margin-left:40px;
+}
