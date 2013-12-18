@@ -13,6 +13,16 @@ public class Attachment {
     private int creatorid;
     private int literatureid;
 
+    public int getType() {
+        return type;
+    }
+
+    private int type;//附件类型，0表示论文，1表示其他
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }

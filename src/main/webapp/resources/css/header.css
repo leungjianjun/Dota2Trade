@@ -5,7 +5,6 @@
 .white-bg {
     background: white;
     border-bottom: 1px solid #F1F2F7;
-    overflow: hidden;;
 }
 
 .logo {
@@ -17,6 +16,10 @@
     display:inline-block;
     vertical-align:top;
     padding-top:15px;
+}
+
+.top-menu {
+    margin-right: 40px;
 }
 
 .dropdown-menu {

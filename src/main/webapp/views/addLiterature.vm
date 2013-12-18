@@ -1,0 +1,222 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>录入文献</title>
+    <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/addLiterature.css"></link>
+
+    <!-- Bootstrap -->
+    <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/css/responsive.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- DateTimePicker Plugin -->
+    <link href="../resources/common/theme/scripts/plugins/forms/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet" />
+
+    <!-- JQueryUI -->
+    <link href="../resources/common/theme/scripts/plugins/system/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+    <!-- Main Theme Stylesheet :: CSS -->
+    <link href="../resources/common/theme/css/style-light.css?1369753442" rel="stylesheet" />
+
+</head>
+<body>
+    #include("header.vm")
+<div class="container0 clearfix">
+    <ul class="menu">
+        <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
+        <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
+        <li class="active"><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
+        <li><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
+        <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
+    </ul>
+    <div class="add_right">
+        <div class="title">录入文献</div>
+        <div class="main">
+            <form method="POST" action="/doAddLiterature" enctype="multipart/form-data" >
+                <div>
+                    <label>文献类别</label>
+                    <select name="literaturetypeid" class="selectpicker span6" data-style="btn-default">
+                        <option value="1">图书</option>
+                        <option value="2">图书章节</option>
+                        <option value="3">期刊</option>
+                        <option value="4">会议</option>
+                        <option value="5">学位论文</option>
+                        <option value="6">技术报告</option>
+                        <option value="7">在线资源</option>
+                    </select>
+                </div>
+                <div>
+                    <label>标题</label>
+                    <input type="text" name="title" class="span12">
+                </div>
+                <div>
+                    <label>作者</label>
+                    <input type="text" name="author" placeholder="多个作者用‘;’隔开" class="span12">
+                </div>
+                <div>
+                    <label>出版年份</label>
+                    <input type="text" name="published_year"id="datepicker" value="" />
+                </div>
+                <div>
+                    <label>页码</label>
+                    <input type="text" name="pages" class="span12">
+                </div>
+                <div>
+                    <label>摘要</label>
+                    <textarea cols="3" name="literature_abstract" rows="5"></textarea>
+                </div>
+                <div>
+                    <label>关键字</label>
+                    <input type="text" name="key_words" placeholder="多个关键字用‘;’隔开" class="span12">
+                </div>
+                <div>
+                    <label>出版社</label>
+                    <input type="text" name="publisher_name" class="span12">
+                </div>
+                <div>
+                    <label>文献在线链接</label>
+                    <input type="text" name="link" class="span12">
+                </div>
+                <div>
+                    <label>论文附件</label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="fileAttachment"/>
+                            </span>
+                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label>其他附件</label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="otherAttachment1"/>
+                            </span>
+                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label></label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="otherAttachment2"/>
+                            </span>
+                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label></label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="otherAttachment3"/>
+                            </span>
+                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label></label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="otherAttachment4"/>
+                            </span>
+                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit">
+                    <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">录入文献</button>
+                    <button class="btn btn-block btn-primary"></button>
+                    <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="widget" id="widget" style="display: none;position: absolute;z-index: 1002;left: 400px;top: 300px;">
+    <!-- Widget heading -->
+    <div class="widget-head">
+        <h4 class="heading">上传成功</h4>
+    </div>
+    <!-- // Widget heading END -->
+
+    <div class="widget-body center" style="padding: 40px;">
+        <span>要立即编辑引用关系么？</span>
+        <a href="/editCite.html"><span class="btn btn-default" data-layout="topLeft" data-type="primary" data-toggle="notyfy">编辑引用关系</span></a>
+        <span class="btn btn-default" data-layout="centerLeft" data-type="primary" data-toggle="notyfy" onclick="hidehint();">取消</span>
+    </div>
+</div>
+<script>
+    function showhint(){
+        $("#widget").show();
+    }
+    function hidehint(){
+        $("#widget").hide();
+    }
+</script>
+<!-- JQuery -->
+<script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
+
+<!-- JQueryUI -->
+<script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- Bootstrap -->
+<script src="../resources/common/bootstrap/js/bootstrap.min.js"></script>
+<!-- Common Demo Script -->
+<script src="../resources/common/theme/scripts/demo/common.js?1369753442"></script>
+
+<!-- Holder Plugin -->
+<script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
+<!-- Bootstrap Extended -->
+<script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
+<script src="../resources/common/bootstrap/extend/jasny-bootstrap/js/bootstrap-fileupload.js"></script>
+<!-- DateTimePicker Plugin -->
+<script src="../resources/common/theme/scripts/plugins/forms/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
+</body>

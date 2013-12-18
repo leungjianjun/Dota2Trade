@@ -1,0 +1,54 @@
+.main-right{
+    margin-left:250px;
+    width:56%;
+}
+
+.title{
+    margin: 0px 0px 22px;
+    font-weight: 600;
+    color: rgb(124, 124, 124);
+    line-height: 30px;
+    font-size: 26px;
+    border-bottom: 2px solid rgb(216, 216, 216);
+}
+
+.main-right .span12{
+    width:500px;
+}
+
+.main-right label{
+    float: left;
+    margin-right: 15px;
+    font-size: 14px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 88px;
+}
+
+.main-right .checkbox{
+    margin-right:6px;
+}
+
+.exist-attachments{
+    height:40px;
+}
+.exist-attachments  span{
+    margin-right:10px;
+}
+
+.doc-title{
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-family: Microsoft YaHei;
+    font-size: 24px;
+    display: inline-block;
+    color: greenYellow;
+}
+
+.doc-type{
+    display:inline-block;
+    margin-left: 30px;
+    font-weight: bold;
+    font-size: 18px;
+}

@@ -11,7 +11,7 @@ public class CiteRelationship {
     private int id;
     private int literatureid;//被引用文献id
     private int citedbyid;//引用文献id
-    private int citedtypeid;//引用类型
+    private int citedtypeid;//引用类型，1**开头的为引用 2**开头的为被引用
 
     public int getId() {
         return id;

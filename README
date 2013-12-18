@@ -1,5 +1,5 @@
 ===============================================================================
-                             Dota2Trade
+                             GDMS系统
 ===============================================================================
 
 -------------------------------------------------------------------------------
@@ -7,3 +7,8 @@ Overview
 -------------------------------------------------------------------------------
 基于spring web MVC 3的web应用
 This file was modified by IntelliJ IDEA 12.0.1 for binding GitHub repository
+
+#开发环境配置参考这里
+https://github.com/leungjianjun/Dota2Trade/blob/master/doc/config/DEV_environment.md
+#部署环境配置参考这里
+https://github.com/leungjianjun/Dota2Trade/blob/master/doc/config/Deploy_environment.md

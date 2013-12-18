@@ -11,4 +11,5 @@ import com.dota2trade.model.User;
  */
 public interface UserDao {
     public User getUser(String account,String password);
+    int getIdByUserAccount(String account);
 }
