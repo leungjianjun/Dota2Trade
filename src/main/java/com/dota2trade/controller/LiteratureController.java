@@ -81,8 +81,8 @@ public class LiteratureController {
         if (!otherAttachment4.isEmpty()){
             String otherFile4Name = System.currentTimeMillis()+otherAttachment4.getOriginalFilename();
             FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name);
+            
         }
-
         LiteratureMeta literatureMeta=new LiteratureMeta();
         literatureMeta.setTitle(title);
         literatureMeta.setAuthor(author);
