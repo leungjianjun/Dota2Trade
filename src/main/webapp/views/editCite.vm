@@ -74,6 +74,7 @@
                     <ul id="cite">
                         <li>
                             <a href="#">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
+                            <a href="#" onclick="deleteCite(this);" style="float: right;">删除</a>
                             <div class="widget-body uniformjs">
                                 <label>引用关系类型：</label>
                                 <label class="checkbox">
@@ -100,6 +101,7 @@
                         </li>
                         <li>
                             <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
+                            <a href="#" onclick="deleteCite(this);" style="float: right;">删除</a>
                             <div class="widget-body uniformjs">
                                 <label>引用关系类型：</label>
                                 <label class="checkbox">
@@ -126,6 +128,7 @@
                         </li>
                         <li>
                             <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
+                            <a href="#" onclick="deleteCite(this);" style="float: right;">删除</a>
                             <div class="widget-body uniformjs">
                                 <label>引用关系类型：</label>
                                 <label class="checkbox">
@@ -157,6 +160,7 @@
                     <ul id="cited">
                         <li>
                             <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
+                            <a href="#" onclick="deleteCite(this);" style="float: right;">删除</a>
                             <div class="widget-body uniformjs">
                                 <label>引用关系类型：</label>
                                 <label class="checkbox">
@@ -183,6 +187,7 @@
                         </li>
                         <li>
                             <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
+                            <a href="#" onclick="deleteCite(this);" style="float: right;">删除</a>
                             <div class="widget-body uniformjs">
                                 <label>引用关系类型：</label>
                                 <label class="checkbox">
@@ -239,6 +244,9 @@
                         '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="5" checked="checked" style="opacity: 0;"></span></div>'+
                         '&nbsp;不确定</label></div></li>'
             )
+    }
+    function deleteCite(e){
+        $(e).parent().remove();
     }
 </script>
 <!-- JQuery -->
