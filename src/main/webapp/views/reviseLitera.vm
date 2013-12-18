@@ -51,7 +51,7 @@
                 </div>
                 <div>
                     <label>出版年份</label>
-                    <input type="text" name="published_year"id="datepicker" value="$literature.literatureMeta.published_year" />
+                    <input type="text" name="published_year"id="datepicker" value="$published_year" />
                 </div>
                 <div>
                     <label>页码</label>
