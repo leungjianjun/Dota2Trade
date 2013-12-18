@@ -36,7 +36,7 @@
     <div class="add_right">
         <div class="title">录入文献</div>
         <div class="main">
-            <form name="" method="POST" action="javascript:showhint();">
+            <form method="POST" action="/doAddLiterature">
                 <div>
                     <label>文献类别</label>
                     <select class="selectpicker span6" data-style="btn-default">
@@ -51,35 +51,35 @@
                 </div>
                 <div>
                     <label>标题</label>
-                    <input type="text" class="span12">
+                    <input type="text" name="title" class="span12">
                 </div>
                 <div>
                     <label>作者</label>
-                    <input type="text" placeholder="多个作者用‘;’隔开" class="span12">
+                    <input type="text" name="author" placeholder="多个作者用‘;’隔开" class="span12">
                 </div>
                 <div>
                     <label>出版年份</label>
-                    <input type="text" id="datepicker" value="" />
+                    <input type="text" name="published_year"id="datepicker" value="" />
                 </div>
                 <div>
                     <label>页码</label>
-                    <input type="text" class="span12">
+                    <input type="text" name="pages" class="span12">
                 </div>
                 <div>
                     <label>摘要</label>
-                    <textarea cols="3" rows="5"></textarea>
+                    <textarea cols="3" name="literature_abstract" rows="5"></textarea>
                 </div>
                 <div>
                     <label>关键字</label>
-                    <input type="text" placeholder="多个关键字用‘;’隔开" class="span12">
+                    <input type="text" name="key_words" placeholder="多个关键字用‘;’隔开" class="span12">
                 </div>
                 <div>
                     <label>出版社</label>
-                    <input type="text" class="span12">
+                    <input type="text" name="publisher_name" class="span12">
                 </div>
                 <div>
                     <label>文献在线链接</label>
-                    <input type="text" class="span12">
+                    <input type="text" name="link" class="span12">
                 </div>
                 <div>
                     <label>论文附件</label>

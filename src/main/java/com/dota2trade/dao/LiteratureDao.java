@@ -17,7 +17,7 @@ public interface LiteratureDao {
     /**添加文献基本信息*/
     boolean addLiteratureMeta(LiteratureMeta literatureMeta);
     /**添加文献附件信息*/
-    boolean addAttachment(Attachment attachment);
+    boolean addAttachment(List<Attachment> attachmentList);
     /**添加出版社信息*/
     int addPublisher(Publisher publisher);
     /**添加文献出版社对应关系信息*/
