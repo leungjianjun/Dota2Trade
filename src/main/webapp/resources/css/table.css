@@ -103,6 +103,8 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .main-right .adv-table td{
     min-width: 20px;
+    max-width:320px;
+    overflow: hidden;
 }
 
 .main-right .dataTables_filter, .main-right .dataTables_paginate{
@@ -110,4 +112,15 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 .main-right .dataTables_paginate a{
     margin-left: 10px;
+}
+
+.op .btn{
+    margin-left:15px;
+    padding: 3px 5px;
+    float:left;
+    font-size:12px;
+}
+
+.op .btn + .btn:not(.btn-block) {
+    margin: 0 0 0 20px;
 }

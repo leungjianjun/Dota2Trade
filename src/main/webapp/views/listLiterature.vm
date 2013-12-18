@@ -34,8 +34,8 @@
             <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
         </ul>
         <div class="main-right">
-            <div class="title">已上传文献</div>
-            <div class="widget widget-tabs widget-tabs-double-2">
+            <div class="title">已录入文献</div>
+            <div class="widget widget-tabs widget-tabs-double-2 list-self">
                 <div class="widget-head">
                     <ul>
                         <li class="active"><a class="glyphicons list" href="#tabBook" data-toggle="tab"><span>图&nbsp&nbsp书</span></a></li>
@@ -59,11 +59,11 @@
                                         <!-- Table heading -->
                                         <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>SSN</th>
                                             <th>文献名称</th>
                                             <th>上传时间</th>
-                                            <th>上传者</th>
                                             <th>评分</th>
+                                            <th>操作</th>
                                         </tr>
                                         </thead>
                                         <!-- // Table heading END -->
@@ -76,18 +76,18 @@
                                             <td>1</td>
                                             <td><a href="#">大教堂与集市</a></td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">李琰</td>
-                                            <td class="center">X</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
                                         <!-- Table row -->
                                         <tr class="gradeC">
                                             <td>2</td>
-                                            <td>Internet Explorer 5.0</td>
+                                            <td>Internet Explorer 5.0lalalalalhhahhahahahahahahahjdkadfjakldfjakldjf</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">5</td>
-                                            <td class="center">C</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -96,8 +96,8 @@
                                             <td>3</td>
                                             <td>Internet Explorer 5.5</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">5.5</td>
-                                            <td class="center">A</td>
+                                            <td>7</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -106,8 +106,8 @@
                                             <td>4</td>
                                             <td>Internet Explorer 6</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">6</td>
-                                            <td class="center">A</td>
+                                            <td>9</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -116,8 +116,8 @@
                                             <td>5</td>
                                             <td>Internet Explorer 7</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">7</td>
-                                            <td class="center">A</td>
+                                            <td>10</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -126,8 +126,8 @@
                                             <td>5</td>
                                             <td>AOL browser (AOL desktop)</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">6</td>
-                                            <td class="center">A</td>
+                                            <td>1</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -136,8 +136,8 @@
                                             <td>6</td>
                                             <td>Firefox 1.0</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">1.7</td>
-                                            <td class="center">A</td>
+                                            <td>2</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -146,8 +146,9 @@
                                             <td>7</td>
                                             <td>Firefox 1.5</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">1.8</td>
-                                            <td class="center">A</td>
+                                            <td>4</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -156,8 +157,8 @@
                                             <td>8</td>
                                             <td>Firefox 2.0</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">1.8</td>
-                                            <td class="center">A</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -166,8 +167,8 @@
                                             <td>9</td>
                                             <td>Firefox 3.0</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">1.9</td>
-                                            <td class="center">A</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
                                         </tr>
                                         <!-- // Table row END -->
 
@@ -176,8 +177,9 @@
                                             <td>10</td>
                                             <td>Camino 1.0</td>
                                             <td>2013/12/17 16:58</td>
-                                            <td class="center">1.8</td>
-                                            <td class="center">A</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+
                                         </tr>
                                         <!-- // Table row END -->
                                         </tbody>
@@ -245,7 +247,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('#self_upload').dataTable( {
-            "aaSorting": [[ 4, "desc" ]]
+            "aaSorting": [[ 4, "asc" ]]
         } );
     } );
 </script>
