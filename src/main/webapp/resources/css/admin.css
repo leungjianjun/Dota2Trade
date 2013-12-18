@@ -15,8 +15,11 @@
 
 .admin .row{
     margin-left:0;
-    height: 160px;
-    display:block;
+    height:80px;
+}
+
+.paper-config .row{
+    height:160px;
 }
 
 .form-control {
