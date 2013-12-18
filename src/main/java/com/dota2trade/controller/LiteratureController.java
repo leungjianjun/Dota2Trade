@@ -15,6 +15,7 @@ import com.dota2trade.security.SAuthentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -137,14 +138,18 @@ public class LiteratureController {
     /**修改文献基本信息页面*/
     @RequestMapping(value="/reviseLitera.html",method=RequestMethod.GET)
     public String reviseLiterature(@RequestParam("literatureid")int literatureid,ModelMap model){
-        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
+        Literature literature=literatureDao.getLiteratureById(literatureid);
+        SimpleDateFormat format=new SimpleDateFormat("MM/dd/yyyy");
+        String py=format.format(literature.getLiteratureMeta().getPublished_year());
+        model.addAttribute("published_year",py);
+        model.addAttribute("literature",literature);
         return "reviseLitera";
     }
 
     /**执行文献基本信息修改*/
     @RequestMapping(value="/doEditLiterature",method=RequestMethod.POST)
     public String doEditLiterature(
-           // @RequestParam("literatureid")int literatureid,
+           @RequestParam("literatureid")int literatureid,
            @RequestParam("author") String author,
            @RequestParam("published_year") Date published_year,
            @RequestParam("pages") String pages,

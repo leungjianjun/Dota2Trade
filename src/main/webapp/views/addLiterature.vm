@@ -92,7 +92,7 @@
                             <span class="btn btn-default btn-file">
                                 <span class="fileupload-new">选择文件</span>
                                 <span class="fileupload-exists">修改</span>
-                                <input type="file" name="paperAttachment"/>
+                                <input type="file" name="fileAttachment"/>
                             </span>
                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">删除</a>
                         </div>
@@ -115,6 +115,61 @@
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <label></label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="otherAttachment2"/>
+                            </span>
+                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label></label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="otherAttachment3"/>
+                            </span>
+                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label></label>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3" style="display: inline-table;">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileupload-new">选择文件</span>
+                                <span class="fileupload-exists">修改</span>
+                                <input type="file" name="otherAttachment4"/>
+                            </span>
+                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="submit">
                     <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">录入文献</button>
                     <button class="btn btn-block btn-primary"></button>
