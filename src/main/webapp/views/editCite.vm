@@ -26,7 +26,7 @@
         <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
         <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
         <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
-        <li class="active"><a class="modify" href=""><i></i><span>文献修改</span></a></li>
+        <li class="active"><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
         <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
     </ul>
     <div class="edit_right">
