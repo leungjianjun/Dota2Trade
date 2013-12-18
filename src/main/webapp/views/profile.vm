@@ -243,14 +243,59 @@
                        </div>
 
                        <ul class="nav nav-pills nav-stacked">
-                           <li><a href="profile.html"> <i class="icon-user"></i> 编辑个人信息</a></li>
-                           <li><a href="profile-edit.html"> <i class="icon-edit"></i> 编辑登录信息</a></li>
+                           <li><a href="#" onclick="show('edit-info',this)"> <i class="icon-user"></i> 编辑个人信息</a></li>
+                           <li><a href="#" onclick="show('edit-login',this)"> <i class="icon-edit"></i> 编辑登录信息</a></li>
                        </ul>
 
                    </section>
                </aside>
-               <div class="edit-info"></div>
-               <div class="edit-login"></div>
+               <div class="edit-info" id="edit-info" style="display:none;">
+                 <div class="edit-head">个人信息修改</div>
+                 <form class="info-form" action="">
+                   <div>
+                       <label>姓名：</label>
+                       <input type="text" value="梁建均" name="username" disabled="disabled"/>
+                   </div>
+                   <div>
+                       <label>邮箱：</label>
+                       <input type="text" value="梁建均" name="username" />
+                   </div>
+                   <div>
+                       <label>研究方向：</label>
+                       <input type="text" value="云计算" name="major" />
+                   </div>
+                   <div>
+                       <label>学位：</label>
+                       <input type="text" value="硕士研究生" name="level" />
+                   </div>
+                   <div class="submit">
+                         <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改</button>
+                         <button class="btn btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+                   </div>
+                 </form>
+               </div>
+               <div class="edit-info" id="edit-login" style="display:none;">
+                   <div class="edit-head">登录密码修改</div>
+                   <form class="info-form">
+                       <div>
+                           <label>旧密码：</label>
+                           <input type="password" value="123" name="oldpassword" />
+                       </div>
+                       <div>
+                           <label>新密码：</label>
+                           <input type="password"  name="newpassword" />
+                       </div>
+                       <div>
+                           <label>重复新密码：</label>
+                           <input type="password"  name="repeat-newpassword" />
+                       </div>
+                       <div class="submit">
+                           <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改</button>
+                           <button class="btn btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+                       </div>
+                   </form>
+
+               </div>
 
            </div>
 
@@ -280,6 +325,18 @@
 <script src="../resources/common/advanced-table/js/jquery.dataTables.js"></script>
 
 <script type="text/javascript">
+
+    function show(id,obj)
+    {
+        if($(obj).hasClass('active')){
+            $(obj).removeClass('active');
+            $('#'+id).css('display','none');
+        }else{
+            $(obj).addClass('active');
+            $('#'+id).css('display','block');
+        }
+    }
+
     /* Formating function for row details */
     function fnFormatDetails ( oTable, nTr )
     {
