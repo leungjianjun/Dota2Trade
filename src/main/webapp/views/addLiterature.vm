@@ -39,14 +39,14 @@
             <form method="POST" action="/doAddLiterature">
                 <div>
                     <label>文献类别</label>
-                    <select class="selectpicker span6" data-style="btn-default">
-                        <option>图书</option>
-                        <option>图书章节</option>
-                        <option>期刊</option>
-                        <option>会议</option>
-                        <option>学位论文</option>
-                        <option>技术报告</option>
-                        <option>在线资源</option>
+                    <select name="literaturetypeid" class="selectpicker span6" data-style="btn-default">
+                        <option value="1">图书</option>
+                        <option value="2">图书章节</option>
+                        <option value="3">期刊</option>
+                        <option value="4">会议</option>
+                        <option value="5">学位论文</option>
+                        <option value="6">技术报告</option>
+                        <option value="7">在线资源</option>
                     </select>
                 </div>
                 <div>
