@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 4.0.4
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2013 年 12 月 18 日 13:39
--- 服务器版本: 5.5.24-log
--- PHP 版本: 5.3.13
+-- 生成日期: 2013 年 12 月 18 日 14:47
+-- 服务器版本: 5.6.12-log
+-- PHP 版本: 5.4.16
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- 数据库: `manage_schema`
 --
+CREATE DATABASE IF NOT EXISTS `manage_schema` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `manage_schema`;
 
 -- --------------------------------------------------------
 
@@ -65,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `literature` (
   `literaturetypeid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- 转存表中的数据 `literature`
@@ -81,7 +83,8 @@ INSERT INTO `literature` (`id`, `creatorid`, `updaterid`, `status`, `literaturet
 (10, 7, 0, 0, 1),
 (11, 7, 0, 0, 2),
 (12, 7, 0, 0, 1),
-(13, 7, 0, 0, 1);
+(13, 7, 0, 0, 1),
+(14, 1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -114,7 +117,8 @@ INSERT INTO `literaturemeta` (`literatureid`, `title`, `literature_abstract`, `a
 (10, 'Re: 江泽民在国立中央大学读书反反复复', 'vbddfgh', 'jjkk', '2013-12-03', '规范的施工', 'http://docs.spring.io/spring/docs/3.1.4.RELEASE/javadoc-api/org/springframework/dao/DuplicateKeyException.html', '11'),
 (11, '迎新任美驻日大使肯尼迪', 'sgdgsdfgadgadfgadfgagagasdg', 'fgdsfg', '2013-12-04', 'fgasg收到法国大叔', 'wwwsdfsdaf', '113'),
 (12, 'è¿æ°ä»»ç¾é©»', 'hgfds', 'liyancode', '2013-12-03', 'sdg', 'www', '11'),
-(13, 'å®ä¹ ', 'gdg', '', '2013-12-04', 'åµåµ', 'wwwsdfsdaf', '113');
+(13, 'å®ä¹ ', 'gdg', '', '2013-12-04', 'åµåµ', 'wwwsdfsdaf', '113'),
+(14, '阿达', '看看', 'dsafsafdsa', '2013-12-03', '三等份', 'sdfa', '12');
 
 -- --------------------------------------------------------
 
@@ -139,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `literature_publisher` (
   `literatureid` int(11) NOT NULL,
   `publisherid` int(11) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- 转存表中的数据 `literature_publisher`
@@ -152,7 +156,8 @@ INSERT INTO `literature_publisher` (`id`, `literatureid`, `publisherid`) VALUES
 (8, 10, 109),
 (9, 11, 110),
 (10, 12, 111),
-(11, 13, 112);
+(11, 13, 112),
+(12, 14, 113);
 
 -- --------------------------------------------------------
 
@@ -165,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `publisher` (
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=113 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=114 ;
 
 --
 -- 转存表中的数据 `publisher`
@@ -176,8 +181,9 @@ INSERT INTO `publisher` (`id`, `name`) VALUES
 (108, '人民出版社'),
 (109, '南京大学出版社dd'),
 (110, '规范'),
-(111, '啊啊啊'),
-(112, '噢噢噢噢');
+(111, 'aaa'),
+(112, 'bbb'),
+(113, '地方大');
 
 -- --------------------------------------------------------
 
@@ -197,6 +203,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `account`, `password`) VALUES
+(1, 'test', 'test'),
+(2, 'admin', 'admin'),
 (7, 'liyancode', '123456');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
