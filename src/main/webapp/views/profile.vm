@@ -20,6 +20,7 @@
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/profile.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
 
 
@@ -32,7 +33,7 @@
            <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
            <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
            <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
-           <li><a class="modify" href=""><i></i><span>文献修改</span></a></li>
+           <li><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
            <li class="active"><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
        </ul>
        <div class="main-right">
@@ -65,7 +66,7 @@
                                                <!-- Table heading -->
                                                <thead>
                                                <tr>
-                                                   <th>ID</th>
+                                                   <th>SSN</th>
                                                    <th>文献名称</th>
                                                    <th>上传时间</th>
                                                    <th>评分</th>
@@ -164,20 +165,64 @@
                    <div class="widget widget-tabs widget-tabs-double-2">
                        <div class="widget-head">
                            <ul>
-                               <li class="active"><a class="glyphicons list" href="#tabDraft" data-toggle="tab"><span>评论草稿</span></a></li>
-                               <li><a class="glyphicons user" href="#tabComment" data-toggle="tab"><span>完成评论</span></a></li>
+                               <li class="active"><a class="glyphicons user" href="#tabComment" data-toggle="tab"><span>完成评论</span></a></li>
+                               <li ><a class="glyphicons list" href="#tabDraft" data-toggle="tab"><span>评论草稿</span></a></li>
+
                            </ul>
                        </div>
                        <div class="widget-body">
                            <div class="tab-content">
-                               <div id="tabDraft" class="tab-pane active widget-body-regular">
+                               <div id="tabDraft" class="tab-pane widget-body-regular">
+
+                                   <div class="adv-table">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-other">
+                                           <thead>
+                                           <tr>
+
+                                               <th>评论文献</th>
+                                               <th>评论草稿</th>
+                                               <th>操作</th>
+                                           </tr>
+                                           </thead>
+                                           <tbody>
+
+                                           <tr>
+
+                                               <td><a href="#">大教堂与集市</a></td>
+                                               <td>啦啦啦啦啦lalalalalalaallalalala</td>
+                                               <td class="op"><div><button class="btn  btn-primary" type="">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
+                                           </tr>
+                                           <tr>
+
+                                               <td><a href="#">人月神话</a></td>
+                                               <td>不错额</td>
+                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
+                                           </tr>
+                                           <tr>
+
+                                               <td><a href="#">编程珠玑</a></td>
+                                               <td>哈哈哈</td>
+                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
+                                           </tr>
+                                           <tr>
+
+                                               <td><a href="#">Thinking in Java</a></td>
+                                               <td>额。。。。</td>
+                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
+                                           </tr>
+
+                                           </tbody>
+                                       </table>
+
+                                   </div>
 
                                </div>
-                               <div id="tabComment" class="tab-pane widget-body-regular">
+                               <div id="tabComment" class="tab-pane active widget-body-regular">
                                    <div class="adv-table">
                                        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
                                            <thead>
                                            <tr>
+
                                                <th>评论文献</th>
                                                <th>评论时间</th>
                                                <th>操作</th>
@@ -186,24 +231,29 @@
                                            <tbody>
 
                                            <tr>
+
                                                <td><a href="#">大教堂与集市</a></td>
                                                <td>2012/12/18 10:00</td>
-                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                               <td class="op"><div><button class="btn  btn-primary" type="">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
                                            </tr>
                                            <tr>
+
                                                <td><a href="#">人月神话</a></td>
                                                <td>2012/12/18 11:00</td>
-                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
                                            </tr>
                                            <tr>
+
                                                <td><a href="#">编程珠玑</a></td>
                                                <td>2012/12/18 12:00</td>
-                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
                                            </tr>
                                            <tr>
+
                                                <td><a href="#">Thinking in Java</a></td>
                                                <td>2012/12/18 13:00</td>
-                                               <td class="op"><div><button>编辑</button><button>删除</button></div></td>
+                                               <td class="op"><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
+
                                            </tr>
 
                                            </tbody>
@@ -215,7 +265,6 @@
                            </div>
                        </div>
                    </div>
-               </div>
            </div>
            <div class="self-info">
 
@@ -242,5 +291,78 @@
 <script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
 <!-- Bootstrap Extended -->
 <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
+
+<!-- advanced-table-->
+<script src="../resources/common/advanced-table/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+    /* Formating function for row details */
+    function fnFormatDetails ( oTable, nTr )
+    {
+        var aData = oTable.fnGetData( nTr );
+        var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+        sOut += '<tr><td>评论对象:</td><td>'+aData[1]+' '+aData[2]+'</td></tr>';
+        sOut += '<tr><td>简要类型:</td><td>简要评价</td></tr>';
+        sOut += '<tr><td>评价内容:</td><td>And any further details here (images etc)</td></tr>';
+        sOut += '</table>';
+
+        return sOut;
+    }
+
+    $(document).ready(function() {
+        /*
+         * Insert a 'details' column to the table
+         */
+        var nCloneTh = document.createElement( 'th' );
+        var nCloneTd = document.createElement( 'td' );
+        nCloneTd.innerHTML = '<img src="../resources/common/advanced-table/support/details_open.png">';
+        nCloneTd.className = "center";
+
+        $('#hidden-table-info thead tr').each( function () {
+            this.insertBefore( nCloneTh, this.childNodes[0] );
+        } );
+
+        $('#hidden-table-info tbody tr').each( function () {
+            this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+        } );
+
+        /*
+         * Initialse DataTables, with no sorting on the 'details' column
+         */
+        var oTable = $('#hidden-table-info').dataTable( {
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }
+            ],
+            "aaSorting": [[1, 'asc']]
+        });
+
+        /* Add event listener for opening and closing details
+         * Note that the indicator for showing which row is open is not controlled by DataTables,
+         * rather it is done here
+         */
+        $('#hidden-table-info tbody td img').live('click', function () {
+            var nTr = $(this).parents('tr')[0];
+            if ( oTable.fnIsOpen(nTr) )
+            {
+                /* This row is already open - close it */
+                this.src = "../resources/common/advanced-table/support/details_open.png";
+                oTable.fnClose( nTr );
+            }
+            else
+            {
+                /* Open this row */
+                this.src = "../resources/common/advanced-table/support/details_close.png";
+                oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+            }
+        } );
+
+
+
+
+    } );
+
+
+</script>
+
 
 </body>

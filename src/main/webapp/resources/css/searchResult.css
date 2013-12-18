@@ -1,0 +1,17 @@
+.result_right{float: left;margin-left: 50px;width: 56%;}
+.result_right .title{
+    margin: 0px 0px 22px;
+    font-weight: 600;
+    color: rgb(124, 124, 124);
+    line-height: 30px;
+    font-size: 26px;
+    border-bottom: 2px solid rgb(216, 216, 216);
+}
+.result_right .title a{float: right;font-size: 14px;color: #8ec657;}
+.result_right .result_main{margin-bottom: 25px;}
+.result_right .result_main li{margin-bottom: 10px;}
+.result_right .result_main .name a{color: #8ec657;font-size: 14px;text-decoration: none;}
+.result_right .result_main .content{color: #2b2b2b;}
+.result_right .result_main .name{margin-bottom: 5px;}
+.result_right .result_main .total{margin-bottom: 10px;}
+.result_right .result_main .info span{margin-right: 10px;}

@@ -1,0 +1,254 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>修改文献-已有文献</title>
+    <!-- Bootstrap -->
+    <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/css/responsive.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+    <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- JQueryUI -->
+    <link href="../resources/common/theme/scripts/plugins/system/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+    <!-- Main Theme Stylesheet :: CSS -->
+    <link href="../resources/common/theme/css/style-light.css?1369753442" rel="stylesheet" />
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/listLiterature.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
+</head>
+
+<body>
+#include("header.vm")
+    <div class="container0 clearfix">
+        <ul class="menu">
+            <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
+            <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
+            <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
+            <li class="active"><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
+            <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
+        </ul>
+        <div class="main-right">
+            <div class="title">已录入文献</div>
+            <div class="widget widget-tabs widget-tabs-double-2 list-self">
+                <div class="widget-head">
+                    <ul>
+                        <li class="active"><a class="glyphicons list" href="#tabBook" data-toggle="tab"><span>图&nbsp&nbsp书</span></a></li>
+                        <li><a class="glyphicons user" href="#tabChp" data-toggle="tab"><span>图书章节</span></a></li>
+                        <li><a class="glyphicons credit_card" href="#tabMag" data-toggle="tab"><span>期&nbsp&nbsp刊</span></a></li>
+                        <li><a class="glyphicons cogwheel" href="#tabMeeting" data-toggle="tab"><span>会&nbsp&nbsp议</span></a></li>
+                        <li><a class="glyphicons snowflake" href="#tabThesis" data-toggle="tab"><span>学位论文</span></a></li>
+                        <li><a class="glyphicons snowflake" href="#tabLecture" data-toggle="tab"><span>技术报告</span></a></li>
+                        <li><a class="glyphicons snowflake" href="#tabOnline" data-toggle="tab"><span>在线资源</span></a></li>
+                    </ul>
+                </div>
+                <div class="widget-body">
+                    <div class="tab-content">
+                        <div id="tabBook" class="tab-pane active widget-body-regular">
+                            <!-- Widget -->
+                            <div class="adv-table">
+
+                                    <!-- Table -->
+                                    <table class="display table table-bordered table-striped" id="self_upload">
+
+                                        <!-- Table heading -->
+                                        <thead>
+                                        <tr>
+                                            <th>SSN</th>
+                                            <th>文献名称</th>
+                                            <th>上传时间</th>
+                                            <th>评分</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <!-- // Table heading END -->
+
+                                        <!-- Table body -->
+                                        <tbody>
+
+                                        <!-- Table row -->
+                                        <tr class="gradeX">
+                                            <td>1</td>
+                                            <td><a href="#">大教堂与集市</a></td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeC">
+                                            <td>2</td>
+                                            <td>Internet Explorer 5.0lalalalalhhahhahahahahahahahjdkadfjakldfjakldjf</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>3</td>
+                                            <td>Internet Explorer 5.5</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>7</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>4</td>
+                                            <td>Internet Explorer 6</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>9</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>5</td>
+                                            <td>Internet Explorer 7</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>10</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>5</td>
+                                            <td>AOL browser (AOL desktop)</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>1</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>6</td>
+                                            <td>Firefox 1.0</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>2</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>7</td>
+                                            <td>Firefox 1.5</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>4</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>8</td>
+                                            <td>Firefox 2.0</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>9</td>
+                                            <td>Firefox 3.0</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                        </tr>
+                                        <!-- // Table row END -->
+
+                                        <!-- Table row -->
+                                        <tr class="gradeA">
+                                            <td>10</td>
+                                            <td>Camino 1.0</td>
+                                            <td>2013/12/17 16:58</td>
+                                            <td>6</td>
+                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+
+                                        </tr>
+                                        <!-- // Table row END -->
+                                        </tbody>
+                                        <!-- // Table body END -->
+
+                                    </table>
+                                    <!-- // Table END -->
+
+
+                            </div>
+                            <!-- // Widget END -->
+                        </div>
+                        <div id="tabChp" class="tab-pane widget-body-regular">
+                            <h5>Account tab content</h5>
+                            <p>Donec at nunc dui. Integer eget sem sit amet arcu ...</p>
+                        </div>
+                        <div id="tabMag" class="tab-pane widget-body-regular">
+                            <h5>Payments tab content</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ...</p>
+                        </div>
+                        <div id="tabMeeting" class="tab-pane widget-body-regular">
+                            <h5>Support tab content</h5>
+                            <p>Integer porttitor, enim eu egestas ullamcorper ...</p>
+                        </div>
+                        <div id="tabThesis" class="tab-pane widget-body-regular">
+                            <h5>Features tab content</h5>
+                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
+                        </div>
+                        <div id="tabLecture" class="tab-pane widget-body-regular">
+                            <h5>hello</h5>
+                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
+                        </div>
+                        <div id="tabOnline" class="tab-pane widget-body-regular">
+                            <h5>lalalalalalallalalaallalalala</h5>
+                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<!--JS-->
+
+<script src="../resources/js/jquery-1.8.3.min.js"></script>
+<script src="../resources/common/theme/scripts/demo/common.js"></script>
+<script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
+
+<!-- JQueryUI -->
+<script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- Bootstrap -->
+<script src="../resources/common/bootstrap/js/bootstrap.min.js"></script>
+<!-- Common Demo Script -->
+<script src="../resources/common/theme/scripts/demo/common.js?1369753442"></script>
+
+<!-- Holder Plugin -->
+<script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
+<!-- Bootstrap Extended -->
+<script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
+
+<!-- advanced-table-->
+<script src="../resources/common/advanced-table/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#self_upload').dataTable( {
+            "aaSorting": [[ 4, "asc" ]]
+        } );
+    } );
+</script>
+</body>

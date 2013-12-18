@@ -1,0 +1,166 @@
+<!doctype html>
+<head xmlns="http://www.w3.org/1999/html">
+    <meta charset="utf-8">
+    <title>搜索结果</title>
+    <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
+    <link rel="stylesheet" media="screen" href="../resources/css/literatureDetail.css"></link>
+    <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="../resources/common/theme/css/style-light.css?1369753442" rel="stylesheet" />
+    <link href="../resources/common/theme/scripts/plugins/forms/pixelmatrix-uniform/css/uniform.default.css" rel="stylesheet" />
+</head>
+<body>
+    #include("header.vm")
+<div class="container0 clearfix">
+    <ul class="menu">
+        <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
+        <li class="active"><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
+        <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
+        <li><a class="modify" href=""><i></i><span>文献修改</span></a></li>
+        <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
+    </ul>
+    <div class="detail_right">
+        <div class="title">文献详情<a href="./searchResult.html">返回</a></div>
+        <div class="main">
+            <div class="left">
+                <ul>
+                    <li class="t">云计算安全研究</li>
+                    <li class="type">
+                        <span>类别：论文</span>
+                        <span>发行时间：2011－11</span>
+                    </li>
+                    <li class="author">作者：冯登国， 张敏， 张妍， 徐震</li>
+                    <li class="abstract">
+                        ... 由于云计算代表未来信息技术领域的核心竞争力,当前世界各国政府都十分重视本国云计算的发展,
+                        力争 在未来信息技术的制高点占据一席之地.例如,2009 年9 月,美国总统奥巴马宣布将执行云计算
+                        政策,希望借助应 用虚拟化来压缩美国政府的经济支出;韩国政府计划向云计算领域投资6 ...
+                    </li>
+                    <li class="keyword">
+                        关键字：云计算 信息技术
+                    </li>
+                </ul>
+                <div class="comment">
+                    <div class="t">我来评论</div>
+                    <div class="widget widget-tabs widget-tabs-double-2">
+                        <div class="widget-head">
+                            <ul>
+                                <li class="active"><a class="glyphicons user" href="#tabSimple" data-toggle="tab"><span>简单评论</span></a></li>
+                                <li ><a class="glyphicons list" href="#tabDetail" data-toggle="tab"><span>详细评论</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="widget-body">
+                            <div class="tab-content">
+                                <div id="tabSimple" class="active tab-pane widget-body-regular">
+                                    <form name="" action="" method="get">
+                                        <textarea cols="2" rows="3" style="width: 362px;"></textarea>
+                                        <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
+                                    </form>
+                                </div>
+                                <div id="tabDetail" class="tab-pane widget-body-regular">
+                                    <form name="" action="" method="get">
+                                        <div>
+                                            <label>解决问题</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>主要思路</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>实验结果</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>贡献</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <div>
+                                            <label>改进</label>
+                                            <textarea cols="3" rows="2"></textarea>
+                                        </div>
+                                        <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <ul class="row1">
+                    <li>由<a href="#">梁建均</a>上传于2013－12－18</li>
+                    <li>由<a href="#">李琰</a>最后修改于2013－12－18</li>
+                    <li>平均得分：9.2（15人评价）</li>
+                    <li class="download clearfix">
+                        <div class="l">附件下载:</div>
+                        <form name="" method="get" action="">
+                            <div class="r">
+                                <div class="widget-body uniformjs">
+                                    <span class="checkbox">
+                                        <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                        论文
+                                    </span>
+                                    <span class="checkbox">
+                                        <input type="checkbox" class="checkbox" value="1" />
+                                        其他
+                                    </span>
+                                </div>
+                                <button class="btn btn-primary" type="submit" style="display: inline-block;">下载</button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+                <div class="cite_list">
+                    <div class="list_title"><span></span>本文引用的文献（8）<a class="more" href="">更多>></a></div>
+                    <ul>
+                        <li>
+                            <a href="#">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
+                        </li>
+                        <li>
+                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
+                        </li>
+                        <li>
+                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
+                        </li>
+                        <li>
+                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="cite_list">
+                    <div class="list_title"><span></span>引用本文的文献（7）<a class="more" href="">更多>></a></div>
+                    <ul>
+                        <li>
+                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
+                        </li>
+                        <li>
+                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
+                        </li>
+                        <li>
+                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
+                        </li>
+                        <li>
+                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
+                        </li>
+                    </ul>
+            </div>
+    </div>
+</div>
+    <!-- JQuery -->
+    <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
+
+    <!-- JQueryUI -->
+    <script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../resources/common/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Common Demo Script -->
+    <script src="../resources/common/theme/scripts/demo/common.js?1369753442"></script>
+
+    <!-- Holder Plugin -->
+    <script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
+    <!-- Bootstrap Extended -->
+    <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
+    <!-- Uniform Forms Plugin -->
+    <script src="../resources/common/theme/scripts/plugins/forms/pixelmatrix-uniform/jquery.uniform.min.js"></script>
+</body>

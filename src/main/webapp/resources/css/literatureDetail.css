@@ -1,0 +1,34 @@
+.detail_right{float: left;margin-left: 50px;width: 68%;}
+.detail_right .title{
+    margin: 0px 0px 22px;
+    font-weight: 600;
+    color: rgb(124, 124, 124);
+    line-height: 30px;
+    font-size: 26px;
+    border-bottom: 2px solid rgb(216, 216, 216);
+}
+.detail_right .title a{float: right;font-size: 14px;color: #8ec657;}
+.detail_right .main .t{font-size: 14px;color: #8ec657;}
+.detail_right .main .left{float: left;width: 400px;}
+.detail_right .main .left li{margin: 3px 0;}
+.detail_right .main .right{float: left;margin-left: 32px;margin-top: 21px;}
+.detail_right .main .right .row1 li{margin: 3px 0;}
+.detail_right .main .right .row1 .download .l{float: left;width: 58px;}
+.detail_right .main .right .row1 .download .r{float: left;}
+.detail_right .main .right .row1 .download .r span{display: block;}
+.detail_right .main .right .row1 .download .btn.btn-primary {padding: 2px 18px;margin-top: 5px;}
+.detail_right .main .right{text-align: left;}
+.detail_right .main .right .cite_list{margin-top: 20px;}
+.detail_right .list_title {font-size: 14px;margin: 5px 0;}
+.detail_right .list_title .more{margin-left: 100px;font-size: 12px;}
+.detail_right .list_title span{float:left;width:16px;height:18px;background: url("images/cite_logo.png") 0 0 no-repeat;}
+.detail_right .cite_list ul{margin-left: 16px;}
+.left .widget.widget-tabs-double-2 > .widget-head {
+    height:40px;
+}
+
+.left .widget.widget-tabs-double-2 > .widget-head ul li a span {
+    line-height: 40px;
+}
+.left textarea,.left .span12{width: 262px;}
+.left label{display: inline-block;width: 90px;}
