@@ -50,4 +50,11 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
             return users.get(0);
         }
     }
+
+    @Override
+    public int getIdByUserAccount(String account) {
+        String sql="SELECT id FROM user WHERE account='"+account+"'";
+
+        return this.getJdbcTemplate().queryForInt(sql);
+    }
 }
