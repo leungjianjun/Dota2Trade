@@ -94,13 +94,13 @@
                                 <span class="fileupload-exists">修改</span>
                                 <input type="file" name="fileAttachment"/>
                             </span>
-                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">删除</a>
+                            <a href="javascript:;" class="btn fileupload-exists" data-dismiss="fileupload">删除</a>
                         </div>
                     </div>
                 </div>
                 <div>
                     <label>其他附件</label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="fileupload fileupload-new" id="fileupload-type1" data-provides="fileupload" style="display:none">
                         <div class="input-append">
                             <div class="uneditable-input span3" style="display: inline-table;">
                                 <i class="icon-file fileupload-exists"></i>
@@ -111,14 +111,14 @@
                                 <span class="fileupload-exists">修改</span>
                                 <input type="file" name="otherAttachment1"/>
                             </span>
-                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                         </div>
                     </div>
                 </div>
 
                 <div>
                     <label></label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type2" style="display:none">
                         <div class="input-append">
                             <div class="uneditable-input span3" style="display: inline-table;">
                                 <i class="icon-file fileupload-exists"></i>
@@ -129,14 +129,14 @@
                                 <span class="fileupload-exists">修改</span>
                                 <input type="file" name="otherAttachment2"/>
                             </span>
-                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                         </div>
                     </div>
                 </div>
 
                 <div>
                     <label></label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type3" style="display:none">
                         <div class="input-append">
                             <div class="uneditable-input span3" style="display: inline-table;">
                                 <i class="icon-file fileupload-exists"></i>
@@ -147,14 +147,14 @@
                                 <span class="fileupload-exists">修改</span>
                                 <input type="file" name="otherAttachment3"/>
                             </span>
-                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                         </div>
                     </div>
                 </div>
 
                 <div>
                     <label></label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="fileupload fileupload-new" data-provides="fileupload" style="display:none" id="fileupload-type4">
                         <div class="input-append">
                             <div class="uneditable-input span3" style="display: inline-table;">
                                 <i class="icon-file fileupload-exists"></i>
@@ -165,15 +165,17 @@
                                 <span class="fileupload-exists">修改</span>
                                 <input type="file" name="otherAttachment4"/>
                             </span>
-                            <a href="#" class="btn" data-dismiss="fileupload">删除</a>
+                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                         </div>
                     </div>
                 </div>
 
+                </br>
+                </br>
                 <div class="submit">
                     <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">录入文献</button>
-                    <button class="btn btn-block btn-primary"></button>
-                    <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+                    <button class="btn btn-block btn-primary" id="add-attachment" type="button" style="display: inline-block;">添加附件</button>
+                    <button class="btn btn-block btn-primary" style="display: inline-block;">取消</button>
                 </div>
             </form>
         </div>
@@ -192,14 +194,7 @@
         <span class="btn btn-default" data-layout="centerLeft" data-type="primary" data-toggle="notyfy" onclick="hidehint();">取消</span>
     </div>
 </div>
-<script>
-    function showhint(){
-        $("#widget").show();
-    }
-    function hidehint(){
-        $("#widget").hide();
-    }
-</script>
+
 <!-- JQuery -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
 
@@ -218,5 +213,39 @@
 <!-- DateTimePicker Plugin -->
 <script src="../resources/common/theme/scripts/plugins/forms/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
+<script>
+    function showhint(){
+        $("#widget").show();
+    }
+    function hidehint(){
+        $("#widget").hide();
+    }
+    $(document).ready(function(){
+        $(".fake-delete").click(function(){
+            $(this).parent().parent().hide();
+        })
+        $("#add-attachment").click(function(){
+            if(!$("#fileupload-type1").is(":visible")){
+                $("#fileupload-type1").show();
+                return;
+            }
+
+            if(!$("#fileupload-type2").is(":visible")){
+                $("#fileupload-type2").show();
+                return;
+            }
+
+            if(!$("#fileupload-type3").is(":visible")){
+                $("#fileupload-type3").show();
+                return;
+            }
+
+            if(!$("#fileupload-type4").is(":visible")){
+                $("#fileupload-type4").show();
+                return;
+            }
+        })
+    })
+</script>
 <script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
 </body>
