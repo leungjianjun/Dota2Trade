@@ -5,15 +5,16 @@ import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.Literature;
 import com.dota2trade.model.LiteratureMeta;
 import com.dota2trade.model.Publisher;
+import com.dota2trade.util.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import com.dota2trade.security.SAuthentication;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -51,16 +52,40 @@ public class LiteratureController {
             @RequestParam("key_words") String key_words,
             @RequestParam("publisher_name") String publisher_name,
             @RequestParam("link") String link,
+            @RequestParam("fileAttachment") MultipartFile fileAttachment,
+            @RequestParam("otherAttachment1") MultipartFile otherAttachment1,
+            @RequestParam("otherAttachment2") MultipartFile otherAttachment2,
+            @RequestParam("otherAttachment3") MultipartFile otherAttachment3,
+            @RequestParam("otherAttachment4") MultipartFile otherAttachment4,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model
-    ){
+    ) throws IOException {
+        String paperFileName = System.currentTimeMillis()+fileAttachment.getOriginalFilename();
+        FileUploadHelper.uploadFile(fileAttachment,paperFileName);
+
+        if (!otherAttachment1.isEmpty()){
+            String otherFile1Name = System.currentTimeMillis()+otherAttachment1.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name);
+        }
+
+        if (!otherAttachment2.isEmpty()){
+            String otherFile2Name = System.currentTimeMillis()+otherAttachment2.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name);
+        }
+
+        if (!otherAttachment3.isEmpty()){
+            String otherFile3Name = System.currentTimeMillis()+otherAttachment3.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name);
+        }
+
+        if (!otherAttachment4.isEmpty()){
+            String otherFile4Name = System.currentTimeMillis()+otherAttachment4.getOriginalFilename();
+            FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name);
+        }
+
         LiteratureMeta literatureMeta=new LiteratureMeta();
         literatureMeta.setTitle(title);
         literatureMeta.setAuthor(author);
-        /*SimpleDateFormat formatter;
-        formatter = new SimpleDateFormat ("yyyy-MM-dd");
-        formatter.format(published_year);
-        System.out.println("date:" + published_year);*/
         literatureMeta.setPublished_year(published_year);
         literatureMeta.setPages(pages);
         literatureMeta.setLiterature_abstract(literature_abstract);
@@ -112,20 +137,14 @@ public class LiteratureController {
     /**修改文献基本信息页面*/
     @RequestMapping(value="/reviseLitera.html",method=RequestMethod.GET)
     public String reviseLiterature(@RequestParam("literatureid")int literatureid,ModelMap model){
-
-        Literature literature=literatureDao.getLiteratureById(literatureid);
-        SimpleDateFormat formatter;
-        formatter = new SimpleDateFormat ("MM/dd/yyyy");
-        String py=formatter.format(literature.getLiteratureMeta().getPublished_year());
-        model.addAttribute("literature",literature);
-        model.addAttribute("published_year",py);
+        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         return "reviseLitera";
     }
 
     /**执行文献基本信息修改*/
     @RequestMapping(value="/doEditLiterature",method=RequestMethod.POST)
     public String doEditLiterature(
-           @RequestParam("literatureid")int literatureid,
+           // @RequestParam("literatureid")int literatureid,
            @RequestParam("author") String author,
            @RequestParam("published_year") Date published_year,
            @RequestParam("pages") String pages,
@@ -135,29 +154,7 @@ public class LiteratureController {
            @RequestParam("link") String link,
            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model){
-        LiteratureMeta literatureMeta=new LiteratureMeta();
-        //literatureMeta.setTitle(title);
-        literatureMeta.setAuthor(author);
-        literatureMeta.setPublished_year(published_year);
-        literatureMeta.setPages(pages);
-        literatureMeta.setLiterature_abstract(literature_abstract);
-        literatureMeta.setKey_words(key_words);
-        literatureMeta.setLink(link);
 
-
-        Publisher publisher=new Publisher();
-        publisher.setName(publisher_name);
-
-        Literature literature=new Literature();
-        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
-        literature.setCreatorid(userid);
-        literature.setUpdaterid(userid);
-        literature.setStatus(0);
-       // literature.setLiteraturetypeid(literaturetypeid);
-        literature.setLiteratureMeta(literatureMeta);
-        literature.setPublisher(publisher);
-
-        literatureDao.updateLiterature(literature);
        // model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         return "listLiterature";
@@ -178,8 +175,6 @@ public class LiteratureController {
     /**文献修改*/
     @RequestMapping(value="/listLiterature.html", method= RequestMethod.GET)
     public String login(Model model){
-       // List<LiteratureMeta> literatureMetaList=literatureDao.getAllLiteratureMeta();
-
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         return "listLiterature";
     }
