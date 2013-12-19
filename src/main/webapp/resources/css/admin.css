@@ -1,1 +1,68 @@
-.admin .op .btn{margin-left: 72px;padding: 3px 19px;}
+.admin .btn{margin-left: 72px;padding: 3px 19px;vertical-align: top;}
+
+.paper-config{
+    width:521px;
+}
+
+.add-user{
+    margin-bottom: 20px;
+}
+
+.admin .col-lg-6{
+    float:left;
+    width:50%;
+}
+
+.admin .row{
+    margin-left:0;
+    height:80px;
+}
+
+.paper-config .row{
+    height:160px;
+}
+
+.form-control {
+    display: block;
+    width: 90%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555;
+    vertical-align: middle;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+small, .small {
+    font-size: 85%;
+}
+
+.admin .add-div{
+
+}
+.admin .add-div input{
+    width:342px;
+}
+
+.admin label{
+    width:120px;
+}
+
+.admin .checkbox-group{
+    display:block;
+    margin-top:35px;
+    padding-bottom:10px;
+    width:356px;
+    border:#e2e2e2 solid 1px;
+}
+
+.admin .checkbox-group .checkbox,.admin .checkbox-group span{
+    margin-right:18px;
+}
