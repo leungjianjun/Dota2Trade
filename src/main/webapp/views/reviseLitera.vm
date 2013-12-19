@@ -38,12 +38,35 @@
             <form method="POST" action="/doEditLiterature">
                 <div class="unable-revise">
                     <div style="display: none"><input type="text" name="literatureid" value="$literature.id"></div>
+                    <div class="doc-type">
+
+                        #if($literature.literaturetypeid==1)
+                            图书
+                        #end
+                        #if($literature.literaturetypeid==2)
+                            图书章节
+                        #end
+                        #if($literature.literaturetypeid==3)
+                            期刊
+                        #end
+                        #if($literature.literaturetypeid==4)
+                            会议
+                        #end
+                        #if($literature.literaturetypeid==5)
+                            学位论文
+                        #end
+                        #if($literature.literaturetypeid==6)
+                            技术报告
+                        #end
+                        #if($literature.literaturetypeid==7)
+                            在线资源
+                        #end
+                        :
+                    </div>
                     <div class="doc-title">
                         $literature.literatureMeta.title
                     </div>
-                    <div class="doc-type">
-                        论文
-                    </div>
+
                 </div>
                 <div>
                     <label>作者</label>
