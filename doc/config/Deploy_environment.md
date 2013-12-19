@@ -8,7 +8,7 @@
 
 ###2 安装WAMP配置数据库
 - 到这里下载wamp http://wampserver.com/ 并且安装
-- 运行，并且打开phpmyadmin
+- 运行，并且打开phpmyadmin，设置用户名和密码都为root
 - 直接把doc/data文件按里面的sql文件导入数据库
 
 ###3 运行jar

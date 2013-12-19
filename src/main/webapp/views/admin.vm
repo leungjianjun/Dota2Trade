@@ -1,7 +1,7 @@
 <!doctype html>
 <head>
     <meta charset="utf-8">
-    <title>修改文献-已有文献</title>
+    <title>管理员</title>
     <!-- Bootstrap -->
     <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="../resources/common/bootstrap/css/responsive.css" rel="stylesheet" />
@@ -18,7 +18,6 @@
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
-    <link rel="stylesheet" media="screen" href="../resources/css/listLiterature.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/admin.css">
@@ -29,20 +28,30 @@
 <div class="container0 clearfix">
     <ul class="menu">
         <li><a class="group" href="/admin.html"><i></i><span>用户管理</span></a></li>
-        <li><a class="search" href="#"><i></i><span>文献配置</span></a></li>
+        <li><a class="search" href="/paperConfig.html"><i></i><span>文献配置</span></a></li>
     </ul>
     <div class="main-right admin">
         <div class="title">用户列表</div>
-            <div class="adv-table">
+            <div class="adv-table editable-table">
+                <div class="add-user">
+                    <div class="btn-group">
+                        <button id="editable-sample_new" class="btn green">
+                            添加用户 <i class="icon-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="space15"></div>
                 <!-- Table -->
-                <table class="display table table-bordered table-striped" id="self_upload">
+                <table class="table table-striped table-hover table-bordered" id="editable-sample">
                     <!-- Table heading -->
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>姓名</th>
+                            <th>用户名</th>
+                            <th>密码</th>
                             <th>Email</th>
-                            <th>操作</th>
+                            <th>修改</th>
+                            <th>删除</th>
                         </tr>
                     </thead>
                     <!-- // Table heading END -->
@@ -50,38 +59,46 @@
                     <!-- Table body -->
                     <tbody>
                         <!-- Table row -->
-                        <tr class="gradeX">
+                        <tr class="">
                             <td>1</td>
-                            <td><a href="#">梁建均</a></td>
+                            <td>梁建均</td>
+                            <td>123</td>
                             <td>1234@gmail.com</td>
-                            <td><div class="op"><button class="btn  btn-primary">编辑</button></div></td>
+                            <td><a class="edit" href="javascript:;">修改</a></td>
+                            <td><a class="delete" href="javascript:;">删除</a></td>
                         </tr>
                         <!-- // Table row END -->
 
                         <!-- Table row -->
-                        <tr class="gradeX">
+                        <tr class="">
                             <td>2</td>
-                            <td><a href="#">戴娟</a></td>
+                            <td>戴娟</td>
+                            <td>123</td>
                             <td>1234@gmail.com</td>
-                            <td><div class="op"><button class="btn  btn-primary">编辑</button></div></td>
+                            <td><a class="edit" href="javascript:;">修改</a></td>
+                            <td><a class="delete" href="javascript:;">删除</a></td>
                         </tr>
                         <!-- // Table row END -->
 
                         <!-- Table row -->
-                        <tr class="gradeX">
+                        <tr class="">
                             <td>3</td>
-                            <td><a href="#">丁玲娟</a></td>
+                            <td>丁玲娟</td>
+                            <td>123</td>
                             <td>1234@gmail.com</td>
-                            <td><div class="op"><button class="btn  btn-primary">编辑</button></div></td>
+                            <td><a class="edit" href="javascript:;">修改</a></td>
+                            <td><a class="delete" href="javascript:;">删除</a></td>
                         </tr>
                         <!-- // Table row END -->
 
                         <!-- Table row -->
-                        <tr class="gradeX">
+                        <tr class="">
                             <td>4</td>
-                            <td><a href="#">李琰</a></td>
+                            <td>李琰</td>
+                            <td>123</td>
                             <td>1234@gmail.com</td>
-                            <td><div class="op"><button class="btn  btn-primary">编辑</button></div></td>
+                            <td><a class="edit" href="javascript:;">修改</a></td>
+                            <td><a class="delete" href="javascript:;">删除</a></td>
                         </tr>
                         <!-- // Table row END -->
                         </tbody>
@@ -90,6 +107,11 @@
                     <!-- // Table END -->
                 </div>
                 <!-- // Widget END -->
+
+
+
+
+
             </div>
         </div>
 <!--JS-->
@@ -112,13 +134,16 @@
 <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
 
 <!-- advanced-table-->
+<script src="../resources/common/advanced-table/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="../resources/common/advanced-table/js/jquery.dataTables.js"></script>
+<script src="../resources/common/advanced-table/js/DT_bootstrap.js"></script>
+
+<script src="../resources/js/editable-table.js"></script>
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        $('#self_upload').dataTable( {
-            "aaSorting": [[ 4, "asc" ]]
-        } );
+        EditableTable.init();
     } );
+
 </script>
 </body>

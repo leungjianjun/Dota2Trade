@@ -29,7 +29,6 @@
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
-    <link rel="stylesheet" media="screen" href="../resources/css/listLiterature.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/admin.css">
@@ -40,25 +39,80 @@
 <div class="container0 clearfix">
     <ul class="menu">
         <li><a class="group" href="/admin.html"><i></i><span>用户管理</span></a></li>
-        <li><a class="search" href="#"><i></i><span>文献配置</span></a></li>
+        <li><a class="search" href="/paperConfig.html"><i></i><span>文献配置</span></a></li>
     </ul>
-    <div class="main-right admin">
+    <div class="main-right admin paper-config">
         <div class="title">文献配置</div>
         <div class="main">
-            <label>文献种类</label>
-            <select class="selectpicker span6" data-style="btn-default" style="display: none;">
-                <option>图书</option>
-                <option>图书章节</option>
-                <option>期刊</option>
-                <option>会议</option>
-                <option>学位论文</option>
-                <option>技术报告</option>
-                <option>在线资源</option>
-            </select>
-            <button class="btn btn-block btn-primary" sytle="">添加</button>
-            <label>信息配置</label>
-            <label>详细评价配置</label>
-            <label>引用关系配置</label>
+            <div class="row">
+                <label>文献种类：</label>
+                <select class="selectpicker span6" data-style="btn-default" style="display: none;">
+                    <option>图书</option>
+                    <option>图书章节</option>
+                    <option>期刊</option>
+                    <option>会议</option>
+                    <option>学位论文</option>
+                    <option>技术报告</option>
+                    <option>在线资源</option>
+                </select>
+                <div class="add-div">
+                    <input type="text" placeholder="多个类型用 ‘;’ 隔开" >
+                    <button class="btn btn-primary">添加</button>
+                </div>
+
+            </div>
+            <div  class="row">
+                <label>信息配置：</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" checked="true" class="checkbox"><span>标题</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>作者</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>出版年份</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>页码</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>摘要</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>关键字</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>出版社</span>
+                    <input type="checkbox"  class="checkbox"><span>在线地址</span>
+                </div>
+                <div class="add-div">
+                    <input type="text" placeholder="多个类型用 ‘;’ 隔开" >
+                    <button class="btn btn-primary">添加</button>
+                </div>
+            </div>
+            <div  class="row">
+                <label>详细评价配置：</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" checked="true" class="checkbox"><span>内容</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>来源</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>出版年份</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>页码</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>摘要</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>关键字</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>出版社</span>
+                    <input type="checkbox"  class="checkbox"><span>在线地址</span>
+                </div>
+                <div class="add-div">
+                    <input type="text" placeholder="多个类型用 ‘;’ 隔开" >
+                    <button class="btn btn-primary">添加</button>
+                </div>
+            </div>
+            <div  class="row">
+                <label>引用关系配置：</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" checked="true" class="checkbox"><span>提及</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>关联</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>出版年份</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>页码</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>摘要</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>关键字</span>
+                    <input type="checkbox" checked="true" class="checkbox"><span>出版社</span>
+                    <input type="checkbox"  class="checkbox"><span>在线地址</span>
+                </div>
+                <div class="add-div">
+                    <input type="text" placeholder="多个类型用 ‘;’ 隔开" >
+                    <button class="btn btn-primary">添加</button>
+                </div>
+            </div>
+
         </div>
 
     </div>

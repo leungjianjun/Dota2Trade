@@ -76,10 +76,20 @@
                 <div class="exist-attachments">
                     <label>已有附件</label>
                     <div>
-                        <input type="checkbox" checked="true" disabled="disabled" class="checkbox"><span>论文</span>
+                     #foreach($attachment in $literature.attachmentList)
+                         #if($attachment.type==0)
+                         <input type="checkbox" checked="true" disabled="disabled" class="checkbox"><span>论文:$attachment.name</span>
+                         <br>
+                         #end
+                         #if($attachment.type==1)
+                         <input type="checkbox" checked="true" class="checkbox"><span>其他:$attachment.name</span>
+                         #end
+                     #end
+                      #* <input type="checkbox" checked="true" disabled="disabled" class="checkbox"><span>论文</span>
                         <input type="checkbox" checked="true" class="checkbox"><span>其他一</span>
                         <input type="checkbox" checked="true" class="checkbox"><span>其他二</span>
                         <input type="checkbox" checked="true" class="checkbox"><span>其他三</span>
+                        *#
                     </div>
                 </div>
                 <div>

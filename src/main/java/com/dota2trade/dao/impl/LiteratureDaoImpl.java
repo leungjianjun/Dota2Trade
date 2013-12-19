@@ -59,21 +59,21 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                     //添加文献-出版社关系信息
                     boolean addLitPubResult=this.addLiteraturePublisher(keyid,publisherId);
                     if(addLitPubResult==true){
-                        /*for(Attachment at:literature.getAttachmentList()){
+                        for(Attachment at:literature.getAttachmentList()){
                             at.setLiteratureid(keyid);
                         }
                         //添加文档的附件信息
                         boolean addAttachmentResult=this.addAttachment(literature.getAttachmentList());
                         if(addAttachmentResult==true){
                             //添加引用关系信息
-                            boolean addCiteRelationshipResult=this.addCiteRelationship(literature.getCiteRelationshipList());
-                            return addCiteRelationshipResult;
+                           /* boolean addCiteRelationshipResult=this.addCiteRelationship(literature.getCiteRelationshipList());
+                            return addCiteRelationshipResult;*/
+                            System.out.println("--success05--添加文档的附件信息OK！");
+                            return true;
                         } else{
                             System.out.println("--error05--添加文档的附件信息出错！");
                             return false;
-                        }*/
-                        System.out.println("--success04--添加文献-出版社关系成功！");
-                        return true;
+                        }
                     }else{
                         System.out.println("--error04--添加文献-出版社关系出错！");
                         return false;
@@ -112,7 +112,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
 
     @Override
     public boolean addAttachment(List<Attachment> attachmentList) {
-        String sql="INSERT INTO attachment (name,link,creatorid,literatureid) VALUES (?,?,?,?)";
+        String sql="INSERT INTO attachment (name,link,creatorid,literatureid,type) VALUES (?,?,?,?,?)";
         boolean r=true;
         for(Attachment attachment:attachmentList){
             int result=this.getJdbcTemplate().update(
@@ -120,7 +120,8 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                     attachment.getName(),
                     attachment.getLink(),
                     attachment.getCreatorid(),
-                    attachment.getLiteratureid()
+                    attachment.getLiteratureid(),
+                    attachment.getType()
             );
             r=(r==true&&result>0);
         }

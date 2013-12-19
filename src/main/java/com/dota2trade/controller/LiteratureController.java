@@ -2,6 +2,7 @@ package com.dota2trade.controller;
 
 import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.dao.UserDao;
+import com.dota2trade.model.Attachment;
 import com.dota2trade.model.Literature;
 import com.dota2trade.model.LiteratureMeta;
 import com.dota2trade.model.Publisher;
@@ -17,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +34,7 @@ import java.util.List;
 public class LiteratureController {
     private UserDao userDao;
     private LiteratureDao literatureDao;
+    private static String LINK_PREFIX="http://localhost:8080/attachment/";
 
     @RequestMapping(value = "/sTest.html",method = RequestMethod.GET)
     public String savepTest(@RequestParam("lid") int id,Model model){
@@ -62,36 +66,68 @@ public class LiteratureController {
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model
     ) throws IOException {
+        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
+
+        List<Attachment> attachmentList=new ArrayList<Attachment>();
+        Attachment paper,attachment1,attachment2,attachment3,attachment4;
+
+        paper=new Attachment();
         System.out.println(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
-        String paperFileName = System.currentTimeMillis()+
-                new String (fileAttachment.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8");
+        String attachmentName = new String (fileAttachment.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
+        paper.setName(attachmentName);
+        String paperFileName = System.currentTimeMillis()+attachmentName;
+        paper.setLink(LINK_PREFIX+paperFileName);
         FileUploadHelper.uploadFile(fileAttachment,paperFileName);
+        paper.setCreatorid(userid);
+        paper.setType(0);
+        attachmentList.add(paper);
 
         if (!otherAttachment1.isEmpty()){
-            String otherFile1Name = System.currentTimeMillis()+
-                    new String (otherAttachment1.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8");
+            String other1Name = new String (otherAttachment1.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
+            String otherFile1Name = System.currentTimeMillis()+other1Name;
             FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name);
+            attachment1=new Attachment();
+            attachment1.setName(other1Name);
+            attachment1.setLink(LINK_PREFIX+otherFile1Name);
+            attachment1.setCreatorid(userid);
+            attachment1.setType(1);
+            attachmentList.add(attachment1);
         }
 
         if (!otherAttachment2.isEmpty()){
-            String otherFile2Name = System.currentTimeMillis()+
-            new String (otherAttachment2.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8");
+            String other2Name = new String (otherAttachment2.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
+            String otherFile2Name = System.currentTimeMillis()+other2Name;
             FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name);
+            attachment2=new Attachment();
+            attachment2.setName(other2Name);
+            attachment2.setLink(LINK_PREFIX+otherFile2Name);
+            attachment2.setCreatorid(userid);
+            attachment2.setType(1);
+            attachmentList.add(attachment2);
         }
 
         if (!otherAttachment3.isEmpty()){
-            String otherFile3Name = System.currentTimeMillis()+
-                    new String ( otherAttachment3.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8")
-                   ;
+            String other3Name = new String (otherAttachment3.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
+            String otherFile3Name = System.currentTimeMillis()+other3Name;
             FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name);
+            attachment3=new Attachment();
+            attachment3.setName(other3Name);
+            attachment3.setLink(LINK_PREFIX+otherFile3Name);
+            attachment3.setCreatorid(userid);
+            attachment3.setType(1);
+            attachmentList.add(attachment3);
         }
 
         if (!otherAttachment4.isEmpty()){
-            String otherFile4Name = System.currentTimeMillis()+
-                    new String ( otherAttachment4.getOriginalFilename().getBytes("iso-8859-1"), "UTF-8")
-                    ;
-
+            String other4Name = new String (otherAttachment4.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
+            String otherFile4Name = System.currentTimeMillis()+other4Name;
             FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name);
+            attachment4=new Attachment();
+            attachment4.setName(other4Name);
+            attachment4.setLink(LINK_PREFIX+otherFile4Name);
+            attachment4.setCreatorid(userid);
+            attachment4.setType(1);
+            attachmentList.add(attachment4);
         }
 
         LiteratureMeta literatureMeta=new LiteratureMeta();
@@ -108,13 +144,14 @@ public class LiteratureController {
         publisher.setName(new String (publisher_name .getBytes ("iso-8859-1"), "UTF-8"));
 
         Literature literature=new Literature();
-        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
+
         literature.setCreatorid(userid);
         literature.setUpdaterid(userid);
         literature.setStatus(0);
         literature.setLiteraturetypeid(literaturetypeid);
         literature.setLiteratureMeta(literatureMeta);
         literature.setPublisher(publisher);
+        literature.setAttachmentList(attachmentList);
 
         model.addAttribute("literature",literature);
 
