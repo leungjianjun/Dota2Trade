@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2013 年 12 月 18 日 14:47
--- 服务器版本: 5.6.12-log
--- PHP 版本: 5.4.16
+-- 生成日期: 2013 年 12 月 23 日 12:57
+-- 服务器版本: 5.5.24-log
+-- PHP 版本: 5.3.13
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- 数据库: `manage_schema`
 --
-CREATE DATABASE IF NOT EXISTS `manage_schema` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `manage_schema`;
 
 -- --------------------------------------------------------
 
@@ -37,7 +35,28 @@ CREATE TABLE IF NOT EXISTS `attachment` (
   `type` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `attachment`
+--
+
+INSERT INTO `attachment` (`id`, `name`, `link`, `creatorid`, `literatureid`, `type`) VALUES
+(1, 'Hadoop实战(中).pdf', 'http://localhost:8080/attachment/1387429335765Hadoop实战(中).pdf', 7, 14, 0),
+(2, '最全VS2010初级教程学习手册.pdf', 'http://localhost:8080/attachment/1387429336134最全VS2010初级教程学习手册.pdf', 7, 14, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `attribute`
+--
+
+CREATE TABLE IF NOT EXISTS `attribute` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '属性名',
+  `type` int(2) NOT NULL COMMENT '属性的类别：引用属性、信息属性、评价属性',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -84,7 +103,22 @@ INSERT INTO `literature` (`id`, `creatorid`, `updaterid`, `status`, `literaturet
 (11, 7, 0, 0, 2),
 (12, 7, 0, 0, 1),
 (13, 7, 0, 0, 1),
-(14, 1, 0, 0, 1);
+(14, 7, 0, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `literatureattribute`
+--
+
+CREATE TABLE IF NOT EXISTS `literatureattribute` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `literatureid` int(11) NOT NULL,
+  `attributeid` int(11) NOT NULL,
+  `attributename` varchar(20) NOT NULL,
+  `value` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -118,7 +152,7 @@ INSERT INTO `literaturemeta` (`literatureid`, `title`, `literature_abstract`, `a
 (11, '迎新任美驻日大使肯尼迪', 'sgdgsdfgadgadfgadfgagagasdg', 'fgdsfg', '2013-12-04', 'fgasg收到法国大叔', 'wwwsdfsdaf', '113'),
 (12, 'è¿æ°ä»»ç¾é©»', 'hgfds', 'liyancode', '2013-12-03', 'sdg', 'www', '11'),
 (13, 'å®ä¹ ', 'gdg', '', '2013-12-04', 'åµåµ', 'wwwsdfsdaf', '113'),
-(14, '阿达', '看看', 'dsafsafdsa', '2013-12-03', '三等份', 'sdfa', '12');
+(14, '云计算2', '云计算是什么', 'jjkk', '2013-12-04', '云计算s', 'www.cloud.org', '113');
 
 -- --------------------------------------------------------
 
@@ -131,6 +165,21 @@ CREATE TABLE IF NOT EXISTS `literaturetype` (
   `name` varchar(50) NOT NULL,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `literaturetype_attribute`
+--
+
+CREATE TABLE IF NOT EXISTS `literaturetype_attribute` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `literaturetypeid` int(11) NOT NULL,
+  `attributeid` int(11) NOT NULL,
+  `attributetype` int(2) NOT NULL,
+  `ismust` int(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -181,9 +230,9 @@ INSERT INTO `publisher` (`id`, `name`) VALUES
 (108, '人民出版社'),
 (109, '南京大学出版社dd'),
 (110, '规范'),
-(111, 'aaa'),
-(112, 'bbb'),
-(113, '地方大');
+(111, 'äººæ°åºçç¤¾'),
+(112, 'åäº¬å¤§å­¦åºçç¤¾'),
+(113, '南京大学出版');
 
 -- --------------------------------------------------------
 
@@ -196,16 +245,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `account` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`id`, `account`, `password`) VALUES
-(1, 'test', 'test'),
-(2, 'admin', 'admin'),
-(7, 'liyancode', '123456');
+(7, 'liyancode', '123456'),
+(8, 'admin', 'admin');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
