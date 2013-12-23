@@ -25,6 +25,10 @@ public interface LiteratureDao {
     /**添加文献的引用关系*/
     boolean addCiteRelationship(List<CiteRelationship> citeRelationshipList);
 
+
+    /**添加不同类型的文献特有的属性信息*/
+    boolean addLiteratureAttribute(List<LiteratureAttribute> literatureAttributeList);
+
     /*********************delete methods*********************************/
     /**删除文献*/
     boolean deleteLiterature(int literatureid);
@@ -73,4 +77,7 @@ public interface LiteratureDao {
     List<CiteRelationship> getAllCiteRelationshipByLiteratureId(int literatureid);
     /**获取组内所有文献的基本信息*/
     List<LiteratureMeta> getAllLiteratureMeta();
+
+    /**获取一个文献的所有特有属性信息*/
+    List<LiteratureAttribute> getLiteratureAttribute(int literatureid);
 }

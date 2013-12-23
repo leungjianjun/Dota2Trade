@@ -28,6 +28,22 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
     }
 
     @Override
+    public boolean addUser(User user) {
+        String sql="INSERT INTO user SET account='"+user.getAccount()+"',password='"+user.getPassword()+"'";
+        return false;
+    }
+
+    @Override
+    public boolean deleteUser(String account) {
+        return false;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return false;
+    }
+
+    @Override
     public User getUser(String account, String password) {
         System.out.println(account+" "+password);
         List<User> users =  this.getJdbcTemplate().query(

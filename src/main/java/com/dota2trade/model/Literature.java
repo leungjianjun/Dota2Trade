@@ -22,10 +22,21 @@ public class Literature {
     private LiteratureMeta literatureMeta;
     /**出版社信息*/
     private Publisher publisher;
+
+    /**类型特有信息*/
+    private List<LiteratureAttribute> literatureAttributeList ;
     /**附件信息*/
     private List<Attachment> attachmentList;
     /**引用关系*/
     private List<CiteRelationship> citeRelationshipList;
+
+    public List<LiteratureAttribute> getLiteratureAttributeList() {
+        return literatureAttributeList;
+    }
+
+    public void setLiteratureAttributeList(List<LiteratureAttribute> literatureAttributeList) {
+        this.literatureAttributeList = literatureAttributeList;
+    }
 
     public List<Attachment> getAttachmentList() {
         return attachmentList;

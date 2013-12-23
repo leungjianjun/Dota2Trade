@@ -10,6 +10,11 @@ import com.dota2trade.model.User;
  * To change this template use File | Settings | File Templates.
  */
 public interface UserDao {
+
+    boolean addUser(User user);
+    boolean deleteUser(String account);
+    boolean updateUser(User user);
     public User getUser(String account,String password);
+
     int getIdByUserAccount(String account);
 }

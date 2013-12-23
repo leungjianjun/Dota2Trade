@@ -196,6 +196,11 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         return r;
     }
 
+    @Override
+    public boolean addLiteratureAttribute(List<LiteratureAttribute> literatureAttributeList) {
+        return false;
+    }
+
     /**********************delete() methods********************/
     @Override
     public boolean deleteLiterature(int literatureid) {
@@ -394,5 +399,10 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         String sql="SELECT * FROM literaturemeta";
         List<LiteratureMeta> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(LiteratureMeta.class));
         return list;
+    }
+
+    @Override
+    public List<LiteratureAttribute> getLiteratureAttribute(int literatureid) {
+        return null;
     }
 }
