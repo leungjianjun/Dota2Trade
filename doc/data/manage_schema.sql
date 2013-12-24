@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 4.0.9
 -- http://www.phpmyadmin.net
 --
--- 主机: localhost
--- 生成日期: 2013 年 12 月 23 日 12:57
--- 服务器版本: 5.5.24-log
--- PHP 版本: 5.3.13
+-- 主机: 127.0.0.1
+-- 生成日期: 2013-12-24 15:44:29
+-- 服务器版本: 5.5.34
+-- PHP 版本: 5.3.26
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `literature` (
   `literaturetypeid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
 -- 转存表中的数据 `literature`
@@ -103,7 +103,12 @@ INSERT INTO `literature` (`id`, `creatorid`, `updaterid`, `status`, `literaturet
 (11, 7, 0, 0, 2),
 (12, 7, 0, 0, 1),
 (13, 7, 0, 0, 1),
-(14, 7, 0, 0, 1);
+(14, 7, 0, 0, 1),
+(15, 7, 0, 0, 1),
+(16, 7, 0, 0, 1),
+(17, 7, 0, 0, 1),
+(18, 7, 0, 0, 1),
+(19, 7, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -131,28 +136,12 @@ CREATE TABLE IF NOT EXISTS `literaturemeta` (
   `title` varchar(100) NOT NULL,
   `literature_abstract` varchar(1000) NOT NULL,
   `author` varchar(300) NOT NULL,
-  `published_year` date NOT NULL,
+  `published_year` varchar(100) NOT NULL,
   `key_words` varchar(300) NOT NULL,
   `link` varchar(1024) NOT NULL,
   `pages` varchar(100) NOT NULL DEFAULT '0',
   PRIMARY KEY (`literatureid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- 转存表中的数据 `literaturemeta`
---
-
-INSERT INTO `literaturemeta` (`literatureid`, `title`, `literature_abstract`, `author`, `published_year`, `key_words`, `link`, `pages`) VALUES
-(4, 'Re: 日本数千人夹道欢迎新任美驻日大使肯尼迪', '高等', 'liyancode', '2013-12-03', '呵呵', 'www', '11'),
-(5, 'Re: 江泽民在国立中央大学读书', '划分', 'liyancode', '2013-12-03', '呵呵', 'www.ddd', '11'),
-(6, 'Re: 专硕真的很受伤', 'thdf', 'jjkk', '2013-12-09', 'fa', 'www.ddd.ff', '115'),
-(7, '江泽民在国立中央大学读书  gfgfg', 'gfds', 'liyancode', '2013-12-03', '呵呵fds', 'www.ddd.ff', '113'),
-(9, '美驻日大使肯尼迪', '收费多少多少收电费', 'jjkk', '2013-12-03', '规范的施工', 'http://docs.spring.io/spring/docs/3.1.4.RELEASE/javadoc-api/org/springframework/dao/DuplicateKeyException.html', '113'),
-(10, 'Re: 江泽民在国立中央大学读书反反复复', 'vbddfgh', 'jjkk', '2013-12-03', '规范的施工', 'http://docs.spring.io/spring/docs/3.1.4.RELEASE/javadoc-api/org/springframework/dao/DuplicateKeyException.html', '11'),
-(11, '迎新任美驻日大使肯尼迪', 'sgdgsdfgadgadfgadfgagagasdg', 'fgdsfg', '2013-12-04', 'fgasg收到法国大叔', 'wwwsdfsdaf', '113'),
-(12, 'è¿æ°ä»»ç¾é©»', 'hgfds', 'liyancode', '2013-12-03', 'sdg', 'www', '11'),
-(13, 'å®ä¹ ', 'gdg', '', '2013-12-04', 'åµåµ', 'wwwsdfsdaf', '113'),
-(14, '云计算2', '云计算是什么', 'jjkk', '2013-12-04', '云计算s', 'www.cloud.org', '113');
 
 -- --------------------------------------------------------
 
@@ -194,20 +183,6 @@ CREATE TABLE IF NOT EXISTS `literature_publisher` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
---
--- 转存表中的数据 `literature_publisher`
---
-
-INSERT INTO `literature_publisher` (`id`, `literatureid`, `publisherid`) VALUES
-(3, 4, 106),
-(6, 7, 106),
-(7, 9, 108),
-(8, 10, 109),
-(9, 11, 110),
-(10, 12, 111),
-(11, 13, 112),
-(12, 14, 113);
-
 -- --------------------------------------------------------
 
 --
@@ -220,19 +195,6 @@ CREATE TABLE IF NOT EXISTS `publisher` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=114 ;
-
---
--- 转存表中的数据 `publisher`
---
-
-INSERT INTO `publisher` (`id`, `name`) VALUES
-(106, '南京大学出版社'),
-(108, '人民出版社'),
-(109, '南京大学出版社dd'),
-(110, '规范'),
-(111, 'äººæ°åºçç¤¾'),
-(112, 'åäº¬å¤§å­¦åºçç¤¾'),
-(113, '南京大学出版');
 
 -- --------------------------------------------------------
 
@@ -252,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `account`, `password`) VALUES
-(7, 'liyancode', '123456'),
+(7, 'test', 'test'),
 (8, 'admin', 'admin');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
