@@ -51,10 +51,11 @@ small, .small {
     width:342px;
 }
 
+/*
 .admin label{
     width:120px;
 }
-
+*/
 .admin .checkbox-group{
     display:block;
     margin-top:35px;

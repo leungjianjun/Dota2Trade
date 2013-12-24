@@ -22,8 +22,8 @@ var EditableTable = function () {
                 jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '">';
                 jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
                 jqTds[3].innerHTML = '<input type="text" class="form-control small" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
-                jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                jqTds[4].innerHTML = '<a class="edit" href="">保存</a>';
+                jqTds[5].innerHTML = '<a class="cancel" href="">取消</a>';
             }
 
             function saveRow(oTable, nRow) {
@@ -32,8 +32,8 @@ var EditableTable = function () {
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-                oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
+                oTable.fnUpdate('<a class="edit" href="">修改</a>', nRow, 4, false);
+                oTable.fnUpdate('<a class="delete" href="">删除</a>', nRow, 5, false);
                 oTable.fnDraw();
             }
 
@@ -43,7 +43,7 @@ var EditableTable = function () {
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
+                oTable.fnUpdate('<a class="edit" href="">修改</a>', nRow, 4, false);
                 oTable.fnDraw();
             }
 
@@ -57,10 +57,10 @@ var EditableTable = function () {
                 "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
                 "sPaginationType": "bootstrap",
                 "oLanguage": {
-                    "sLengthMenu": "_MENU_ records per page",
+                    "sLengthMenu": "每页_MENU_ 记录",
                     "oPaginate": {
-                        "sPrevious": "Prev",
-                        "sNext": "Next"
+                        "sPrevious": "上页",
+                        "sNext": "下页"
                     }
                 },
                 "aoColumnDefs": [{
@@ -78,7 +78,7 @@ var EditableTable = function () {
             $('#editable-sample_new').click(function (e) {
                 e.preventDefault();
                 var aiNew = oTable.fnAddData(['', '', '', '',
-                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
+                        '<a class="edit" href="">修改</a>', '<a class="cancel" data-mode="new" href="">取消</a>'
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
                 editRow(oTable, nRow);
@@ -88,13 +88,13 @@ var EditableTable = function () {
             $('#editable-sample a.delete').live('click', function (e) {
                 e.preventDefault();
 
-                if (confirm("Are you sure to delete this row ?") == false) {
+                if (confirm("你确定要删除该记录 ?") == false) {
                     return;
                 }
 
                 var nRow = $(this).parents('tr')[0];
                 oTable.fnDeleteRow(nRow);
-                alert("Deleted! Do not forget to do some ajax to sync with backend :)");
+                alert("已删除! Do not forget to do some ajax to sync with backend :)");
             });
 
             $('#editable-sample a.cancel').live('click', function (e) {
@@ -119,11 +119,11 @@ var EditableTable = function () {
                     restoreRow(oTable, nEditing);
                     editRow(oTable, nRow);
                     nEditing = nRow;
-                } else if (nEditing == nRow && this.innerHTML == "Save") {
+                } else if (nEditing == nRow && this.innerHTML == "保存") {
                     /* Editing this row and want to save it */
                     saveRow(oTable, nEditing);
                     nEditing = null;
-                    alert("Updated! Do not forget to do some ajax to sync with backend :)");
+                    alert("更新成功! Do not forget to do some ajax to sync with backend :)");
                 } else {
                     /* No edit in progress - let's start one */
                     editRow(oTable, nRow);
