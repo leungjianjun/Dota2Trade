@@ -18,3 +18,8 @@
 }
 .add_right .submit{margin-top:20px;}
 .add_right .main input,.add_right .main texarea{width:500px;}
+input[type=text], input[type=password], select, textarea {
+    border-color: #D8D9DA;
+    color: #333;
+}
+.fileupload{margin-left: 103px;}

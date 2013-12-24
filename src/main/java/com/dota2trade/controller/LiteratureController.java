@@ -52,7 +52,7 @@ public class LiteratureController {
             @RequestParam("literaturetypeid") int literaturetypeid,
             @RequestParam("title") String title,
             @RequestParam("author") String author,
-            @RequestParam("published_year") Date published_year,
+            @RequestParam("published_year") String published_year,
             @RequestParam("pages") String pages,
             @RequestParam("literature_abstract") String literature_abstract,
             @RequestParam("key_words") String key_words,
@@ -133,7 +133,7 @@ public class LiteratureController {
         LiteratureMeta literatureMeta=new LiteratureMeta();
         literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         literatureMeta.setAuthor(new String (author.getBytes ("iso-8859-1"), "UTF-8"));
-        literatureMeta.setPublished_year(published_year);
+        literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"),"UTF-8"));
         literatureMeta.setPages(pages);
         literatureMeta.setLiterature_abstract(new String (literature_abstract .getBytes("iso-8859-1"), "UTF-8"));
         literatureMeta.setKey_words(new String (key_words.getBytes("iso-8859-1"), "UTF-8"));
@@ -186,9 +186,9 @@ public class LiteratureController {
     @RequestMapping(value="/reviseLitera.html",method=RequestMethod.GET)
     public String reviseLiterature(@RequestParam("literatureid")int literatureid,ModelMap model){
         Literature literature=literatureDao.getLiteratureById(literatureid);
-        SimpleDateFormat format=new SimpleDateFormat("MM/dd/yyyy");
-        String py=format.format(literature.getLiteratureMeta().getPublished_year());
-        model.addAttribute("published_year",py);
+//        SimpleDateFormat format=new SimpleDateFormat("MM/dd/yyyy");
+//        String py=format.format(literature.getLiteratureMeta().getPublished_year());
+//        model.addAttribute("published_year",py);
         model.addAttribute("literature",literature);
         return "reviseLitera";
     }
@@ -198,7 +198,7 @@ public class LiteratureController {
     public String doEditLiterature(
            @RequestParam("literatureid")int literatureid,
            @RequestParam("author") String author,
-           @RequestParam("published_year") Date published_year,
+           @RequestParam("published_year") String published_year,
            @RequestParam("pages") String pages,
            @RequestParam("literature_abstract") String literature_abstract,
            @RequestParam("key_words") String key_words,
@@ -210,7 +210,7 @@ public class LiteratureController {
         LiteratureMeta literatureMeta=new LiteratureMeta();
        // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         literatureMeta.setAuthor(new String (author.getBytes ("iso-8859-1"), "UTF-8"));
-        literatureMeta.setPublished_year(published_year);
+        literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"),"UTF-8"));
         literatureMeta.setPages(pages);
         literatureMeta.setLiterature_abstract(new String (literature_abstract .getBytes ("iso-8859-1"), "UTF-8"));
         literatureMeta.setKey_words(new String (key_words.getBytes ("iso-8859-1"), "UTF-8"));

@@ -13,7 +13,7 @@ public class LiteratureMeta {
     private String title;
     private String literature_abstract;//摘要
     private String author;
-    private Date published_year;//发行时间
+    private String published_year;//发行时间
     private String key_words;//关键字
     private String link;
     private String pages;
@@ -50,11 +50,11 @@ public class LiteratureMeta {
         this.author = author;
     }
 
-    public Date getPublished_year() {
+    public String getPublished_year() {
         return published_year;
     }
 
-    public void setPublished_year(Date published_year) {
+    public void setPublished_year(String published_year) {
         this.published_year = published_year;
     }
 

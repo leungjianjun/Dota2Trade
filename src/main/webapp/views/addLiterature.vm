@@ -5,7 +5,6 @@
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
-    <link rel="stylesheet" media="screen" href="../resources/css/addLiterature.css"></link>
 
     <!-- Bootstrap -->
     <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
@@ -14,13 +13,11 @@
     <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet">
     <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap-responsive.min.css" rel="stylesheet">
 
-    <!-- DateTimePicker Plugin -->
-    <link href="../resources/common/theme/scripts/plugins/forms/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet" />
-
-    <!-- JQueryUI -->
+   <!-- JQueryUI -->
     <link href="../resources/common/theme/scripts/plugins/system/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
     <!-- Main Theme Stylesheet :: CSS -->
     <link href="../resources/common/theme/css/style-light.css?1369753442" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="../resources/css/addLiterature.css"></link>
 
 </head>
 <body>
@@ -59,7 +56,7 @@
                 </div>
                 <div>
                     <label>出版年份</label>
-                    <input type="text" name="published_year"id="datepicker" value="" />
+                    <input type="text" name="published_year" placeholder="比如1991" value="" />
                 </div>
                 <div>
                     <label>页码</label>
@@ -100,82 +97,67 @@
                 </div>
                 <div>
                     <label>其他附件</label>
-                    <div class="fileupload fileupload-new" id="fileupload-type1" data-provides="fileupload" style="display:none">
-                        <div class="input-append">
-                            <div class="uneditable-input span3" style="display: inline-table;">
-                                <i class="icon-file fileupload-exists"></i>
-                                <span class="fileupload-preview"></span>
-                            </div>
-                            <span class="btn btn-default btn-file">
-                                <span class="fileupload-new">选择文件</span>
-                                <span class="fileupload-exists">修改</span>
-                                <input type="file" name="otherAttachment1"/>
-                            </span>
-                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
+                    <button class="btn btn-block" id="add-attachment" type="button" style="display: inline-block;font-weight: normal;">添加附件</button>
+                </div>
+                <div class="fileupload fileupload-new" id="fileupload-type1" data-provides="fileupload" style="display:none">
+                    <div class="input-append">
+                        <div class="uneditable-input span3" style="display: inline-table;">
+                            <i class="icon-file fileupload-exists"></i>
+                            <span class="fileupload-preview"></span>
                         </div>
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new">选择文件</span>
+                            <span class="fileupload-exists">修改</span>
+                            <input type="file" name="otherAttachment1"/>
+                        </span>
+                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                     </div>
                 </div>
-
-                <div>
-                    <label></label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type2" style="display:none">
-                        <div class="input-append">
-                            <div class="uneditable-input span3" style="display: inline-table;">
-                                <i class="icon-file fileupload-exists"></i>
-                                <span class="fileupload-preview"></span>
-                            </div>
-                            <span class="btn btn-default btn-file">
-                                <span class="fileupload-new">选择文件</span>
-                                <span class="fileupload-exists">修改</span>
-                                <input type="file" name="otherAttachment2"/>
-                            </span>
-                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
+                <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type2" style="display:none">
+                    <div class="input-append">
+                        <div class="uneditable-input span3" style="display: inline-table;">
+                            <i class="icon-file fileupload-exists"></i>
+                            <span class="fileupload-preview"></span>
                         </div>
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new">选择文件</span>
+                            <span class="fileupload-exists">修改</span>
+                            <input type="file" name="otherAttachment2"/>
+                        </span>
+                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                     </div>
                 </div>
-
-                <div>
-                    <label></label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type3" style="display:none">
-                        <div class="input-append">
-                            <div class="uneditable-input span3" style="display: inline-table;">
-                                <i class="icon-file fileupload-exists"></i>
-                                <span class="fileupload-preview"></span>
-                            </div>
-                            <span class="btn btn-default btn-file">
-                                <span class="fileupload-new">选择文件</span>
-                                <span class="fileupload-exists">修改</span>
-                                <input type="file" name="otherAttachment3"/>
-                            </span>
-                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
+                <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type3" style="display:none">
+                    <div class="input-append">
+                        <div class="uneditable-input span3" style="display: inline-table;">
+                            <i class="icon-file fileupload-exists"></i>
+                            <span class="fileupload-preview"></span>
                         </div>
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new">选择文件</span>
+                            <span class="fileupload-exists">修改</span>
+                            <input type="file" name="otherAttachment3"/>
+                        </span>
+                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                     </div>
                 </div>
-
-                <div>
-                    <label></label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload" style="display:none" id="fileupload-type4">
-                        <div class="input-append">
-                            <div class="uneditable-input span3" style="display: inline-table;">
-                                <i class="icon-file fileupload-exists"></i>
-                                <span class="fileupload-preview"></span>
-                            </div>
-                            <span class="btn btn-default btn-file">
-                                <span class="fileupload-new">选择文件</span>
-                                <span class="fileupload-exists">修改</span>
-                                <input type="file" name="otherAttachment4"/>
-                            </span>
-                            <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
+                <div class="fileupload fileupload-new" data-provides="fileupload" style="display:none" id="fileupload-type4">
+                    <div class="input-append">
+                        <div class="uneditable-input span3" style="display: inline-table;">
+                            <i class="icon-file fileupload-exists"></i>
+                            <span class="fileupload-preview"></span>
                         </div>
+                        <span class="btn btn-default btn-file">
+                            <span class="fileupload-new">选择文件</span>
+                            <span class="fileupload-exists">修改</span>
+                            <input type="file" name="otherAttachment4"/>
+                        </span>
+                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
                     </div>
                 </div>
-
-                </br>
-                </br>
                 <div class="submit">
                     <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">录入文献</button>
-                    <button class="btn btn-block btn-primary" id="add-attachment" type="button" style="display: inline-block;">添加附件</button>
-                    <button class="btn btn-block btn-primary" style="display: inline-block;">取消</button>
+                    <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
                 </div>
             </form>
         </div>
@@ -187,7 +169,6 @@
         <h4 class="heading">上传成功</h4>
     </div>
     <!-- // Widget heading END -->
-
     <div class="widget-body center" style="padding: 40px;">
         <span>要立即编辑引用关系么？</span>
         <a href="/editCite.html"><span class="btn btn-default" data-layout="topLeft" data-type="primary" data-toggle="notyfy">编辑引用关系</span></a>
@@ -197,21 +178,17 @@
 
 <!-- JQuery -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
-
 <!-- JQueryUI -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
 <!-- Bootstrap -->
 <script src="../resources/common/bootstrap/js/bootstrap.min.js"></script>
 <!-- Common Demo Script -->
 <script src="../resources/common/theme/scripts/demo/common.js?1369753442"></script>
-
 <!-- Holder Plugin -->
 <script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
 <!-- Bootstrap Extended -->
 <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
 <script src="../resources/common/bootstrap/extend/jasny-bootstrap/js/bootstrap-fileupload.js"></script>
-<!-- DateTimePicker Plugin -->
-<script src="../resources/common/theme/scripts/plugins/forms/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
 <script>
     function showhint(){
