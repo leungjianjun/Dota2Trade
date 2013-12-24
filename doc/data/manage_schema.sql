@@ -37,14 +37,6 @@ CREATE TABLE IF NOT EXISTS `attachment` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
---
--- 转存表中的数据 `attachment`
---
-
-INSERT INTO `attachment` (`id`, `name`, `link`, `creatorid`, `literatureid`, `type`) VALUES
-(1, 'Hadoop实战(中).pdf', 'http://localhost:8080/attachment/1387429335765Hadoop实战(中).pdf', 7, 14, 0),
-(2, '最全VS2010初级教程学习手册.pdf', 'http://localhost:8080/attachment/1387429336134最全VS2010初级教程学习手册.pdf', 7, 14, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -87,28 +79,6 @@ CREATE TABLE IF NOT EXISTS `literature` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
-
---
--- 转存表中的数据 `literature`
---
-
-INSERT INTO `literature` (`id`, `creatorid`, `updaterid`, `status`, `literaturetypeid`) VALUES
-(4, 7, 0, 0, 1),
-(5, 7, 0, 0, 2),
-(6, 7, 0, 0, 4),
-(7, 7, 0, 0, 7),
-(8, 7, 0, 0, 2),
-(9, 7, 0, 0, 2),
-(10, 7, 0, 0, 1),
-(11, 7, 0, 0, 2),
-(12, 7, 0, 0, 1),
-(13, 7, 0, 0, 1),
-(14, 7, 0, 0, 1),
-(15, 7, 0, 0, 1),
-(16, 7, 0, 0, 1),
-(17, 7, 0, 0, 1),
-(18, 7, 0, 0, 1),
-(19, 7, 0, 0, 1);
 
 -- --------------------------------------------------------
 
