@@ -18,6 +18,11 @@ public interface ConfigDao {
     boolean deleteLiteratureType(int id);
 
     /********************属性信息配置*******************/
+    /**
+     * 属性信息即根据不同的文献类别对应的不同的属性，所有文献有通用的必填文献信息为
+     * LiteratureMeta,除此之外，每种文献有自己的属性信息，每个单独的属性为Attribute,
+     * 存储时按照单个属性来存
+     * */
     /**添加一个文献类别的一个新属性
      * 顺序是：先查看属性表是否有重名同类型的属性，有则不创建新的属性，没有则创建。
      * 然后向类型-属性关系对应表插入记录，插入的关系默认ismust为1
@@ -31,5 +36,4 @@ public interface ConfigDao {
     List<Attribute> getAllAttributeOfLiteratureType(int literatureTypeId);
     /**获得一个文献类型的某一属性类型的已配置属性*/
     List<Attribute> getOneAttributeOfLiteratureType(int literatureTypeId,int type);
-
 }
