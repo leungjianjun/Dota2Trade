@@ -29,9 +29,16 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
     @Override
     public boolean addUser(User user) {
-        String sql="INSERT INTO user(account,password) VALUES(?,?)";
-        int r=this.getJdbcTemplate().update(sql,user.getAccount(),user.getPassword());
-        return (r>0)?true:false;
+        String exist="SELECT COUNT(*) FROM user WHERE account='"+user.getAccount()+"'";
+        int s=this.getJdbcTemplate().queryForInt(exist);
+        if(s!=0){
+            //用户名已存在
+            return false;
+        }else{
+            String sql="INSERT INTO user(account,password) VALUES(?,?)";
+            int r=this.getJdbcTemplate().update(sql,user.getAccount(),user.getPassword());
+            return (r>0)?true:false;
+        }
     }
 
     @Override
@@ -42,9 +49,13 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
     }
 
     @Override
+    /**
+     * 修改密码
+     * */
     public boolean updateUser(User user) {
-        //String sql="UPDATE user SET account='"user.getAccount()"'";
-        return false;
+        String sql="UPDATE user SET password='"+user.getPassword()+"' WHERE account='"+user.getAccount()+"'";
+        int r=this.getJdbcTemplate().update(sql);
+        return (r>0)?true:false;
     }
 
     @Override
