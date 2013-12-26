@@ -92,9 +92,9 @@ p {
 .timeline-item {
     display: table-row;
     float: right;
-    width: 300px;
-    padding-left: 26px;
-    padding-right: 26px;
+    width: 47.7%;
+    /*padding-left: 26px;*/
+    /*padding-right: 26px;*/
     clear:both;
 }
 
@@ -117,6 +117,7 @@ p {
 .timeline-desk .panel {
     margin-bottom: 5px;
 }
+.timeline-item.alt .panel{margin-left:0;}
 
 .timeline-item .timeline-desk .arrow {
     border-bottom: 8px solid transparent;

@@ -40,7 +40,7 @@
         <li><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
         <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
     </ul>
-        <div style="margin-left: 230px">
+        <div style="float:right;width: 79%;">
             <div class="row">
                 <div class="col-lg-8">
                     <!--timeline start-->
