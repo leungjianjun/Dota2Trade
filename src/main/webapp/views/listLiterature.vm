@@ -20,9 +20,7 @@
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/table.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
-
 </head>
-
 <body>
 #include("header.vm")
     <div class="container0 clearfix">
@@ -52,156 +50,39 @@
                         <div id="tabBook" class="tab-pane active widget-body-regular">
                             <!-- Widget -->
                             <div class="adv-table">
-
-                                    <!-- Table -->
-                                    <table class="display table table-bordered table-striped" id="self_upload">
-
-                                        <!-- Table heading -->
-                                        <thead>
-                                        <tr>
-                                            <th>SSN</th>
-                                            <th>文献名称</th>
-                                            <th>上传时间</th>
-                                            <th>评分</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                        <!-- // Table heading END -->
-
-                                        <!-- Table body -->
-                                        <tbody>
-                                            #foreach($literatureMeta in $literatureMetaList)
-                                            <tr class="gradeX">
-                                                <td>$literatureMeta.literatureid</td>
-                                                <td><a href="#">$literatureMeta.title</a></td>
-                                                <td>$literatureMeta.published_year</td>
-                                                <td class="center">6</td>
-                                                <td><div class="op">
-                                                    <button alt-data="$literatureMeta.literatureid" class="btn  edit_literature btn-primary">编辑文献内容及附件</button>
-                                                    <button alt-data="$literatureMeta.literatureid" class="btn  edit_cite btn-primary">编辑引用关系</button>
-                                                    <button alt-data="$literatureMeta.literatureid" class="btn  delete btn-primary">删除</button>
-                                                </div>
-                                                </td>
-                                            </tr>
-                                            #end
-                                        #*<!-- Table row -->
+                                <!-- Table -->
+                                <table class="display table table-bordered table-striped" id="self_upload">
+                                    <!-- Table heading -->
+                                    <thead>
+                                    <tr>
+                                        <th>SSN</th>
+                                        <th>文献名称</th>
+                                        <th>出版时间</th>
+                                        <th>评分</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <!-- // Table heading END -->
+                                    <!-- Table body -->
+                                    <tbody>
+                                        #foreach($literatureMeta in $literatureMetaList)
                                         <tr class="gradeX">
-                                            <td>1</td>
-                                            <td><a href="/literatureDetail.html">云计算与世界</a></td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary" onClick="location.href='/reviseLitera.html'">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
+                                            <td>$literatureMeta.literatureid</td>
+                                            <td><a href="#">$literatureMeta.title</a></td>
+                                            <td>$literatureMeta.published_year</td>
+                                            <td class="center">6</td>
+                                            <td><div class="op">
+                                                <button alt-data="$literatureMeta.literatureid" class="btn  edit_literature btn-primary">编辑文献内容及附件</button>
+                                                <button alt-data="$literatureMeta.literatureid" class="btn  edit_cite btn-primary">编辑引用关系</button>
+                                                <button alt-data="$literatureMeta.literatureid" class="btn  delete btn-primary">删除</button>
+                                            </div>
+                                            </td>
                                         </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeC">
-                                            <td>2</td>
-                                            <td>Internet Explorer 5.0lalalalalhhahhahahahahahahahjdkadfjakldfjakldjf</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary" onClick="location.href='/reviseLitera.html'">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>3</td>
-                                            <td>大教堂与集市</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>7</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>4</td>
-                                            <td>Internet Explorer 6</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>9</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>5</td>
-                                            <td>Internet Explorer 7</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>10</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>5</td>
-                                            <td>AOL browser (AOL desktop)</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>1</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>6</td>
-                                            <td>Firefox 1.0</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>2</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>7</td>
-                                            <td>Firefox 1.5</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>4</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>8</td>
-                                            <td>Firefox 2.0</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>9</td>
-                                            <td>Firefox 3.0</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-                                        </tr>
-                                        <!-- // Table row END -->
-
-                                        <!-- Table row -->
-                                        <tr class="gradeA">
-                                            <td>10</td>
-                                            <td>Camino 1.0</td>
-                                            <td>2013/12/17 16:58</td>
-                                            <td>6</td>
-                                            <td><div class="op"><button class="btn  btn-primary">编辑文献内容及附件</button><button class="btn  btn-primary" type="" onClick="location.href='/editCite.html'">编辑引用关系</button><button class="btn  btn-primary">删除</button></div></td>
-
-                                        </tr>*#
-                                        <!-- // Table row END -->
-                                        </tbody>
-                                        <!-- // Table body END -->
-
-                                    </table>
-                                    <!-- // Table END -->
-
-
+                                        #end
+                                    </tbody>
+                                    <!-- // Table body END -->
+                                </table>
+                                <!-- // Table END -->
                             </div>
                             <!-- // Widget END -->
                         </div>
@@ -232,7 +113,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 <!--JS-->
