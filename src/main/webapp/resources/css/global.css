@@ -12,3 +12,7 @@ ul,li,dd,dl{padding:0;margin:0;list-style:none;text-align:left;}
 .clear{*zoom:1;font-size:0;clear:both;height:0;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 img{vertical-align: middle;}
+input[type=text], input[type=password], select, textarea {
+    border-color: #D8D9DA;
+    color: #333;
+}

@@ -5,7 +5,6 @@
     <!-- Bootstrap -->
     <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="../resources/common/bootstrap/css/responsive.css" rel="stylesheet" />
-    <link href="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
     <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet">
     <link href="../resources/common/bootstrap/extend/jasny-bootstrap/css/jasny-bootstrap-responsive.min.css" rel="stylesheet">
 
@@ -13,14 +12,12 @@
     <link href="../resources/common/theme/scripts/plugins/system/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
     <!-- Main Theme Stylesheet :: CSS -->
     <link href="../resources/common/theme/css/style-light.css?1369753442" rel="stylesheet" />
-    <!-- DateTimePicker Plugin -->
-    <link href="../resources/common/theme/scripts/plugins/forms/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet" />
     <!-- STYLESHEETS -->
+    <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/editLiterature.css"></link>
-    <link rel="stylesheet" media="screen" href="../resources/common/theme/css/style-light.css"></link>
 </head>
 <body>
     #include("header.vm")
@@ -74,7 +71,7 @@
                 </div>
                 <div>
                     <label>出版年份</label>
-                    <input type="text" name="published_year"id="datepicker" value="$published_year" />
+                    <input type="text" name="published_year" value="$literature.literatureMeta.published_year" />
                 </div>
                 <div>
                     <label>页码</label>
@@ -108,11 +105,6 @@
                          <input type="checkbox" checked="true" class="checkbox"><span>其他:$attachment.name</span>
                          #end
                      #end
-                      #* <input type="checkbox" checked="true" disabled="disabled" class="checkbox"><span>论文</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>其他一</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>其他二</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>其他三</span>
-                        *#
                     </div>
                 </div>
                 <div>
@@ -158,7 +150,6 @@
 
 <!-- Holder Plugin -->
 <script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
-<!-- Bootstrap Extended -->
-<script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
+<script src="../resources/common/bootstrap/extend/jasny-bootstrap/js/bootstrap-fileupload.js"></script>
 
 </body>
