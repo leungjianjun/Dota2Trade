@@ -2,6 +2,8 @@ package com.dota2trade.dao;
 
 import com.dota2trade.model.User;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ljj-lab
@@ -17,4 +19,5 @@ public interface UserDao {
     public User getUser(String account,String password);
 
     int getIdByUserAccount(String account);
+    public List<User> getAllUser();
 }

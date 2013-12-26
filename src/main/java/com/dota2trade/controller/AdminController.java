@@ -1,9 +1,15 @@
 package com.dota2trade.controller;
 
+import com.dota2trade.dao.UserDao;
+import com.dota2trade.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,14 +19,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class AdminController {
+    private UserDao userDao;
 
     @RequestMapping(value="/admin.html",method= RequestMethod.GET)
-    public String group(ModelMap model){
+    public String admin(ModelMap model){
+        model.addAttribute("userList",userDao.getAllUser());
         return "admin";
     }
 
     @RequestMapping(value="/paperConfig.html",method= RequestMethod.GET)
     public String paperConfig(ModelMap model){
         return "paperConfig";
+    }
+
+    @RequestMapping(value="/doUpdateUser",method=RequestMethod.POST)
+    public String doUpdateUser(
+            @RequestParam("id") int id,
+            @RequestParam("account") String account,
+            @RequestParam("password") String password,
+            Model model)throws UnsupportedEncodingException {
+        System.out.println("hello");
+        /*
+        User user=new User();
+        user.setId(id);
+        user.setAccount(new String (account.getBytes ("iso-8859-1"), "UTF-8"));
+        user.setPassword(new String (password.getBytes ("iso-8859-1"), "UTF-8"));
+        */
+
+
+        return "admin";
+    }
+
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 }

@@ -3,6 +3,8 @@ package com.dota2trade.dao.impl;
 import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -87,5 +89,12 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         String sql="SELECT id FROM user WHERE account='"+account+"'";
 
         return this.getJdbcTemplate().queryForInt(sql);
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        String sql="SELECT * FROM user";
+        List<User> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(User.class));
+        return list;
     }
 }
