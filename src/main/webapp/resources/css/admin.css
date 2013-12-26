@@ -34,10 +34,10 @@
 }
 
 .paper-config .section .head{
-    background: #41CAC0;
+    background: none repeat scroll 0% 0% rgb(242, 243, 244);
     -webkit-border-radius: 4px 4px 0px 0px;
     border-radius: 4px 4px 0px 0px;
-    color: white;
+    color: #8ec657;
     line-height: 35px;
 }
 

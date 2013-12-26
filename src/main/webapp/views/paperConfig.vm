@@ -28,7 +28,7 @@
 <div class="container0 clearfix">
     <ul class="menu">
         <li><a class="group" href="/admin.html"><i></i><span>用户管理</span></a></li>
-        <li><a class="search" href="/paperConfig.html"><i></i><span>文献配置</span></a></li>
+        <li class="active"><a class="search" href="/paperConfig.html"><i></i><span>文献配置</span></a></li>
     </ul>
     <div class="paper-config admin">
         <div class="title">文献配置</div>
