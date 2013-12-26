@@ -38,15 +38,25 @@ public class AdminController {
             @RequestParam("account") String account,
             @RequestParam("password") String password,
             Model model)throws UnsupportedEncodingException {
-        System.out.println("hello");
-        /*
+
         User user=new User();
         user.setId(id);
         user.setAccount(new String (account.getBytes ("iso-8859-1"), "UTF-8"));
         user.setPassword(new String (password.getBytes ("iso-8859-1"), "UTF-8"));
-        */
+        boolean success=false;
+        System.out.println("id:" + id+ " account:"+account +" pass:"+password);
+        if(id==-1)
+            success=userDao.addUser(user);
+        else
+            success=userDao.updateUser(user);
+        //model.addAttribute("success",success);
+        return "admin";
+    }
 
-
+    @RequestMapping(value="/doDeleUser",method=RequestMethod.POST)
+    public String doDeleUser(@RequestParam("account") String account,Model model){
+        boolean success=false;
+        userDao.deleteUser(account);
         return "admin";
     }
 
