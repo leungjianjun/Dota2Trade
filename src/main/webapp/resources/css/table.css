@@ -1,5 +1,6 @@
 .main-right{
-    margin-left:250px;
+    width: 77%;
+    float: right;
 }
 
 .title{
