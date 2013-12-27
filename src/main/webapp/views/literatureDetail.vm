@@ -55,13 +55,14 @@
                                 <div id="tabSimple" class="active tab-pane widget-body-regular">
                                     <form name="" action="" method="get">
                                         <div class="rating clearfix">
+                                            <input type="hidden" id="s_star" name="star" value="" />
                                             <span>打个分数吧（可选）：</span>
                                             <span class="stars">
-                                              <span class="star"></span>
-                                              <span class="star"></span>
-                                              <span class="star"></span>
-                                              <span class="star"></span>
-                                              <span class="star"></span>
+                                              <span class="star" id="s_star1" onmouseover="selectStar('s_star',1)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',1)"></span>
+                                              <span class="star" id="s_star2" onmouseover="selectStar('s_star',2)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',2)"></span>
+                                              <span class="star" id="s_star3" onmouseover="selectStar('s_star',3)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',3)"></span>
+                                              <span class="star" id="s_star4" onmouseover="selectStar('s_star',4)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',4)"></span>
+                                              <span class="star" id="s_star5" onmouseover="selectStar('s_star',5)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',5)"></span>
                                             </span>
                                         </div>
                                         <textarea cols="2" rows="3" style="width: 362px;"></textarea>
@@ -71,13 +72,14 @@
                                 <div id="tabDetail" class="tab-pane widget-body-regular">
                                     <form name="" action="" method="get">
                                         <div class="rating clearfix">
+                                            <input type="hidden" id="d_star" name="star" value="" />
                                             <span>打个分数吧（可选）：</span>
                                             <span class="stars">
-                                              <span class="star"></span>
-                                              <span class="star"></span>
-                                              <span class="star"></span>
-                                              <span class="star"></span>
-                                              <span class="star"></span>
+                                              <span class="star" id="d_star1" onmouseover="selectStar('d_star',1)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',1)"></span>
+                                              <span class="star" id="d_star2" onmouseover="selectStar('d_star',2)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',2)"></span>
+                                              <span class="star" id="d_star3" onmouseover="selectStar('d_star',3)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',3)"></span>
+                                              <span class="star" id="d_star4" onmouseover="selectStar('d_star',4)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',4)"></span>
+                                              <span class="star" id="d_star5" onmouseover="selectStar('d_star',5)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',5)"></span>
                                             </span>
                                         </div>
                                         <div>
@@ -215,6 +217,31 @@
             </div>
     </div>
 </div>
+    <script>
+        var sign = 0;
+        function selectStar(e,num){
+            sign=0;
+            cancelSelect(e);
+            for (var i=1;i<=num;i++)
+            {
+                $("#"+e+i).addClass("on");
+            }
+            $("#"+e).val("");
+        }
+        function cancelSelect(e){
+            if(sign==0){
+                for(var i=1;i<=5;i++){
+                    $("#"+e+i).removeClass("on");
+                }
+                $("#"+e).val("");
+            }
+        }
+        function confirmSelect(e,num){
+            selectStar(e,num);
+            $("#"+e).val(num);
+            sign=1;
+        }
+    </script>
     <!-- JQuery -->
     <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
 
