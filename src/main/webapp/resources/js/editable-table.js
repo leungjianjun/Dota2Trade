@@ -128,11 +128,11 @@ var EditableTable = function () {
 
                     var aData = oTable.fnGetData(nRow);
                     $.ajax({
-                        type:'POST',
+                        type:'post',
                         url:"/doUpdateUser",
-                        data:{id:aData[0],account:aData[1],password:aData[2]},
+                        data:{id:aData[0].value,account:aData[1].value,password:aData[2].value},
                         success:function(data){
-                            alert(data);
+                            alert(data.success);
                         },
                         error:function(XMLHttpRequest, textStatus, errorThrown){
                             alert(XMLHttpRequest.status);

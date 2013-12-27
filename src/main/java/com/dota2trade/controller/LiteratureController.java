@@ -242,7 +242,10 @@ public class LiteratureController {
         return "searchResult";
     }
     @RequestMapping(value="/literatureDetail.html",method=RequestMethod.GET)
-    public String literatureDetail(ModelMap model){
+    public String literatureDetail(
+            @RequestParam("id")int literatureid,
+            ModelMap model){
+        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         return "literatureDetail";
     }
 

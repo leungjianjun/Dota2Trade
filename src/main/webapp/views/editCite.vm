@@ -232,4 +232,9 @@
 <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
 <!-- Uniform Forms Plugin -->
 <script src="../resources/common/theme/scripts/plugins/forms/pixelmatrix-uniform/jquery.uniform.min.js"></script>
+<script>
+    $('.btn-block').click(function(){
+        window.open("/listLiterature.html");
+    })
+</script>
 </body>

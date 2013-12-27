@@ -1,11 +1,5 @@
-.admin .btn{margin-left: 72px;padding: 3px 19px;vertical-align: top;}
-
-.paper-config{
-    width:521px;
-}
-
-.add-user{
-    margin-bottom: 20px;
+.admin .row{
+    margin-left:0;
 }
 
 .admin .col-lg-6{
@@ -13,14 +7,46 @@
     width:50%;
 }
 
-.admin .row{
-    margin-left:0;
-    height:80px;
+.paper-config{
+    float:left;
+    width:56%;
+    margin-left:50px;
 }
 
 .paper-config .row{
-    height:160px;
+    margin:10px 15px;
 }
+
+.paper-config .row label{
+    font-weight: bold;
+}
+
+.paper-config .btn{
+    margin-left: 15px;
+    padding: 3px 19px;
+    vertical-align: top;
+    float:right;
+}
+
+.paper-config .section{
+    border: #F1F2F7 1px solid;
+    margin-bottom: 22px;
+}
+
+.paper-config .section .head{
+    background: none repeat scroll 0% 0% rgb(242, 243, 244);
+    -webkit-border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0px 0px;
+    color: #8ec657;
+    line-height: 35px;
+}
+
+.paper-config .section .head h5 {
+    margin-top: 0;
+    padding-left: 10px;
+    margin-bottom: 0;
+}
+
 
 .form-control {
     display: block;
@@ -44,26 +70,32 @@ small, .small {
     font-size: 85%;
 }
 
-.admin .add-div{
 
-}
-.admin .add-div input{
-    width:342px;
+.paper-config .add-div input{
+    float: left;
+    width: 538px;
 }
 
-/*
-.admin label{
-    width:120px;
+.paper-config .literature .span6{
+    float:left;
 }
-*/
-.admin .checkbox-group{
+
+.literature .add-div{
+    float: right;
+}
+.literature .add-div input{
+    width: 276px;
+}
+
+.paper-config .checkbox-group{
     display:block;
-    margin-top:35px;
-    padding-bottom:10px;
-    width:356px;
+    margin-bottom:15px;
     border:#e2e2e2 solid 1px;
+    padding:15px;
+    min-height: 20px;
 }
 
-.admin .checkbox-group .checkbox,.admin .checkbox-group span{
+.paper-config .checkbox-group .checkbox,.paper-config .checkbox-group span{
     margin-right:18px;
+    vertical-align: middle;
 }
