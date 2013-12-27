@@ -25,20 +25,34 @@
         <div class="main">
             <div class="left">
                 <ul>
-                    <li class="t">云计算安全研究</li>
-                    <li class="type">
-                        <span>类别：论文</span>
-                        <span>发行时间：2011－11</span>
-                    </li>
-                    <li class="author">作者：冯登国， 张敏， 张妍， 徐震</li>
-                    <li class="abstract">
-                        ... 由于云计算代表未来信息技术领域的核心竞争力,当前世界各国政府都十分重视本国云计算的发展,
-                        力争 在未来信息技术的制高点占据一席之地.例如,2009 年9 月,美国总统奥巴马宣布将执行云计算
-                        政策,希望借助应 用虚拟化来压缩美国政府的经济支出;韩国政府计划向云计算领域投资6 ...
-                    </li>
-                    <li class="keyword">
-                        关键字：云计算 信息技术
-                    </li>
+                    <li class="t">$literature.literatureMeta.title</li>
+                    <li class="type">类别：
+                            #if($literature.literaturetypeid==1)
+                                图书
+                            #end
+                            #if($literature.literaturetypeid==2)
+                                图书章节
+                            #end
+                            #if($literature.literaturetypeid==3)
+                                期刊
+                            #end
+                            #if($literature.literaturetypeid==4)
+                                会议
+                            #end
+                            #if($literature.literaturetypeid==5)
+                                学位论文
+                            #end
+                            #if($literature.literaturetypeid==6)
+                                技术报告
+                            #end
+                            #if($literature.literaturetypeid==7)
+                                在线资源
+                            #end
+                        </li>
+                    <li>发行时间：$literature.literatureMeta.published_year</li>
+                    <li class="author">作者：$literature.literatureMeta.author</li>
+                    <li class="abstract">摘要：$literature.literatureMeta.literature_abstract</li>
+                    <li class="keyword">关键字：$literature.literatureMeta.key_words</li>
                 </ul>
                 <div class="comment">
                     <div class="t">我来评论</div>

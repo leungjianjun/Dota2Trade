@@ -68,7 +68,7 @@
                                         #foreach($literatureMeta in $literatureMetaList)
                                         <tr class="gradeX">
                                             <td>$literatureMeta.literatureid</td>
-                                            <td><a href="#">$literatureMeta.title</a></td>
+                                            <td><a href="literatureDetail.html?id=$literatureMeta.literatureid">$literatureMeta.title</a></td>
                                             <td>$literatureMeta.published_year</td>
                                             <td class="center">6</td>
                                             <td><div class="op">
