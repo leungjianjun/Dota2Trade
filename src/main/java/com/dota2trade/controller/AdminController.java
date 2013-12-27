@@ -34,11 +34,11 @@ public class AdminController {
 
     @RequestMapping(value="/doUpdateUser",method=RequestMethod.POST)
     public String doUpdateUser(
-            @RequestParam("id") int id,
-            @RequestParam("account") String account,
-            @RequestParam("password") String password,
+           @RequestParam(value="id") int id,
+            @RequestParam(value="account") String account,
+            @RequestParam(value="password") String password,
             Model model)throws UnsupportedEncodingException {
-        System.out.println("hello");
+        System.out.println("hello"+id+"/"+account);
         /*
         User user=new User();
         user.setId(id);
