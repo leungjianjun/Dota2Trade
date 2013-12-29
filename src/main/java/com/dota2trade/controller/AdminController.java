@@ -2,6 +2,9 @@ package com.dota2trade.controller;
 
 import com.dota2trade.dao.ConfigDao;
 import com.dota2trade.dao.UserDao;
+import com.dota2trade.model.Attribute;
+import com.dota2trade.model.LiteratureType;
+import com.dota2trade.model.LiteraturetypeAttribute;
 import com.dota2trade.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,14 +36,16 @@ public class AdminController {
 
     @RequestMapping(value="/paperConfig.html",method= RequestMethod.GET)
     public String paperConfig(ModelMap model){
-        List typeList=configDao.getAllLiteratureTypes();
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
         model.addAttribute("typeList",typeList);
-        model.addAttribute("size",typeList.size());
-
+        List typeAttributeList=new ArrayList();
         for(int i=0;i<typeList.size();i++){
-            model.addAttribute("type"+i,configDao.getAllAttributeOfLiteratureType((String)typeList.get(i)));
+            LiteratureType type= (LiteratureType) typeList.get(i);
+            int id=type.getId();
+            typeAttributeList.add(configDao.getAllAttributeOfLiteratureType(id));
         }
-
+        model.addAttribute("typeAttributeList",typeAttributeList);
         return "paperConfig";
     }
 

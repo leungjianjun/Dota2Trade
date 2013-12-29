@@ -1,6 +1,7 @@
 package com.dota2trade.dao;
 
 import com.dota2trade.model.Attribute;
+import com.dota2trade.model.LiteratureType;
 import com.dota2trade.model.LiteraturetypeAttribute;
 
 import java.util.List;
@@ -15,9 +16,9 @@ import java.util.List;
 public interface ConfigDao {
     /********************文献类别配置*******************/
     /**返回自增的id*/
-    int addLiteratureType(String name);
+    int addLiteratureType(LiteratureType literatureType);
     boolean deleteLiteratureType(int id);
-    List<String> getAllLiteratureTypes();
+    List<LiteratureType> getAllLiteratureTypes();
 
     /********************属性信息配置*******************/
     /**

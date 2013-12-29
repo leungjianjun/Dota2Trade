@@ -2,6 +2,7 @@ package com.dota2trade.dao.impl;
 
 import com.dota2trade.dao.ConfigDao;
 import com.dota2trade.model.Attribute;
+import com.dota2trade.model.LiteratureType;
 import com.dota2trade.model.LiteraturetypeAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,9 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by liyan.code@gmail.com
@@ -32,7 +31,8 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         setDataSource(dataSource);
     }
     @Override
-    public int addLiteratureType(final String name) {
+    public int addLiteratureType(LiteratureType literatureType) {
+        final String name= literatureType.getName();
         final String sql="INSERT INTO literaturetype (name) VALUES (?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator preparedStatementCreator=new PreparedStatementCreator(){
@@ -58,14 +58,9 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     }
 
     @Override
-    public List<String> getAllLiteratureTypes() {
-        String sql="SELECT name from literaturetype";
-        List list =new ArrayList();
-        list=this.getJdbcTemplate().queryForList(sql);
-        List typeList=new ArrayList();
-        for(int i=0;i<list.size();i++){
-            typeList.add(((Map) list.get(i)).get("name"));
-        }
+    public List<LiteratureType> getAllLiteratureTypes() {
+        String sql="SELECT * from literaturetype";
+        List typeList=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(LiteratureType.class));
         return typeList;
     }
 
