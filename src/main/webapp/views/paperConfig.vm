@@ -25,7 +25,6 @@
 
 <body>
     #include("header.vm")
-
 <div class="container0 clearfix">
     <ul class="menu">
         <li><a class="group" href="/admin.html"><i></i><span>用户管理</span></a></li>
@@ -179,11 +178,12 @@
     function addConfig(id){
         alert("start!");
         var configs=document.getElementById(id).value;
-        var selected=document.getElementById("select").value;
+        var text=document.getElementById("select").text;
+        alert("id:"+id+"  configs:"+configs+"  selected:"+text);
         $.ajax({
             type:'post',
             url:"/doAddConfigs",
-            data:{type:id,configs:configs,selected:selected},
+            data:{type:id,configs:configs,typename:text},
             success:function(data){},
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest.status);

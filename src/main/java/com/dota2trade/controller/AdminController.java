@@ -55,44 +55,41 @@ public class AdminController {
     public String doAddConfigs(
             @RequestParam("type") String type,
             @RequestParam("configs") String configs,
-            @RequestParam("selected") int selected,
+            @RequestParam("typename") String typename,
             Model model
     )throws UnsupportedEncodingException{
         boolean success=false;
         String args[]=this.getConfigs(configs);
-
-        for(int i=0;i<args.length;i++){
-            if(type.equals("types")){
+        if(type.equals("types")){
+            for(int i=0;i<args.length;i++){
                 LiteratureType ltype=new LiteratureType();
                 ltype.setName(args[i]);
                 configDao.addLiteratureType(ltype);
             }
-
-            if(type.equals("type_attributes")){
+        }
+        else if(type.equals("type_attributes")){
+            for(int i=0;i<args.length;i++){
                 LiteraturetypeAttribute ltypeAttr=new LiteraturetypeAttribute();
                 Attribute attr=new Attribute();
                 attr.setName(args[i]);
                 attr.setType(1);
-                configDao.addLiteraturetypeAttribute(selected,attr);
+                configDao.addLiteraturetypeAttribute(typename,attr);
             }
-
-            if(type.equals("cite_attributes")){
-                Attribute attr=new Attribute();
-                attr.setName(args[i]);
-                attr.setType(3);
-                configDao.addAttribute(attr);
-            }
-
-            if(type.equals("comment_attributes")){
+        }else if(type.equals("comment_attributes")){
+            for(int i=0;i<args.length;i++){
                 Attribute attr=new Attribute();
                 attr.setName(args[i]);
                 attr.setType(2);
                 configDao.addAttribute(attr);
             }
-
-
+        }else if(type.equals("cite_attributes")){
+            for(int i=0;i<args.length;i++){
+                Attribute attr=new Attribute();
+                attr.setName(args[i]);
+                attr.setType(3);
+                configDao.addAttribute(attr);
+            }
         }
-
         return "paperConfig";
     }
 

@@ -32,6 +32,7 @@ public interface ConfigDao {
      * 然后向类型-属性关系对应表插入记录，插入的关系默认ismust为1
      * */
     boolean addLiteraturetypeAttribute(int literatureTypeId,Attribute attribute);
+    boolean addLiteraturetypeAttribute(String literatureTypeName,Attribute attribute);
     /**插入一条属性*/
     int addAttribute(Attribute attribute);
     /**改变类型-属性关系的ismust字段,使得结果与原来相反*/

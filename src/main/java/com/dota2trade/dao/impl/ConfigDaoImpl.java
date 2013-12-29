@@ -76,6 +76,13 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     }
 
     @Override
+    public boolean addLiteraturetypeAttribute(String literatureTypeName, Attribute attribute) {
+        String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
+        int literatureId=this.getJdbcTemplate().queryForInt(sql);
+        return  addLiteraturetypeAttribute(literatureId,attribute);
+    }
+
+    @Override
     public int addAttribute(final Attribute attribute) {
         String selectSql="SELECT * FROM attribute WHERE name=? AND type=?";
         //先检查是否有重名的
@@ -166,7 +173,6 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     @Override
     public List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(String literatureTypeName){
         String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
-        System.out.println(sql);
         int literatureId=this.getJdbcTemplate().queryForInt(sql);
         return getAllAttributeOfLiteratureType(literatureId);
     }
