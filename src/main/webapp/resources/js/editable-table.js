@@ -96,8 +96,21 @@ var EditableTable = function () {
                 }
 
                 var nRow = $(this).parents('tr')[0];
-                oTable.fnDeleteRow(nRow);
-                alert("已删除! Do not forget to do some ajax to sync with backend :)");
+                var aData = oTable.fnGetData(nRow);
+                $.ajax({
+                    type:'post',
+                    url:"/doDeleUser",
+                    data:{account:aData[1]},
+                    success:function(data){
+                        oTable.fnDeleteRow(nRow);
+                        alert("已删除! :)");
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                    }
+                });
             });
 
             $('#editable-sample a.cancel').live('click', function (e) {
@@ -124,15 +137,31 @@ var EditableTable = function () {
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "保存") {
                     /* Editing this row and want to save it */
-                    saveRow(oTable, nEditing);
-
                     var aData = oTable.fnGetData(nRow);
+                    if($(this).attr("data-mode")=="new"){
+                        aData[0]=-1;
+                    }
+                    var jqInputs = $('input', nRow);
+                    aData[1]=jqInputs[0].value;
+                    aData[2]=jqInputs[1].value;
                     $.ajax({
                         type:'post',
                         url:"/doUpdateUser",
-                        data:{id:aData[0].value,account:aData[1].value,password:aData[2].value},
+                        data:{id:aData[0],account:aData[1],password:aData[2]},
                         success:function(data){
-                            alert(data.success);
+                            if(true){
+                                saveRow(oTable, nEditing);
+                                alert("更新成功! :)");
+                                nEditing = null;
+                            }else{
+                                if(aData[0]==-1)
+                                    oTable.fnDeleteRow(nRow);
+                                else{
+                                    restoreRow(oTable, nEditing);
+                                    nEditing = null;
+                                }
+                                alert("更新失败! :(")
+                            }
                         },
                         error:function(XMLHttpRequest, textStatus, errorThrown){
                             alert(XMLHttpRequest.status);
@@ -140,8 +169,6 @@ var EditableTable = function () {
                             alert(textStatus);
                         }
                     });
-                    nEditing = null;
-                    alert("更新成功! Do not forget to do some ajax to sync with backend :)");
                 } else {
                     /* No edit in progress - let's start one */
                     editRow(oTable, nRow);

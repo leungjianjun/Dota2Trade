@@ -39,12 +39,14 @@
     border-radius: 4px 4px 0px 0px;
     color: #8ec657;
     line-height: 35px;
+    height:35px;
 }
 
 .paper-config .section .head h5 {
     margin-top: 0;
     padding-left: 10px;
     margin-bottom: 0;
+    float:left;
 }
 
 
@@ -98,4 +100,43 @@ small, .small {
 .paper-config .checkbox-group .checkbox,.paper-config .checkbox-group span{
     margin-right:18px;
     vertical-align: middle;
+}
+
+.paper-config .save-btn{
+    float:right;
+    display:inline-block;
+    margin-right: 15px;
+}
+
+.paper-config .save-btn a{
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 13px;
+    border-color: #8ec657;
+    background-color: #F2F2F2;
+    line-height: 0px;
+}
+
+.paper-config .save-btn a:hover,.paper-config .save-btn span:hover{
+    background-color: #8ec657;
+    color:#fff;
+}
+
+
+.paper-config .save-btn span{
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    vertical-align: middle;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 13px;
+    padding: 0px 9px 0px 8px;
+    border-color: rgb(255, 255, 255);
+    color: #8ec657;
+    cursor: pointer;
 }

@@ -180,6 +180,8 @@ public class LiteratureController {
     @RequestMapping(value="/editCite.html",method=RequestMethod.GET)
     public String editCite(@RequestParam("literatureid")int literatureid,ModelMap model){
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
+        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+        model.addAttribute("citeList",literatureDao.getAllCiteRelationshipByLiteratureId(literatureid));
         return "editCite";
     }
     /**修改文献基本信息页面*/
@@ -256,6 +258,13 @@ public class LiteratureController {
         return "listLiterature";
     }
 
+    /**
+     * 添加引用关系
+     */
+    @RequestMapping(value = "/addCite",method=RequestMethod.POST)
+    public String addCite(Model model){
+        return "listLiterature";
+    }
 
     public LiteratureDao getLiteratureDao() {
         return literatureDao;

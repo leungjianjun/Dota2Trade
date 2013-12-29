@@ -1,4 +1,4 @@
-.edit_right{float: left;margin-left: 50px;width:820px;color:#333;}
+.edit_right{float: right;margin-left: 50px;width:75%;color:#333;}
 .edit_right .title{
     margin: 0px 0px 22px;
     font-weight: 600;
@@ -8,18 +8,18 @@
     border-bottom: 2px solid rgb(216, 216, 216);
 }
 .edit_right .title span{font-size: 16px;font-weight: normal;margin-left: 20px;}
-.edit_right .main .e_left{float:left;width: 400px;}
-.edit_right .main .e_left .cite_type{margin-left: 270px;margin-bottom: 8px;}
+.edit_right .main .e_left{float:left;width: 45%;}
+.edit_right .main .e_left .cite_type{margin-left: 68%;margin-bottom: 8px;}
 .edit_right .main .e_left .cite_type span{color: #333;}
 .edit_right .main .e_left .cite_type span.first{margin-right: 15px;}
-.edit_right .main .e_left .add_cite.first{margin-right: 15px;}
+.edit_right .main .e_left .add_cite.first{margin-right: 24px;}
 .edit_right .main .e_left .btn{padding: 4px 12px;}
 .edit_right .main .e_left .span6{width: 250px;}
 .edit_right .main .e_left .add_cite{display:inline-block;background: url("images/addcite.png") -2px 0 no-repeat;width: 23px;height: 23px;}
-.edit_right .main .e_left .desc{float:left;width:270px;color: #333;text-decoration: none;}
+.edit_right .main .e_left .desc{float:left;width:68%;color: #333;text-decoration: none;}
 .edit_right .main .e_left .desc:hover{color:#8ec657;text-decoration: underline;}
 
-.e_right {float: left;margin-left: 20px;width: 397px;}
+.e_right {float: right;width: 55%;}
 .e_right .lit_title{font-size: 14px;font-weight: bold;margin-bottom: 15px;}
 .e_right div.checker {width: 10px;height: 19px;}
 .e_right label{display: inline;font-size: 12px;}

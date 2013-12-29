@@ -2,6 +2,7 @@ package com.dota2trade.dao.impl;
 
 import com.dota2trade.dao.ConfigDao;
 import com.dota2trade.model.Attribute;
+import com.dota2trade.model.LiteratureType;
 import com.dota2trade.model.LiteraturetypeAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -30,7 +31,8 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         setDataSource(dataSource);
     }
     @Override
-    public int addLiteratureType(final String name) {
+    public int addLiteratureType(LiteratureType literatureType) {
+        final String name= literatureType.getName();
         final String sql="INSERT INTO literaturetype (name) VALUES (?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator preparedStatementCreator=new PreparedStatementCreator(){
@@ -53,6 +55,13 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         String sql="DELETE FROM literaturetype WHERE id='"+id+"'";
         int r=this.getJdbcTemplate().update(sql);
         return (r>0)?true:false;
+    }
+
+    @Override
+    public List<LiteratureType> getAllLiteratureTypes() {
+        String sql="SELECT * from literaturetype";
+        List typeList=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(LiteratureType.class));
+        return typeList;
     }
 
     @Override
@@ -152,6 +161,14 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(String literatureTypeName){
+        String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
+        System.out.println(sql);
+        int literatureId=this.getJdbcTemplate().queryForInt(sql);
+        return getAllAttributeOfLiteratureType(literatureId);
     }
 
     @Override

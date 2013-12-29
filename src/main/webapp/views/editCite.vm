@@ -39,38 +39,22 @@
                         <button class="btn btn-default" type="button"><i class="icon-search"></i></button>
                     </div>
                 </div>
-                <div class="cite_type">
-                    <span class="first">引用</span>
-                    <span>被引用</span>
-                </div>
+                <div style="font-weight: bold;font-size: 14px;">可能相关的文献：</div>
+                <div class="cite_type"><span>添加引用</span></div>
                 <ul>
-                    <li>
-                        <a class="desc" href="#">《Cloud Computing》-T,J L,Tom 2012</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
-                    </li>
-                    <li>
-                        <a class="desc" href="#">《Hadoop》-Tick L,Tom 2011</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
-                    </li>
-                    <li>
-                        <a class="desc" href="#">《HBase》-Jack L,Tom 2012</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
-                    </li>
-                    <li>
-                        <a class="desc" href="#">《HCI is good》-T,J L,Tom 2012</a>
-                        <a class="add_cite first" href=""></a>
-                        <a class="add_cite" href=""></a>
-                    </li>
+                    #foreach($literatureMeta in $literatureMetaList)
+                        <li>
+                            <a class="desc" href="literatureDetail.html?id=$literatureMeta.literatureid">$literatureMeta.title -$literatureMeta.author $literatureMeta.published_year</a>
+                            <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cite',this);"></a>
+                        </li>
+                    #end
                 </ul>
             </div>
             <div class="e_right">
                 <div class="lit_title">文献标题: ${literature.literatureMeta.title}</div>
                 <div class="cite_list">
                     <div class="list_title"><span></span>本文引用的文献</div>
-                    <ul>
+                    <ul id="cite">
                         <li>
                             <a href="#">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
                             <div class="widget-body uniformjs">
@@ -151,63 +135,6 @@
                         </li>
                     </ul>
                 </div>
-                <div class="cite_list">
-                    <div class="list_title"><span></span>引用本文的文献</div>
-                    <ul>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                            <div class="widget-body uniformjs">
-                                <label>引用关系类型：</label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" />
-                                    简单提及
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    相关
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    使用
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    对比
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    不确定
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                            <div class="widget-body uniformjs">
-                                <label>引用关系类型：</label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" />
-                                    简单提及
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    相关
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    使用
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    对比
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" />
-                                    不确定
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
         <div class="submit">
@@ -216,6 +143,32 @@
         </div>
     </div>
 </div>
+<script>
+    function add_cite(id,e){
+        $("#"+id).append(
+             '<li><a href="#">'+$(e).parent().children('.desc').text()+'</a>'+
+                  '<div class="widget-body uniformjs"><label style="margin-right: 4px;">引用关系类型：</label>' +
+                  '<label class="checkbox" style="margin-right: 4px;">' +
+                  '<div class="checker" id="uniform-undefined"><span><input type="checkbox" class="checkbox" value="1" style="opacity: 0;"></span></div>' +
+                  '&nbsp;简单提及</label>'+
+                  '<label class="checkbox" style="margin-right: 4px;">'+
+                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="2" checked="checked" style="opacity: 0;"></span></div>'+
+                  '&nbsp;相关</label>'+
+                  '<label class="checkbox" style="margin-right: 4px;">'+
+                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="3" checked="checked" style="opacity: 0;"></span></div>'+
+                  '&nbsp;使用</label>'+
+                  '<label class="checkbox" style="margin-right: 4px;">'+
+                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="4" checked="checked" style="opacity: 0;"></span></div>'+
+                  '&nbsp;对比</label>'+
+                  '<label class="checkbox" style="margin-right: 4px;">'+
+                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="5" checked="checked" style="opacity: 0;"></span></div>'+
+                  '&nbsp;不确定</label></div></li>'
+                  )
+    }
+    function deleteCite(e){
+        $(e).parent().remove();
+    }
+</script>
 <!-- JQuery -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
 
