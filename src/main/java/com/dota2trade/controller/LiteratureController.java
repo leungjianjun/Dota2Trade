@@ -77,7 +77,7 @@ public class LiteratureController {
         paper.setName(attachmentName);
         String paperFileName = System.currentTimeMillis()+attachmentName;
         paper.setLink(LINK_PREFIX+paperFileName);
-        FileUploadHelper.uploadFile(fileAttachment,paperFileName);
+        FileUploadHelper.uploadFile(fileAttachment,paperFileName,"paper");
         paper.setCreatorid(userid);
         paper.setType(0);
         attachmentList.add(paper);
@@ -85,7 +85,7 @@ public class LiteratureController {
         if (!otherAttachment1.isEmpty()){
             String other1Name = new String (otherAttachment1.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
             String otherFile1Name = System.currentTimeMillis()+other1Name;
-            FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name);
+            FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name,"other");
             attachment1=new Attachment();
             attachment1.setName(other1Name);
             attachment1.setLink(LINK_PREFIX+otherFile1Name);
@@ -97,7 +97,7 @@ public class LiteratureController {
         if (!otherAttachment2.isEmpty()){
             String other2Name = new String (otherAttachment2.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
             String otherFile2Name = System.currentTimeMillis()+other2Name;
-            FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name);
+            FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name,"other");
             attachment2=new Attachment();
             attachment2.setName(other2Name);
             attachment2.setLink(LINK_PREFIX+otherFile2Name);
@@ -109,7 +109,7 @@ public class LiteratureController {
         if (!otherAttachment3.isEmpty()){
             String other3Name = new String (otherAttachment3.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
             String otherFile3Name = System.currentTimeMillis()+other3Name;
-            FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name);
+            FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name,"other");
             attachment3=new Attachment();
             attachment3.setName(other3Name);
             attachment3.setLink(LINK_PREFIX+otherFile3Name);
@@ -121,7 +121,7 @@ public class LiteratureController {
         if (!otherAttachment4.isEmpty()){
             String other4Name = new String (otherAttachment4.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
             String otherFile4Name = System.currentTimeMillis()+other4Name;
-            FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name);
+            FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name,"other");
             attachment4=new Attachment();
             attachment4.setName(other4Name);
             attachment4.setLink(LINK_PREFIX+otherFile4Name);
