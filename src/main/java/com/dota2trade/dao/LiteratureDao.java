@@ -75,6 +75,8 @@ public interface LiteratureDao {
     List<Attachment> getAllAttachmentByLiteratureId(int literatureid);
     /**获取一个文献的所有引用关系*/
     List<CiteRelationship> getAllCiteRelationshipByLiteratureId(int literatureid);
+    /**获取所有引用一个文献的文献*/
+    List<CiteRelationship> getAllCiteRelationshipByCitedById(int citedbyid);
     /**获取组内所有文献的基本信息*/
     List<LiteratureMeta> getAllLiteratureMeta();
 
