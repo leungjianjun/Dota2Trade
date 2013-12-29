@@ -178,8 +178,11 @@
     function addConfig(id){
         var configs=document.getElementById(id).value;
         var obj=document.getElementById("select");
+        alert(obj);
         var index=obj.selectedIndex;
-        var text=obj.options[index].text;
+        var text=""
+        if(index!=-1)
+            text=obj.options[index].text;
         configs=configs.trim();
         var args=configs.split(/;|；/)
         for(var i=0;i<args.length;i++)
