@@ -179,13 +179,24 @@ public class LiteratureController {
 
     @RequestMapping(value="/editCite.html",method=RequestMethod.GET)
     public String editCite(@RequestParam("literatureid")int literatureid,ModelMap model){
-        Map<Integer, Integer[]> map = new HashMap<Integer, Integer[]>();
+        Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
         for(int i=0;i<temp.size();i++){
             CiteRelationship cr = temp.get(i);
+            if(!(map.containsKey(cr.getCitedbyid()))){
+                ArrayList<Integer> typeList = new ArrayList<Integer>();
+                typeList.add(cr.getCitedtypeid());
+                map.put(cr.getCitedbyid(),typeList);
+            }
+            else{
+                ArrayList<Integer> typeList = map.get(cr.getCitedbyid());
+                typeList.add(cr.getCitedtypeid());
+                map.put(cr.getCitedbyid(),typeList);
+            }
         }
+        System.out.println(map.get(29));
         model.addAttribute("citeList",literatureDao.getAllCiteRelationshipByLiteratureId(literatureid));
         return "editCite";
     }
