@@ -2,10 +2,7 @@ package com.dota2trade.controller;
 
 import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.dao.UserDao;
-import com.dota2trade.model.Attachment;
-import com.dota2trade.model.Literature;
-import com.dota2trade.model.LiteratureMeta;
-import com.dota2trade.model.Publisher;
+import com.dota2trade.model.*;
 import com.dota2trade.util.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +19,9 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created with IntelliJ IDEA.
@@ -179,8 +179,13 @@ public class LiteratureController {
 
     @RequestMapping(value="/editCite.html",method=RequestMethod.GET)
     public String editCite(@RequestParam("literatureid")int literatureid,ModelMap model){
+        Map<Integer, Integer[]> map = new HashMap<Integer, Integer[]>();
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+        List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
+        for(int i=0;i<temp.size();i++){
+            CiteRelationship cr = temp.get(i);
+        }
         model.addAttribute("citeList",literatureDao.getAllCiteRelationshipByLiteratureId(literatureid));
         return "editCite";
     }
@@ -261,8 +266,26 @@ public class LiteratureController {
     /**
      * 添加引用关系
      */
-    @RequestMapping(value = "/addCite",method=RequestMethod.POST)
-    public String addCite(Model model){
+    @RequestMapping(value = "/doaddCite",method=RequestMethod.POST)
+    public String addCite(HttpServletRequest request,Model model){
+        int citeNum=Integer.parseInt(request.getParameter("citeNum"));
+        int literatureid = Integer.parseInt(request.getParameter("literatureid"));
+        ArrayList<CiteRelationship> list = new ArrayList<CiteRelationship>();
+        for(int i=1;i<=citeNum;i++){
+            String cite = "cite"+i;
+            String type = "type"+i;
+            int citedbyid = Integer.parseInt(request.getParameter(cite));
+            String Temp[]=request.getParameterValues(type);
+            for(int j=0;j<Temp.length;j++){
+                CiteRelationship cr = new CiteRelationship();
+                cr.setLiteratureid(literatureid);
+                cr.setCitedtypeid(Integer.parseInt(Temp[j]));
+                cr.setCitedbyid(citedbyid);
+                list.add(cr);
+            }
+        }
+        literatureDao.addCiteRelationship(list);
+        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         return "listLiterature";
     }
 

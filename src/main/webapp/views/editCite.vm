@@ -30,7 +30,8 @@
         <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
     </ul>
     <div class="edit_right">
-        <form name="cite" action="addCite" method="POST">
+    <form name="cite" action="/doaddCite" method="POST">
+        #set($citeNum=$citeList.size())
         <div class="title">文献修改<span>编辑引用关系</span></div>
         <div class="main clearfix">
             <div class="e_left">
@@ -60,7 +61,8 @@
                                 <li style="display: block;" id="nonecite">暂无引用文献</li>
                             #end
                             #set($i=0)
-                            #foreach($cite in $citeList)$i++
+                            #foreach($cite in $citeList)
+                            #set($i=$i+1)
                             <li>
                                 <a href="literatureDetail.html?id=cite.literatureid">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
                                 <div class="widget-body uniformjs">
@@ -96,36 +98,34 @@
         <div class="submit">
             <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 235px;">确认修改</button>
             <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+            <input type="hidden" id="citeNum" value="" name="citeNum" />
+            <input type="hidden" name="literatureid" value="$literature.literatureMeta.literatureid" />
         </div>
-        </form>
+    </form>
     </div>
 </div>
 <script>
-    #set($citeNum=$citeList.size())
+    var temp = $citeNum;
     function add_cite(id,e,literatureid){
-        #set($citeNum=$citeNum+1)
+        temp++;
+        $("#citeNum").val(temp);
         if($("#nonecite")[0].style.display!="none"){
             $("#nonecite")[0].style.display="none";
         }
         $("#"+id).append(
              '<li><a href="#">'+$(e).parent().children('.desc').text()+'</a>'+
-                  '<input name="cite$citeNum" type="hidden" value="'+literatureid+'" />'+
-                  '<div class="widget-body uniformjs"><label style="margin-right: 4px;">引用关系类型：</label>' +
-                  '<label class="checkbox" style="margin-right: 4px;">' +
-                  '<div class="checker" id="uniform-undefined"><span><input type="checkbox" name="type$citeNum" class="checkbox" value="1" style="opacity: 0;"></span></div>' +
-                  '&nbsp;简单提及</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" name="type$citeNum" class="checkbox" value="2" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;相关</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" name="type$citeNum" class="checkbox" value="3" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;使用</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" name="type$citeNum" class="checkbox" value="4" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;对比</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" name="type$citeNum" class="checkbox" value="5" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;不确定</label></div></li>'
+                  '<input name="cite'+temp+'" type="hidden" value="'+literatureid+'" />'+
+                  '<div class="type_checkbox"><label style="margin-right: 4px;">引用关系类型：</label>' +
+                  '<input type="checkbox" name="type'+temp+'" value="1">' +
+                  '&nbsp;简单提及'+
+                  '<input type="checkbox" name="type'+temp+'" value="2" checked="checked">'+
+                  '&nbsp;相关'+
+                  '<input type="checkbox" name="type'+temp+'" value="3" checked="checked">'+
+                  '&nbsp;使用'+
+                  '<input type="checkbox" name="type'+temp+'" value="4" checked="checked">'+
+                  '&nbsp;对比'+
+                  '<input type="checkbox" name="type'+temp+'" value="5" checked="checked">'+
+                  '&nbsp;不确定</div></li>'
                   )
     }
     function deleteCite(e){
@@ -148,9 +148,4 @@
 <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
 <!-- Uniform Forms Plugin -->
 <script src="../resources/common/theme/scripts/plugins/forms/pixelmatrix-uniform/jquery.uniform.min.js"></script>
-<script>
-    $('.btn-block').click(function(){
-        window.open("/listLiterature.html");
-    })
-</script>
 </body>

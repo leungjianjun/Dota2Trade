@@ -27,3 +27,4 @@
 .e_right .list_title span{float:left;width:16px;height:18px;background: url("images/cite_logo.png") 0 0 no-repeat;}
 .e_right .cite_list ul{margin-left: 16px;}
 .submit{margin-top: 20px;}
+.type_checkbox input{display: inline-block;vertical-align: baseline;margin: 0 2px;}

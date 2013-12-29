@@ -322,23 +322,29 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
 
     @Override
     public boolean updateCiteRelationship(List<CiteRelationship> citeRelationshipList) {
-        String sql_update="UPDATE cited SET citedtypeid=? WHERE literatureid=? AND citedbyid=? ";
+        if(citeRelationshipList.size()!=0){
+            int literatureid = citeRelationshipList.get(0).getLiteratureid();
+            int citecount = getAllCiteRelationshipByLiteratureId(literatureid).size();
+            if(citecount!=0){
+                deleteACiteRelationshipByLiteratureId(literatureid);
+            }
+        }
         String sql_insert="INSERT INTO cited (literatureid,citedbyid,citedtypeid) VALUES (?,?,?)";
         boolean r=true;
         for(CiteRelationship citeRelationship:citeRelationshipList){
-            int updateCount=this.getJdbcTemplate().update(sql_update,
-                    citeRelationship.getCitedtypeid(),
-                    citeRelationship.getLiteratureid(),
-                    citeRelationship.getCitedbyid());
-            if(updateCount>0){
-                continue;
-            }else{
+//            int updateCount=this.getJdbcTemplate().update(sql_update,
+//                    citeRelationship.getCitedtypeid(),
+//                    citeRelationship.getLiteratureid(),
+//                    citeRelationship.getCitedbyid());
+//            if(updateCount>0){
+//                continue;
+//            }else{
                 int insertCount=this.getJdbcTemplate().update(sql_insert,
                         citeRelationship.getLiteratureid(),
                         citeRelationship.getCitedbyid(),
                         citeRelationship.getCitedtypeid());
                 r=(r==true&&insertCount>0);
-            }
+//            }
         }
         return r;
     }
