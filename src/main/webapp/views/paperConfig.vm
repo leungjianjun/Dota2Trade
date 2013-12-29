@@ -40,14 +40,10 @@
                 </div>
                 <div class="row literature">
                     <label>文献种类：</label>
-                    <select class="selectpicker span6" data-style="btn-default" style="display: none;">
-                        <option>图书</option>
-                        <option>图书章节</option>
-                        <option>期刊</option>
-                        <option>会议</option>
-                        <option>学位论文</option>
-                        <option>技术报告</option>
-                        <option>在线资源</option>
+                    <select class="selectpicker span6" data-style="btn-default" style="display: none;" id="select" onchange="showAttribute()">
+                        #foreach($type in $typeList)
+                            <option value=$type>$!type</option>
+                        #end
                     </select>
 
                     <div class="add-div">
@@ -55,18 +51,21 @@
                         <button class="btn btn-primary">添加类型</button>
                     </div>
                 </div>
-                <div class="row" id="special">
-                    <label>图书类 - 特色信息配置：</label>
-                    <div class="checkbox-group">
-                        <input type="checkbox" checked="true" class="checkbox"><span>标题</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>作者</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>出版年份</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>页码</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>摘要</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>关键字</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>出版社</span>
-                        <input type="checkbox"  class="checkbox"><span>在线地址</span>
-                    </div>
+                <div class="row">
+                    #set($foo=-1)
+                    #foreach($type in $typeList)
+                        #set($foo=$foo+1)
+                        <div class="special" id=$type>
+                            <label>$type 类 - 特色信息配置：</label>
+                            <div class="checkbox-group">
+                                    #set($test="type"+$foo)
+                                    #foreach($attribute in $test)
+                                        <input type="checkbox" checked=$attribute.ismust class="checkbox"><span>$attribute.attribute.name</span>
+                                    #end
+                            </div>
+
+                        </div>
+                    #end
                     <div class="add-div">
                         <input type="text" placeholder="多个属性用 ‘;’ 隔开" >
                         <button class="btn btn-primary">添加属性</button>
@@ -103,6 +102,9 @@
             <div class="section">
                 <div class="head">
                     <h5>引用关系配置</h5>
+                    <div class="save-btn">
+                        <a><span>保存配置</span></a>
+                    </div>
                 </div>
                 <div class="row">
                     <label>已有引用关系：</label>
@@ -156,5 +158,9 @@
             "aaSorting": [[ 4, "asc" ]]
         } );
     } );
+
+    function showAttribute(){
+
+    }
 </script>
 </body>

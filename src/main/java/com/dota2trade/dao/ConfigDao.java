@@ -17,6 +17,7 @@ public interface ConfigDao {
     /**返回自增的id*/
     int addLiteratureType(String name);
     boolean deleteLiteratureType(int id);
+    List<String> getAllLiteratureTypes();
 
     /********************属性信息配置*******************/
     /**
@@ -38,6 +39,7 @@ public interface ConfigDao {
     boolean deleteLiteraturetypeAttribute(int literatureTypeId,Attribute attribute);
     /**获得一个文献类型的所有已配置属性*/
     List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(int literatureTypeId);
+    List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(String literatureTypeName);
     /**获得一个文献类型的某一属性类型的已配置属性*/
     List<LiteraturetypeAttribute> getOneAttributeOfLiteratureType(int literatureTypeId,int type);
 }

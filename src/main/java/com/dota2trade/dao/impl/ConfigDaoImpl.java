@@ -14,7 +14,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liyan.code@gmail.com
@@ -53,6 +55,18 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         String sql="DELETE FROM literaturetype WHERE id='"+id+"'";
         int r=this.getJdbcTemplate().update(sql);
         return (r>0)?true:false;
+    }
+
+    @Override
+    public List<String> getAllLiteratureTypes() {
+        String sql="SELECT name from literaturetype";
+        List list =new ArrayList();
+        list=this.getJdbcTemplate().queryForList(sql);
+        List typeList=new ArrayList();
+        for(int i=0;i<list.size();i++){
+            typeList.add(((Map) list.get(i)).get("name"));
+        }
+        return typeList;
     }
 
     @Override
@@ -152,6 +166,14 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(String literatureTypeName){
+        String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
+        System.out.println(sql);
+        int literatureId=this.getJdbcTemplate().queryForInt(sql);
+        return getAllAttributeOfLiteratureType(literatureId);
     }
 
     @Override
