@@ -54,12 +54,11 @@ public class AdminController {
     @RequestMapping(value="/doAddConfigs",method=RequestMethod.POST)
     public String doAddConfigs(
             @RequestParam("type") String type,
-            @RequestParam("configs") String configs,
+            @RequestParam("args[]") String[] args,
             @RequestParam("typename") String typename,
             Model model
     )throws UnsupportedEncodingException{
         boolean success=false;
-        String args[]=this.getConfigs(configs);
         if(type.equals("types")){
             for(int i=0;i<args.length;i++){
                 LiteratureType ltype=new LiteratureType();
@@ -116,13 +115,6 @@ public class AdminController {
         boolean success=false;
         userDao.deleteUser(account);
         return "admin";
-    }
-
-    /**将页面传过来的多个字符分割**/
-    public String[] getConfigs(String configs){
-        configs=configs.replaceAll(" ","");
-        String args[] = configs.split(";");
-        return args;
     }
 
 

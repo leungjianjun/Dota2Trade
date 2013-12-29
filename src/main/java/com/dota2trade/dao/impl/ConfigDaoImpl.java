@@ -68,9 +68,9 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     public boolean addLiteraturetypeAttribute(int literatureTypeId, Attribute attribute) {
         int attributeid=this.addAttribute(attribute);
         String sql="INSERT INTO literaturetype_attribute(literaturetypeid," +
-                "attributeid,attributetype,ismust) VALUES(?,?,?,?)";
+                "attributeid,ismust) VALUES(?,?,?)";
         int r=this.getJdbcTemplate().update(sql,literatureTypeId,
-                attributeid,attribute.getType(),1);
+                attributeid,1);
 
         return (r>0)?true:false;
     }

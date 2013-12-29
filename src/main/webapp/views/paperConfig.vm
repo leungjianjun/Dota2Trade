@@ -73,7 +73,7 @@
                                     #end>
                                     #foreach($attribute in $typeAttribute)
                                         <input type="checkbox" #if($attribute.ismust==1) checked="true"
-                                        #end class="checkbox"  value="${attribute.attribute.id}" onclick="changeArray(this,,'type')"><span>${attribute.attribute.name}</span>
+                                        #end class="checkbox"  value="${attribute.attribute.name}"><span>${attribute.attribute.name}</span>
                                     #end
                                 </div>
                             #end
@@ -99,9 +99,9 @@
                 </div>
                 <div class="row">
                     <label>已有详细评价配置：</label>
-                    <div class="checkbox-group">
+                    <div class="checkbox-group" id="comment-box">
                         #foreach($commentAttribute in $commentAttributeList)
-                            <input type="checkbox" class="checkbox" value="$commentAttribute.id" onclick="changeArray(this.value,'comment')"><span>$commentAttribute.name</span>
+                            <input type="checkbox" class="checkbox" value="$commentAttribute.name" ><span>$commentAttribute.name</span>
                         #end
                     </div>
                     <div class="add-div">
@@ -121,9 +121,9 @@
                 </div>
                 <div class="row">
                     <label>已有引用关系：</label>
-                    <div class="checkbox-group">
+                    <div class="checkbox-group" id="cite-box">
                         #foreach($citeAttribute in $citeAttributeList)
-                            <input type="checkbox" class="checkbox" value="$citeAttribute.id" onclick="changeArray(this,'cite')"><span>$citeAttribute.name</span>
+                            <input type="checkbox" class="checkbox" value="$citeAttribute.name" ><span>$citeAttribute.name</span>
                         #end
                     </div>
                     <div class="add-div">
@@ -176,15 +176,47 @@
     }
 
     function addConfig(id){
-        alert("start!");
         var configs=document.getElementById(id).value;
-        var text=document.getElementById("select").text;
-        alert("id:"+id+"  configs:"+configs+"  selected:"+text);
+        var obj=document.getElementById("select");
+        var index=obj.selectedIndex;
+        var text=obj.options[index].text;
+        configs=configs.trim();
+        var args=configs.split(/;|；/)
+        for(var i=0;i<args.length;i++)
+           alert(args[i]);
         $.ajax({
             type:'post',
             url:"/doAddConfigs",
-            data:{type:id,configs:configs,typename:text},
-            success:function(data){},
+            data:{type:id,args:args,typename:text},
+            success:function(data){
+                alert("添加成功！");
+                if(id=="types")
+                    for(var i=0;i<args.length;i++){
+                        var num=$typeList.size()+i+1;
+                        alert("types"+num);
+                        $("#"+id)[0].value="";
+                        $("#select").append("<option value='type_"+num+"'>"+args[i]+"</option>");
+                        $(".special").append("<div class='checkbox-group'id='type_"+num+"'style='display:none'")
+                    }
+                else if(id=="type_attributes")
+                    for(var i=0;i<args.length;i++){
+                        alert("type_attr");
+                        $("#"+id)[0].value="";
+                        $("#"+obj.options[index].value).append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                    }
+                else if(id=="comment_attributes")
+                    for(var i=0;i<args.length;i++){
+                        alert("comment");
+                        $("#"+id)[0].value="";
+                        $("#comment-box").append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                    }
+                else if(id=="cite_attributes")
+                    for(var i=0;i<args.length;i++){
+                        alert("cite");
+                        $("#"+id)[0].value="";
+                        $("#cite-box").append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                    }
+            },
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest.status);
                 alert(XMLHttpRequest.readyState);
