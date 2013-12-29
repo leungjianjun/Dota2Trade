@@ -46,6 +46,53 @@ public class AdminController {
             typeAttributeList.add(configDao.getAllAttributeOfLiteratureType(id));
         }
         model.addAttribute("typeAttributeList",typeAttributeList);
+        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        model.addAttribute("citeAttributeList",configDao.getAllAttributeByType(3));
+        return "paperConfig";
+    }
+
+    @RequestMapping(value="/doAddConfigs",method=RequestMethod.POST)
+    public String doAddConfigs(
+            @RequestParam("type") String type,
+            @RequestParam("configs") String configs,
+            @RequestParam("selected") int selected,
+            Model model
+    )throws UnsupportedEncodingException{
+        boolean success=false;
+        String args[]=this.getConfigs(configs);
+
+        for(int i=0;i<args.length;i++){
+            if(type.equals("types")){
+                LiteratureType ltype=new LiteratureType();
+                ltype.setName(args[i]);
+                configDao.addLiteratureType(ltype);
+            }
+
+            if(type.equals("type_attributes")){
+                LiteraturetypeAttribute ltypeAttr=new LiteraturetypeAttribute();
+                Attribute attr=new Attribute();
+                attr.setName(args[i]);
+                attr.setType(1);
+                configDao.addLiteraturetypeAttribute(selected,attr);
+            }
+
+            if(type.equals("cite_attributes")){
+                Attribute attr=new Attribute();
+                attr.setName(args[i]);
+                attr.setType(3);
+                configDao.addAttribute(attr);
+            }
+
+            if(type.equals("comment_attributes")){
+                Attribute attr=new Attribute();
+                attr.setName(args[i]);
+                attr.setType(2);
+                configDao.addAttribute(attr);
+            }
+
+
+        }
+
         return "paperConfig";
     }
 
@@ -74,6 +121,12 @@ public class AdminController {
         return "admin";
     }
 
+    /**将页面传过来的多个字符分割**/
+    public String[] getConfigs(String configs){
+        configs=configs.replaceAll(" ","");
+        String args[] = configs.split(";");
+        return args;
+    }
 
 
     public UserDao getUserDao() {

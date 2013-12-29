@@ -43,4 +43,6 @@ public interface ConfigDao {
     List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(String literatureTypeName);
     /**获得一个文献类型的某一属性类型的已配置属性*/
     List<LiteraturetypeAttribute> getOneAttributeOfLiteratureType(int literatureTypeId,int type);
+    /**评论以及引用相关**/
+    List<Attribute> getAllAttributeByType(int type);
 }

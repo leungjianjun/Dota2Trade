@@ -25,6 +25,7 @@
 
 <body>
     #include("header.vm")
+
 <div class="container0 clearfix">
     <ul class="menu">
         <li><a class="group" href="/admin.html"><i></i><span>用户管理</span></a></li>
@@ -55,13 +56,13 @@
                     </select>
 
                     <div class="add-div">
-                        <input type="text" placeholder="多个类型用 ‘;’ 隔开" >
-                        <button class="btn btn-primary">添加类型</button>
+                        <input type="text" placeholder="多个类型用 ‘;’ 隔开" id="types">
+                        <button class="btn btn-primary" onclick="addConfig('types')">添加类型</button>
                     </div>
                 </div>
                 <div class="row">
                         <div class="special">
-                            <label>特色信息配置：</label>
+                            <label>特色信息配置<span style="color:red">(选中的为必选项)</span>：</label>
                             #set($foo=0)
                             #foreach($typeAttribute in $typeAttributeList)
                                 #set($foo=$foo+1)
@@ -73,7 +74,7 @@
                                     #end>
                                     #foreach($attribute in $typeAttribute)
                                         <input type="checkbox" #if($attribute.ismust==1) checked="true"
-                                        #end class="checkbox" id="_${attribute.attribute.id}"><span>${attribute.attribute.name}</span>
+                                        #end class="checkbox"  value="${attribute.attribute.id}" onclick="changeArray(this,,'type')"><span>${attribute.attribute.name}</span>
                                     #end
                                 </div>
                             #end
@@ -82,8 +83,8 @@
                         </div>
 
                     <div class="add-div">
-                        <input type="text" placeholder="多个属性用 ‘;’ 隔开" >
-                        <button class="btn btn-primary">添加属性</button>
+                        <input type="text" placeholder="多个属性用 ‘;’ 隔开"  id="type_attributes">
+                        <button class="btn btn-primary" onclick="addConfig('type_attributes')">添加属性</button>
                     </div>
                 </div>
             </div>
@@ -100,18 +101,13 @@
                 <div class="row">
                     <label>已有详细评价配置：</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" checked="true" class="checkbox"><span>内容</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>来源</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>出版年份</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>页码</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>摘要</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>关键字</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>出版社</span>
-                        <input type="checkbox"  class="checkbox"><span>在线地址</span>
+                        #foreach($commentAttribute in $commentAttributeList)
+                            <input type="checkbox" class="checkbox" value="$commentAttribute.id" onclick="changeArray(this.value,'comment')"><span>$commentAttribute.name</span>
+                        #end
                     </div>
                     <div class="add-div">
-                        <input type="text" placeholder="多个条目用 ‘;’ 隔开" >
-                        <button class="btn btn-primary">添加条目</button>
+                        <input type="text" placeholder="多个条目用 ‘;’ 隔开" id="comment_attributes">
+                        <button class="btn btn-primary" onclick="addConfig('comment_attributes')">添加条目</button>
                     </div>
                 </div>
             </div>
@@ -127,18 +123,13 @@
                 <div class="row">
                     <label>已有引用关系：</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" checked="true" class="checkbox"><span>提及</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>关联</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>出版年份</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>页码</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>摘要</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>关键字</span>
-                        <input type="checkbox" checked="true" class="checkbox"><span>出版社</span>
-                        <input type="checkbox"  class="checkbox"><span>在线地址</span>
+                        #foreach($citeAttribute in $citeAttributeList)
+                            <input type="checkbox" class="checkbox" value="$citeAttribute.id" onclick="changeArray(this,'cite')"><span>$citeAttribute.name</span>
+                        #end
                     </div>
                     <div class="add-div">
-                        <input type="text" placeholder="多个关系用 ‘;’ 隔开" >
-                        <button class="btn btn-primary">添加关系</button>
+                        <input type="text" placeholder="多个关系用 ‘;’ 隔开" id="cite_attributes">
+                        <button class="btn btn-primary"onclick="addConfig('cite_attributes')">添加关系</button>
                     </div>
                 </div>
             </div>
@@ -183,6 +174,31 @@
             document.getElementById("type_$i").style.display="none";
         #end
         document.getElementById(value).style.display="block";
+    }
+
+    function addConfig(id){
+        alert("start!");
+        var configs=document.getElementById(id).value;
+        var selected=document.getElementById("select").value;
+        $.ajax({
+            type:'post',
+            url:"/doAddConfigs",
+            data:{type:id,configs:configs,selected:selected},
+            success:function(data){},
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+
+
+
+    }
+
+    function changeArray(obj,type){
+
+
     }
 
 

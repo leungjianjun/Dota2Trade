@@ -202,4 +202,11 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
             return null;
         }
     }
+
+    @Override
+    public List<Attribute> getAllAttributeByType(int type) {
+        String sql="select * from attribute where type="+type;
+        List<Attribute> attributeList=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Attribute.class));
+        return attributeList;
+    }
 }
