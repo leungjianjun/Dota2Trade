@@ -180,6 +180,7 @@ public class LiteratureController {
     @RequestMapping(value="/editCite.html",method=RequestMethod.GET)
     public String editCite(@RequestParam("literatureid")int literatureid,ModelMap model){
         Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+        Map<Integer,String> map_name = new HashMap<Integer,String>();
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
@@ -195,9 +196,12 @@ public class LiteratureController {
                 typeList.add(cr.getCitedtypeid());
                 map.put(cr.getCitedbyid(),typeList);
             }
+            map_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
         }
         System.out.println(map.get(29));
-        model.addAttribute("citeList",literatureDao.getAllCiteRelationshipByLiteratureId(literatureid));
+        System.out.println(map_name.get(29));
+        model.addAttribute("type",map);
+        model.addAttribute("title",map_name);
         return "editCite";
     }
     /**修改文献基本信息页面*/
@@ -295,7 +299,7 @@ public class LiteratureController {
                 list.add(cr);
             }
         }
-        literatureDao.addCiteRelationship(list);
+        literatureDao.updateCiteRelationship(list);
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
         return "listLiterature";
     }
