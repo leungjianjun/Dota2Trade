@@ -198,8 +198,6 @@ public class LiteratureController {
             }
             map_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
         }
-        System.out.println(map.get(29));
-        System.out.println(map_name.get(29));
         model.addAttribute("type",map);
         model.addAttribute("title",map_name);
         return "editCite";
@@ -267,6 +265,20 @@ public class LiteratureController {
     public String literatureDetail(
             @RequestParam("id")int literatureid,
             ModelMap model){
+        Map<Integer,String> cite_name = new HashMap<Integer,String>();
+        Map<Integer,String> cited_name = new HashMap<Integer,String>();
+        List<CiteRelationship> cite = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
+        for(int i=0;i<cite.size();i++){
+            CiteRelationship cr = cite.get(i);
+            cite_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
+        }
+        List<CiteRelationship> cited = literatureDao.getAllCiteRelationshipByCitedById(literatureid);
+        for(int i=0;i<cited.size();i++){
+            CiteRelationship cr = cited.get(i);
+            cited_name.put(cr.getLiteratureid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getLiteratureid()).getTitle());
+        }
+        model.addAttribute("citelist",cite_name);
+        model.addAttribute("citedlist",cited_name);
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         return "literatureDetail";
     }

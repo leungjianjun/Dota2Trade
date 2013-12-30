@@ -206,37 +206,21 @@
                     </li>
                 </ul>
                 <div class="cite_list">
-                    <div class="list_title"><span></span>本文引用的文献（8）<a class="more" href="">更多>></a></div>
+                    <div class="list_title"><span></span>本文引用的文献（$citelist.size()）<a class="more" href="">更多>></a></div>
                     <ul>
-                        <li>
-                            <a href="#">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
+                        <li #if($citelist.size()!=0) style="display: none;"#end id="nonecite">暂无引用文献</li>
+                        #foreach($key in $citelist.keySet())
+                            <li><a href="literatureDetail.html?id=$key">$citelist.get($key)</a></li>
+                        #end
                     </ul>
                 </div>
                 <div class="cite_list">
-                    <div class="list_title"><span></span>引用本文的文献（7）<a class="more" href="">更多>></a></div>
+                    <div class="list_title"><span></span>引用本文的文献（$citedlist.size()）<a class="more" href="">更多>></a></div>
                     <ul>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                        </li>
+                        <li #if($citedlist.size()!=0) style="display: none;"#end id="nonecite">暂无文献引用本文</li>
+                        #foreach($key in $citedlist.keySet())
+                            <li><a href="literatureDetail.html?id=$key">$citedlist.get($key)</a></li>
+                        #end
                     </ul>
             </div>
     </div>

@@ -402,7 +402,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
 
     @Override
     public List<CiteRelationship> getAllCiteRelationshipByCitedById(int citedbyid) {
-        String sql="SELECT * FROM cited WHERE citedbyid-'"+citedbyid+"'";
+        String sql="SELECT * FROM cited WHERE citedbyid='"+citedbyid+"'";
         List<CiteRelationship> list = this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(CiteRelationship.class));
         return list;
     }

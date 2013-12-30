@@ -57,7 +57,7 @@
                 <div class="cite_list">
                     <div class="list_title"><span></span>本文引用的文献</div>
                     <ul id="cite">
-                        <li #if($title.size()==0) style="display: none;"#end id="nonecite">暂无引用文献</li>
+                        <li #if($title.size()!=0) style="display: none;"#end id="nonecite">暂无引用文献</li>
                         #set($i=0)
                         #foreach($key in $title.keySet())
                             #set($i=$i+1)
