@@ -227,20 +227,20 @@ public class LiteratureController {
            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model) throws UnsupportedEncodingException {
 
-        LiteratureMeta literatureMeta=new LiteratureMeta();
+        LiteratureMeta literatureMeta=literatureDao.getLiteratureMetaByLiteratureId(literatureid);
        // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
-        literatureMeta.setAuthor(new String (author.getBytes ("iso-8859-1"), "UTF-8"));
+        literatureMeta.setAuthor(author);
         literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"),"UTF-8"));
         literatureMeta.setPages(pages);
-        literatureMeta.setLiterature_abstract(new String (literature_abstract .getBytes ("iso-8859-1"), "UTF-8"));
-        literatureMeta.setKey_words(new String (key_words.getBytes ("iso-8859-1"), "UTF-8"));
-        literatureMeta.setLink(new String (link .getBytes ("iso-8859-1"), "UTF-8"));
+        literatureMeta.setLiterature_abstract(literature_abstract);
+        literatureMeta.setKey_words(key_words);
+        literatureMeta.setLink(new String (link.getBytes ("iso-8859-1"), "UTF-8"));
 
 
         Publisher publisher=new Publisher();
         publisher.setName(new String (publisher_name .getBytes ("iso-8859-1"), "UTF-8"));
 
-        Literature literature=new Literature();
+        Literature literature=literatureDao.getLiteratureById(literatureid);
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         //literature.setCreatorid(userid);
         literature.setUpdaterid(userid);

@@ -282,12 +282,12 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
 
     @Override
     public boolean updateLiteratureMeta(LiteratureMeta literatureMeta) {
-        String sql="UPDATE literatureMeta SET " +
+        String sql="UPDATE literaturemeta SET " +
                 //"title='"+literatureMeta.getTitle()+"'," +
-                "abstract='"+literatureMeta.getAuthor()+"'," +
+                "literature_abstract='"+literatureMeta.getLiterature_abstract()+"'," +
                 "author='"+literatureMeta.getAuthor()+"'," +
                 "published_year='"+literatureMeta.getPublished_year()+"'," +
-                "keywords='"+literatureMeta.getKey_words()+"'," +
+                "key_words='"+literatureMeta.getKey_words()+"'," +
                 "link='"+literatureMeta.getLink()+"'," +
                 "pages='"+literatureMeta.getPages()+"'" +
                 "WHERE literatureid='"+literatureMeta.getLiteratureid()+"'" ;
