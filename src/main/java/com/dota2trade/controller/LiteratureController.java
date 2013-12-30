@@ -237,8 +237,8 @@ public class LiteratureController {
         literatureMeta.setLink(new String (link.getBytes ("iso-8859-1"), "UTF-8"));
 
 
-        Publisher publisher=new Publisher();
-        publisher.setName(new String (publisher_name .getBytes ("iso-8859-1"), "UTF-8"));
+        Publisher publisher=literatureDao.getPublisherByLiteratureId(literatureid);
+        publisher.setName(publisher_name);
 
         Literature literature=literatureDao.getLiteratureById(literatureid);
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
