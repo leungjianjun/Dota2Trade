@@ -31,7 +31,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
 
     /***************************add() methods*****************************/
     @Override
-    public boolean createLiterature(final Literature literature) {
+    public int createLiterature(final Literature literature) {
 
         final String sql="INSERT INTO literature (creatorid,status,literaturetypeid) VALUES (?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -69,26 +69,26 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                            /* boolean addCiteRelationshipResult=this.addCiteRelationship(literature.getCiteRelationshipList());
                             return addCiteRelationshipResult;*/
                             System.out.println("--success05--添加文档的附件信息OK！");
-                            return true;
+                            return keyid;
                         } else{
                             System.out.println("--error05--添加文档的附件信息出错！");
-                            return false;
+                            return -1;
                         }
                     }else{
                         System.out.println("--error04--添加文献-出版社关系出错！");
-                        return false;
+                        return -1;
                     }
                 }else{
                     System.out.println("--error03--添加出版社信息出错！");
-                    return false;
+                    return -1;
                 }
             }else{
                 System.out.println("--error02--添加文献Meta信息出错！");
-                return false;
+                return -1;
             }
         }else{
             System.out.println("--error01--添加文献属性信息出错！");
-           return false;
+           return -1;
         }
     }
 
