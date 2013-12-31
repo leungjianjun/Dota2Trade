@@ -373,8 +373,19 @@ public class LiteratureController {
     public String listLiterature(
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model){
+        //文献类型
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+        model.addAttribute("typeList",typeList);
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
-        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMetaByUserid(userid));
+        List<LiteratureMeta> list = literatureDao.getAllLiteratureMetaByUserid(userid);
+        List<Literature> literatureList = new ArrayList<Literature>();
+        for(int i=0;i<list.size();i++){
+            LiteratureMeta meta = list.get(i);
+            Literature literature = literatureDao.getLiteratureById(meta.getLiteratureid());
+            literatureList.add(literature);
+        }
+        model.addAttribute("literatureList",literatureList);
         return "listLiterature";
     }
 

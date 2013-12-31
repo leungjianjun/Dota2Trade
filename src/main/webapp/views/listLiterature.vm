@@ -24,98 +24,70 @@
 </head>
 <body>
 #include("header.vm")
-    <div class="container0 clearfix">
-        <ul class="menu">
-            <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
-            <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
-            <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
-            <li class="active"><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
-            <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
-        </ul>
-        <div class="main-right">
-            <div class="title">已录入文献</div>
-            <div class="widget widget-tabs widget-tabs-double-2 list-self">
-                <div class="widget-head">
-                    <ul>
-                        <li class="active"><a class="glyphicons list" href="#tabBook" data-toggle="tab"><span>图&nbsp&nbsp书</span></a></li>
-                        <li><a class="glyphicons user" href="#tabChp" data-toggle="tab"><span>图书章节</span></a></li>
-                        <li><a class="glyphicons credit_card" href="#tabMag" data-toggle="tab"><span>期&nbsp&nbsp刊</span></a></li>
-                        <li><a class="glyphicons cogwheel" href="#tabMeeting" data-toggle="tab"><span>会&nbsp&nbsp议</span></a></li>
-                        <li><a class="glyphicons snowflake" href="#tabThesis" data-toggle="tab"><span>学位论文</span></a></li>
-                        <li><a class="glyphicons snowflake" href="#tabLecture" data-toggle="tab"><span>技术报告</span></a></li>
-                        <li><a class="glyphicons snowflake" href="#tabOnline" data-toggle="tab"><span>在线资源</span></a></li>
-                    </ul>
-                </div>
-                <div class="widget-body">
-                    <div class="tab-content">
-                        <div id="tabBook" class="tab-pane active widget-body-regular">
-                            <!-- Widget -->
-                            <div class="adv-table">
-                                <!-- Table -->
-                                <table class="display table table-bordered table-striped" id="self_upload">
-                                    <!-- Table heading -->
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>文献名称</th>
-                                        <th>出版时间</th>
-                                        <th>评分</th>
-                                        <th>操作</th>
+<div class="container0 clearfix">
+    <ul class="menu">
+        <li><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
+        <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
+        <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
+        <li class="active"><a class="modify" href="/listLiterature.html"><i></i><span>文献修改</span></a></li>
+        <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
+    </ul>
+    <div class="main-right">
+        <div class="title">已录入文献</div>
+        <div class="widget widget-tabs widget-tabs-double-2 list-self">
+            <div class="widget-head">
+                <ul>
+                    #set($i=0)
+                    #foreach($type in $typeList)
+                        #set($i=$i+1)
+                        <li #if($i==1)class="active"#end><a class="glyphicons" href="#tab$type.id" data-toggle="tab"><span>$type.name</span></a></li>
+                    #end
+                </ul>
+            </div>
+            <div class="widget-body">
+                <div class="tab-content">
+                    #set($j=0)
+                    #foreach($type in $typeList)
+                    #set($j=$j+1)
+                    <div id="tab$type.id" class="tab-pane #if($j==1)active#end widget-body-regular">
+                        <div class="adv-table">
+                            <table class="display table table-bordered table-striped" id="self_upload$type.id">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>文献名称</th>
+                                    <th>出版时间</th>
+                                    <th>评分</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    #foreach($literature in $literatureList)
+                                    #if($literature.literaturetypeid==$type.id)
+                                    <tr class="gradeX">
+                                        <td>$literature.literatureMeta.literatureid</td>
+                                        <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid">$literature.literatureMeta.title</a></td>
+                                        <td>$literature.literatureMeta.published_year</td>
+                                        <td class="center">6</td>
+                                        <td><div class="op">
+                                            <button alt-data="$literature.literatureMeta.literatureid" class="btn  edit_literature btn-primary">编辑文献内容及附件</button>
+                                            <button alt-data="$literature.literatureMeta.literatureid" class="btn  edit_cite btn-primary">编辑引用关系</button>
+                                            <button alt-data="$literature.literatureMeta.literatureid" class="btn  delete btn-primary">删除</button>
+                                        </div>
+                                        </td>
                                     </tr>
-                                    </thead>
-                                    <!-- // Table heading END -->
-                                    <!-- Table body -->
-                                    <tbody>
-                                        #foreach($literatureMeta in $literatureMetaList)
-                                        <tr class="gradeX">
-                                            <td>$literatureMeta.literatureid</td>
-                                            <td><a href="literatureDetail.html?id=$literatureMeta.literatureid">$literatureMeta.title</a></td>
-                                            <td>$literatureMeta.published_year</td>
-                                            <td class="center">6</td>
-                                            <td><div class="op">
-                                                <button alt-data="$literatureMeta.literatureid" class="btn  edit_literature btn-primary">编辑文献内容及附件</button>
-                                                <button alt-data="$literatureMeta.literatureid" class="btn  edit_cite btn-primary">编辑引用关系</button>
-                                                <button alt-data="$literatureMeta.literatureid" class="btn  delete btn-primary">删除</button>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        #end
-                                    </tbody>
-                                    <!-- // Table body END -->
-                                </table>
-                                <!-- // Table END -->
-                            </div>
-                            <!-- // Widget END -->
-                        </div>
-                        <div id="tabChp" class="tab-pane widget-body-regular">
-                            <h5>Account tab content</h5>
-                            <p>Donec at nunc dui. Integer eget sem sit amet arcu ...</p>
-                        </div>
-                        <div id="tabMag" class="tab-pane widget-body-regular">
-                            <h5>Payments tab content</h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ...</p>
-                        </div>
-                        <div id="tabMeeting" class="tab-pane widget-body-regular">
-                            <h5>Support tab content</h5>
-                            <p>Integer porttitor, enim eu egestas ullamcorper ...</p>
-                        </div>
-                        <div id="tabThesis" class="tab-pane widget-body-regular">
-                            <h5>Features tab content</h5>
-                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                        </div>
-                        <div id="tabLecture" class="tab-pane widget-body-regular">
-                            <h5>hello</h5>
-                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                        </div>
-                        <div id="tabOnline" class="tab-pane widget-body-regular">
-                            <h5>lalalalalalallalalaallalalala</h5>
-                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
+                                    #end
+                                    #end
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                    #end
                 </div>
             </div>
         </div>
     </div>
+</div>
 <!--JS-->
 
 <script src="../resources/js/jquery-1.8.3.min.js"></script>
@@ -140,9 +112,11 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        $('#self_upload').dataTable( {
+        #foreach($type in $typeList)
+        $('#self_upload${type.id}').dataTable( {
             "aaSorting": [[ 4, "asc" ]]
         } );
+        #end
 
         $('.edit_literature').click(function(){
             window.location.href="/reviseLitera.html?literatureid="+$(this).attr('alt-data')
