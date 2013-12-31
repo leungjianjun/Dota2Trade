@@ -198,7 +198,7 @@
                         var num=$typeList.size()+i+1;
                         alert("types"+num);
                         $("#"+id)[0].value="";
-                        $("#select").append("<option value='type_"+num+"'>"+args[i]+"</option>");
+                        $("#select").append("<option value='type_"+num+"'selected='selected'>"+args[i]+"</option>");
                         $(".special").append("<div class='checkbox-group'id='type_"+num+"'style='display:none'")
                     }
                 else if(id=="type_attributes")
