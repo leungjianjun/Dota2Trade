@@ -1,0 +1,2 @@
+IKAnalyzer中文分词器的jar添加到本地仓库的命令
+mvn install:install-file -Dfile=<YOURPATH>\IKAnalyzer2012_u6.jar -DgroupId=wlteaIK -DartifactId=wlteaIK -Dversion=0.6 -Dpackaging=jar -DgeneratePom=true
