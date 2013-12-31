@@ -12,8 +12,11 @@ import java.util.List;
  */
 public interface LiteratureDao {
     /*******************add methods***********************/
-    /**创建新文献*/
-    boolean createLiterature(Literature literature);
+    /**
+     * 创建新文献
+     * @return 文献id
+     * */
+    int createLiterature(Literature literature);
     /**添加文献基本信息*/
     boolean addLiteratureMeta(LiteratureMeta literatureMeta);
     /**添加文献附件信息*/

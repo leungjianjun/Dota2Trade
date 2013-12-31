@@ -15,14 +15,9 @@
     <!-- Adding "maximum-scale=1" fixes the Mobile Safari auto-zoom bug: http://filamentgroup.com/examples/iosScaleBug/ -->
     <!-- iPad End -->
 
-    <title>vPad</title>
+    <title>GDMS管理系统</title>
+    <link rel="shotcut icon" href="/resources/favicon.ico">
 
-    <!-- iOS ICONS -->
-    <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="touch-icon-ipad.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="touch-icon-iphone4.png" />
-    <link rel="apple-touch-startup-image" href="touch-startup-image.png">
-    <!-- iOS ICONS END -->
 
     <!-- STYLESHEETS -->
 
@@ -55,7 +50,7 @@
 
     <script type = "text/javascript">
         document.write("<div id='loading-container'><p id='loading-content'>" +
-                "<img id='loading-graphic' width='16' height='16' src='images/ajax-loader-abc4ff.gif' /> " +
+                "<img id='loading-graphic' width='16' height='16' src='../resources/css/images/ajax-loader.gif' /> " +
                 "Loading...</p></div>");
     </script>
 
@@ -84,16 +79,11 @@
 
 <!-- MAIN JAVASCRIPTS -->
 <script src="../resources/js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/jquery.tools.min.js"></script>
-<script type="text/javascript" src="js/jquery.uniform.min.js"></script>
-<script type="text/javascript" src="js/jquery.easing.js"></script>
-<script type="text/javascript" src="js/jquery.ui.totop.js"></script>
+<script type="text/javascript" src="./resources/login/css/jquery.uniform.min.js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="js/PIE.js"></script>
 <script type="text/javascript" src="js/ie.js"></script>
 <![endif]-->
-
-<script type="text/javascript" src="js/global.js"></script>
 <!-- MAIN JAVASCRIPTS END -->
 
 <!-- LOADING SCRIPT -->

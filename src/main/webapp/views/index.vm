@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <title>GDMS组内文献管理系统</title>
+    <link rel="shotcut icon" href="/resources/favicon.ico">
 
     <!-- Bootstrap -->
     <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
