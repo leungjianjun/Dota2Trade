@@ -58,6 +58,12 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     }
 
     @Override
+    public boolean deleteLiteratureType(String typename) {
+        int id=this.getTypeIdByName(typename);
+        return deleteLiteratureType(id);
+    }
+
+    @Override
     public List<LiteratureType> getAllLiteratureTypes() {
         String sql="SELECT * from literaturetype";
         List typeList=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(LiteratureType.class));
@@ -77,9 +83,8 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
 
     @Override
     public boolean addLiteraturetypeAttribute(String literatureTypeName, Attribute attribute) {
-        String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
-        int literatureId=this.getJdbcTemplate().queryForInt(sql);
-        return  addLiteraturetypeAttribute(literatureId,attribute);
+        int literaturetypeId=this.getTypeIdByName(literatureTypeName);
+        return  addLiteraturetypeAttribute(literaturetypeId,attribute);
     }
 
     @Override
@@ -125,6 +130,12 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     }
 
     @Override
+    public boolean deleteAttribute(String name, int type) {
+        return false;
+    }
+
+
+    @Override
     public boolean changeAttributeIsmust(int literatureTypeId, int attributeId, int ismust) {
         String sql="UPDATE literaturetype_attribute SET ismust='"+ismust+"' " +
                 "WHERE literaturetypeid='"+literatureTypeId+"' AND attributeid='"+attributeId+"'";
@@ -138,6 +149,12 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
                 "WHERE literaturetypeid='"+literatureTypeId+"' AND attributeid='"+attribute.getId()+"'";
         int r=this.getJdbcTemplate().update(sql);
         return (r>0)?true:false;
+    }
+
+    @Override
+    public boolean deleteLiteraturetypeAttribute(String literatureTypeName, Attribute attribute) {
+        int id=this.getTypeIdByName(literatureTypeName);
+        return deleteLiteraturetypeAttribute(id,attribute);
     }
 
     @Override
@@ -172,9 +189,8 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
 
     @Override
     public List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(String literatureTypeName){
-        String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
-        int literatureId=this.getJdbcTemplate().queryForInt(sql);
-        return getAllAttributeOfLiteratureType(literatureId);
+        int literaturetypeId=this.getTypeIdByName(literatureTypeName);
+        return getAllAttributeOfLiteratureType(literaturetypeId);
     }
 
     @Override
@@ -214,5 +230,11 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         String sql="select * from attribute where type="+type;
         List<Attribute> attributeList=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Attribute.class));
         return attributeList;
+    }
+
+    private int getTypeIdByName(String literatureTypeName){
+        String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
+        int literaturetypeId=this.getJdbcTemplate().queryForInt(sql);
+        return literaturetypeId;
     }
 }

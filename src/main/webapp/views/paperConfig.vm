@@ -41,10 +41,10 @@
                         <a><span>保存必选配置</span></a>
                     </div>
                     <div class="save-btn">
-                        <a><span onclick="deleteConfigs('types')">删除选中配置</span></a>
+                        <a><span onclick="deleteConfigs('type_attributes')">删除选中配置</span></a>
                     </div>
                     <div class="save-btn">
-                        <a><span onclick="deleteConfigs('type_attributes')">删除选中类型</span></a>
+                        <a><span onclick="deleteConfigs('types')">删除选中类型</span></a>
                     </div>
                 </div>
                 <div class="row literature">
@@ -70,7 +70,7 @@
                                 #set($foo=$foo+1)
                                 <div class="checkbox-group" id="type_$foo"
                                     #if($foo==1)
-                                       style="display:blcok"
+                                       style="display:block"
                                     #else
                                        style="display: none"
                                     #end>
@@ -80,13 +80,13 @@
                                     #end
                                 </div>
                             #end
-
-
                         </div>
-
                     <div class="add-div">
                         <input type="text" placeholder="多个属性用 ‘;’ 隔开"  id="type_attributes">
                         <button class="btn btn-primary" onclick="addConfig('type_attributes')">添加属性</button>
+                    </div>
+                    <div id="attribute-box">
+
                     </div>
                 </div>
             </div>
@@ -200,6 +200,7 @@
                         $("#select").append("<option value='type_"+num+"'>"+args[i]+"</option>");
                         $("#special").append("<div class='checkbox-group'id='type_"+num+"'style='display:none'></div>");
                     }
+                    $("#select").get(0).options[$typeList.size()].selected=true;
                 }
                 else if(id=="type_attributes")
                     for(var i=0;i<args.length;i++){
@@ -227,13 +228,97 @@
             }
         });
     }
-
-    function changeArray(obj,type){
-
-
-    }
     function deleteConfigs(type){
-        
+        var obj=document.getElementById("select");
+        var index=obj.selectedIndex;
+        var text=""
+        if(index!=-1)
+            text=obj.options[index].text;
+        else{
+            alert("无类型选中！");
+            return;
+        }
+        var chk_value =[];
+        if(type=="types"){
+            if (confirm("你确定要删除该文献类型 ?") == false) {
+                return;
+            }
+        }else if(type=="type_attributes"){
+            var i=index+1;
+            var checkboxes=$("#type_"+i+" input[type='checkbox']:checked").each(function(){
+                chk_value.push($(this).val());
+            });
+            if(chk_value.length==0){
+                alert("你还没有选择任何内容！");
+                return;
+            }
+            if (confirm("你确定要删除该文献类型的配置属性 ?") == false) {
+                return;
+            }
+
+        }else if(type=="comment_attributes"){
+            var checkboxes=$("#comment-box input[type='checkbox']:checked").each(function(){
+                chk_value.push($(this).val());
+            });
+            if(chk_value.length==0){
+                alert("你还没有选择任何内容！");
+                return;
+            }
+            if (confirm("你确定要删除该评论属性 ?") == false) {
+                return;
+            }
+        }else if(type=="cite_attributes"){
+            var checkboxes=$("#cite-box input[type='checkbox']:checked").each(function(){
+                chk_value.push($(this).val());
+            });
+            if(chk_value.length==0){
+                alert("你还没有选择任何内容！");
+                return;
+            }
+            if (confirm("你确定要删除该引用属性 ?") == false) {
+                return;
+            }
+        }
+
+        $.ajax({
+            type:'post',
+            url:"/doDeleteConfigs",
+            data:{type:type,typename:text,chk_value:chk_value},
+            success:function(data){
+                if(type=="types"){
+                    alert("删除成功！");
+                    window.location.reload();
+                }else if(type=="type_attributes"){
+                    alert("删除成功！")
+                    var i=index+1;
+                    var checkboxes=$("#type_"+i+" input[type='checkbox']:checked").each(function(){
+                        $(this).next().remove();
+                        $(this).remove();
+                    });
+                }else if(type=="comment_attributes"){
+                    alert("删除成功！")
+                    $("#comment-box input[type='checkbox']:checked").each(function(){
+                        $(this).next().remove();
+                        $(this).remove();
+                    });
+
+                }else if(type=="cite-attributes"){
+                    alert("删除成功！")
+                    $("#cite-box input[type='checkbox']:checked").each(function(){
+                        $(this).next().remove();
+                        $(this).remove();
+                    });
+                }
+
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+
+        });
+
 
     }
 

@@ -56,8 +56,7 @@ public class AdminController {
             @RequestParam("type") String type,
             @RequestParam("args[]") String[] args,
             @RequestParam("typename") String typename,
-            Model model
-    )throws UnsupportedEncodingException{
+            Model model)throws UnsupportedEncodingException{
         boolean success=false;
         if(type.equals("types")){
             for(int i=0;i<args.length;i++){
@@ -89,6 +88,39 @@ public class AdminController {
                 configDao.addAttribute(attr);
             }
         }
+        return "paperConfig";
+    }
+
+    @RequestMapping(value="/doDeleteConfigs",method=RequestMethod.POST)
+    public String doDeleteConfigs(
+            @RequestParam("type") String type,
+            @RequestParam("chk_value") String[] chk_value,
+            @RequestParam("typename") String typename,
+            Model model){
+        boolean success=false;
+        if(type.equals("types")){
+            success=configDao.deleteLiteratureType(typename);
+        }
+        else if(type.equals("type_attributes")){
+            for(int i=0;i<chk_value.length;i++){
+                Attribute attr=new Attribute();
+                attr.setName(chk_value[i]);
+                attr.setType(1);
+                configDao.deleteLiteraturetypeAttribute(typename,attr);
+            }
+
+        }else if(type.equals("comment_attributes")){
+            for(int i=0;i<chk_value.length;i++){
+                configDao.deleteAttribute(chk_value[i],2);
+            }
+
+        }else if(type.equals("cite_attributes")){
+            for(int i=0;i<chk_value.length;i++){
+                configDao.deleteAttribute(chk_value[i],3);
+            }
+
+        }
+
         return "paperConfig";
     }
 
