@@ -3,6 +3,7 @@ package com.dota2trade.controller;
 import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.*;
+import com.dota2trade.model.search.Indexer;
 import com.dota2trade.util.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -156,10 +157,12 @@ public class LiteratureController {
 
         model.addAttribute("literature",literature);
 
-        int r=literatureDao.createLiterature(literature);
+        int id=literatureDao.createLiterature(literature);
 
+        Indexer indexer=new Indexer();
+        indexer.indexPaper(paperFileName,id);
 
-        System.out.println("result:"+r);
+        System.out.println("result:"+id);
 
         return "/editCite";
     }
@@ -231,11 +234,11 @@ public class LiteratureController {
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         LiteratureMeta literatureMeta=literatureDao.getLiteratureMetaByLiteratureId(literatureid);
        // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
-        literatureMeta.setAuthor(new String(author.getBytes("iso-8859-1"),"UTF-8"));
-        literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"),"UTF-8"));
+        literatureMeta.setAuthor(new String(author.getBytes("iso-8859-1"), "UTF-8"));
+        literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"), "UTF-8"));
         literatureMeta.setPages(pages);
-        literatureMeta.setLiterature_abstract(new String(literature_abstract.getBytes("iso-8859-1"),"UTF-8"));
-        literatureMeta.setKey_words(new String(key_words.getBytes("iso-8859-1"),"UTF-8"));
+        literatureMeta.setLiterature_abstract(new String(literature_abstract.getBytes("iso-8859-1"), "UTF-8"));
+        literatureMeta.setKey_words(new String(key_words.getBytes("iso-8859-1"), "UTF-8"));
         literatureMeta.setLink(new String (link.getBytes ("iso-8859-1"), "UTF-8"));
 
 

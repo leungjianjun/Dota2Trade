@@ -21,11 +21,12 @@ import java.io.IOException;
  * Time: 下午2:18
  * 用于创建索引的类
  */
-public class Indexr {
+public class Indexer {
     private Analyzer analyzer;
     private Directory directory = null;
     private IndexWriter iwriter = null;
 
+    public Indexer(){}
     /**
      * 对论文进行索引
      * @param fileName 论文名称，带有.pdf后缀名

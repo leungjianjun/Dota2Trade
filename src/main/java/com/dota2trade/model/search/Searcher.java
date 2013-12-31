@@ -69,7 +69,8 @@ public class Searcher {
             ScoreDoc[] scoreDocs = topDocs.scoreDocs;
                 for (int i = 0; i < topDocs.totalHits; i++) {
                 Document targetDoc = isearcher.doc(scoreDocs[i].doc);
-                int id=Integer.getInteger(targetDoc.get("ID"));
+                int id=Integer.valueOf(targetDoc.get("ID"));
+                System.out.println("ID: "+id);
                 literatureList.add(literatureDao.getLiteratureById(id));
                 System.out.println("ID"+targetDoc.get("ID")+"匹配度"+scoreDocs[i].score+" 文件名：" + targetDoc.get("FILENAME"));
             }

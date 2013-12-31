@@ -51,7 +51,7 @@ public class Util {
      * @throws Exception
      */
     public static String getFileContent(File file) throws Exception{
-        Reader reader = new InputStreamReader(new FileInputStream(file),"GBK");
+        Reader reader = new InputStreamReader(new FileInputStream(file),"UTF-8");
         BufferedReader br = new BufferedReader(reader);
         String result ="";
         while(br.readLine() != null){
