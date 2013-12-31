@@ -304,8 +304,11 @@ public class LiteratureController {
 
     /**文献修改*/
     @RequestMapping(value="/listLiterature.html", method= RequestMethod.GET)
-    public String login(Model model){
-        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+    public String listLiterature(
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            Model model){
+        int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
+        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMetaByUserid(userid));
         return "listLiterature";
     }
 
