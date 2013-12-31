@@ -73,6 +73,10 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     @Override
     public boolean addLiteraturetypeAttribute(int literatureTypeId, Attribute attribute) {
         int attributeid=this.addAttribute(attribute);
+        String s="select count(*) from literaturetype_attribute where literaturetypeid="+literatureTypeId+" and attributeid='"+attributeid+"'";
+        int count=this.getJdbcTemplate().queryForInt(s);
+        if(count>=1)
+            return false;
         String sql="INSERT INTO literaturetype_attribute(literaturetypeid," +
                 "attributeid,ismust) VALUES(?,?,?)";
         int r=this.getJdbcTemplate().update(sql,literatureTypeId,
@@ -100,7 +104,6 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
                         a.setId(rs.getInt("id"));
                         a.setName(rs.getString("name"));
                         a.setType(rs.getInt("type"));
-
                         return a;
                     }
                 }
@@ -144,6 +147,14 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
                 "WHERE literaturetypeid='"+literatureTypeId+"' AND attributeid='"+attributeId+"'";
         int r=this.getJdbcTemplate().update(sql);
         return (r>0)?true:false;
+    }
+
+    @Override
+    public boolean changeAttributeIsmust(String literatureTypeName, String attributeName, int ismust) {
+        String s="select id from attribute where name='"+attributeName+"'";
+        int attrubuteId=this.getJdbcTemplate().queryForInt(s);
+        int literatureTypeId=this.getTypeIdByName(literatureTypeName);
+        return changeAttributeIsmust(literatureTypeId,attrubuteId,ismust);
     }
 
     @Override
