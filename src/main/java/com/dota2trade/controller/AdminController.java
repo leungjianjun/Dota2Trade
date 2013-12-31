@@ -94,7 +94,7 @@ public class AdminController {
     @RequestMapping(value="/doDeleteConfigs",method=RequestMethod.POST)
     public String doDeleteConfigs(
             @RequestParam("type") String type,
-            @RequestParam("chk_value") String[] chk_value,
+            @RequestParam("chk_value[]") String[] chk_value,
             @RequestParam("typename") String typename,
             Model model){
         boolean success=false;

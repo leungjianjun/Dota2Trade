@@ -131,7 +131,10 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
 
     @Override
     public boolean deleteAttribute(String name, int type) {
-        return false;
+        String sql="DELETE FROM attribute " +
+                "WHERE name='"+name+"' AND type='"+type+"'";
+        int r=this.getJdbcTemplate().update(sql);
+        return (r>0)?true:false;
     }
 
 

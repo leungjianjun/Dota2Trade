@@ -279,7 +279,6 @@
                 return;
             }
         }
-
         $.ajax({
             type:'post',
             url:"/doDeleteConfigs",
