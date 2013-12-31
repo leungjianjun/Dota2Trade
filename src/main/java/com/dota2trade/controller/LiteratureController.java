@@ -155,7 +155,7 @@ public class LiteratureController {
 
         model.addAttribute("literature",literature);
 
-        boolean r=literatureDao.createLiterature(literature);
+        int r=literatureDao.createLiterature(literature);
 
 
         System.out.println("result:"+r);
