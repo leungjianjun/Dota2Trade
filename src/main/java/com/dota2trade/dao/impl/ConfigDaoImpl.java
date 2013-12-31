@@ -148,8 +148,10 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
 
     @Override
     public boolean deleteLiteraturetypeAttribute(int literatureTypeId, Attribute attribute) {
+        String s="select id from attribute where name='"+attribute.getName()+"'";
+        int attrubuteId=this.getJdbcTemplate().queryForInt(s);
         String sql="DELETE FROM literaturetype_attribute " +
-                "WHERE literaturetypeid='"+literatureTypeId+"' AND attributeid='"+attribute.getId()+"'";
+                "WHERE literaturetypeid='"+literatureTypeId+"' AND attributeid='"+attrubuteId+"'";
         int r=this.getJdbcTemplate().update(sql);
         return (r>0)?true:false;
     }

@@ -211,15 +211,14 @@
                     }
                 else if(id=="comment_attributes")
                     for(var i=0;i<args.length;i++){
-                        alert("comment");
                         $("#"+id)[0].value="";
-                        $("#comment-box").append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                        $("#comment-box").append("<input type='checkbox'  class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
                     }
                 else if(id=="cite_attributes")
                     for(var i=0;i<args.length;i++){
                         alert("cite");
                         $("#"+id)[0].value="";
-                        $("#cite-box").append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                        $("#cite-box").append("<input type='checkbox'  class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
                     }
             },
             error:function(XMLHttpRequest, textStatus, errorThrown){
