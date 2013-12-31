@@ -1,15 +1,18 @@
 package com.dota2trade.model.search;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.cn.ChineseAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,7 +22,9 @@ import java.io.File;
  * 用于创建索引的类
  */
 public class Indexr {
-    private Analyzer analyzer = new ChineseAnalyzer();//StandardAnalyzer(Version.LUCENE_46);
+    private Analyzer analyzer;
+    private Directory directory = null;
+    private IndexWriter iwriter = null;
 
     /**
      * 对论文进行索引
@@ -27,6 +32,7 @@ public class Indexr {
      * @param literatureid 文献id
      * */
     public void indexPaper(String fileName,int literatureid){
+
         if(Util.isPDFFile(fileName)==true){
             /*第一步：pdf转txt*/
             try {
@@ -44,18 +50,37 @@ public class Indexr {
      * txt文件索引
      * @param fileName txt文件名，有.txt后缀名的
      * */
-    public void txt2Index(String fileName,int literatureid) throws Exception{
-        //索引文件夹
-        Directory directory= FSDirectory.open(new File(Util.PAPER_INDEX_DIR));
-
-        IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_46, analyzer);
-        IndexWriter writer=new IndexWriter(directory, iwc);
-
-        File file=new File(Util.TXT_DIR+fileName);
-        Document document=Util.fileToDocument(file,literatureid);
-        writer.addDocument(document);
-        System.out.println("filename=="+document.get("filename"));
-        writer.close();
+    public void txt2Index(String fileName,int fileId) throws Exception{
+        try {
+            // 实例化IKAnalyzer分词器
+            analyzer = new IKAnalyzer();
+            //读取文件内容
+            String fileContent = Util.getFileContent(new File(Util.TXT_DIR+fileName));
+            System.out.println("文件内容："+fileContent);
+            // 索引文件夹
+            directory = FSDirectory.open(new File(Util.PAPER_INDEX_DIR));
+            // 配置IndexWriterConfig
+            IndexWriterConfig iwConfig = new IndexWriterConfig(
+                    Version.LUCENE_34, analyzer);
+            iwConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+            iwriter = new IndexWriter(directory, iwConfig);
+            // 写入索引
+            Document doc = new Document();
+            doc.add(new Field("ID", Integer.toString(fileId), Field.Store.YES,
+                    Field.Index.NOT_ANALYZED));// ID不做索引
+            doc.add(new Field("FILENAME", fileName, Field.Store.YES,
+                    Field.Index.NOT_ANALYZED));// 文件名不做索引
+            doc.add(new Field("CONTENT", fileContent, Field.Store.YES,
+                    Field.Index.ANALYZED));// 文件内容做索引
+            iwriter.addDocument(doc);
+            iwriter.close();
+        } catch (CorruptIndexException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("finally block");
+        }
     }
 
 }
