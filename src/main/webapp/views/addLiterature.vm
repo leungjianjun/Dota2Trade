@@ -36,14 +36,12 @@
             <form method="POST" action="/doAddLiterature" enctype="multipart/form-data" >
                 <div>
                     <label>文献类别</label>
-                    <select name="literaturetypeid" class="selectpicker span6" data-style="btn-default">
-                        <option value="1">图书</option>
-                        <option value="2">图书章节</option>
-                        <option value="3">期刊</option>
-                        <option value="4">会议</option>
-                        <option value="5">学位论文</option>
-                        <option value="6">技术报告</option>
-                        <option value="7">在线资源</option>
+                    <select class="selectpicker span6" name="literaturetypeidS" data-style="btn-default" style="display: none;" id="select" onchange="showAttribute()">
+                        #set($foo=0)
+                        #foreach($type in $typeList)
+                            #set($foo=$foo+1)
+                            <option value="type_$foo">$!{type.name}</option>
+                        #end
                     </select>
                 </div>
                 <div>
@@ -77,6 +75,31 @@
                 <div>
                     <label>文献在线链接</label>
                     <input type="text" name="link" class="span12">
+                </div>
+                <div>
+                    #set($foo=0)
+                    #foreach($typeAttribute in $typeAttributeList)
+                        #set($foo=$foo+1)
+                        <div id="type_$foo"
+                            #if($foo==1)
+                             style="display:block"
+                            #else
+                             style="display: none"
+                            #end>
+                            #set($num=0)
+                            #foreach($attribute in $typeAttribute)
+                                #set($num=$num+1)
+                                #if($attribute.ismust==1)
+                                <div>
+                                    <label>${attribute.attribute.name}</label>
+                                    <input type="text" name="${attribute.literaturetypeid}_attributeValue$num" />
+                                    <input type="hidden" name="${attribute.literaturetypeid}_attributeId$num" value="$attribute.attribute.id">
+                                    <input type="hidden" name="${attribute.literaturetypeid}_attributeName$num" value="$attribute.attribute.name">
+                                </div>
+                                #end
+                            #end
+                        </div>
+                    #end
                 </div>
                 <div>
                     <label>论文附件</label>
@@ -196,6 +219,13 @@
     }
     function hidehint(){
         $("#widget").hide();
+    }
+    function showAttribute(){
+        var value=document.getElementById("select").value;
+        #foreach($i in [1..$typeList.size()])
+            document.getElementById("type_$i").style.display="none";
+        #end
+        document.getElementById(value).style.display="block";
     }
     $(document).ready(function(){
         $(".fake-delete").click(function(){

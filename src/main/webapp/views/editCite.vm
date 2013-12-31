@@ -66,26 +66,12 @@
                             <div class="type_checkbox">
                                 <input name="cite$i" type="hidden" value="$key">
                                 <label>引用关系类型：</label>
-                                    <input type="checkbox" name="type$i" class="checkbox" value="1"
-                                        #if($type.get($key).contains(1))
-                                            checked="checked"
-                                        #end />简单提及
-                                    <input type="checkbox" name="type$i" class="checkbox" value="2"
-                                        #if($type.get($key).contains(2))
-                                           checked="checked"
-                                        #end />相关
-                                    <input type="checkbox" name="type$i" class="checkbox" value="3"
-                                        #if($type.get($key).contains(3))
-                                           checked="checked"
-                                        #end />使用
-                                    <input type="checkbox" name="type$i" class="checkbox" value="4"
-                                        #if($type.get($key).contains(4))
-                                           checked="checked"
-                                        #end />对比
-                                    <input type="checkbox" name="type$i" class="checkbox" value="5"
-                                        #if($type.get($key).contains(5))
-                                           checked="checked"
-                                        #end />不确定
+                                    #foreach($citeType in $citeTypeList)
+                                        <input type="checkbox" name="type$i" class="checkbox" value="$citeType.id"
+                                            #if($type.get($key).contains($citeType.id))
+                                               checked="checked"
+                                            #end />$citeType.name
+                                    #end
                             </div>
                         </li>
                         #end
@@ -114,16 +100,10 @@
              '<li><a href="#">'+$(e).parent().children('.desc').text()+'</a>'+
                   '<input name="cite'+temp+'" type="hidden" value="'+literatureid+'" />'+
                   '<div class="type_checkbox"><label style="margin-right: 4px;">引用关系类型：</label>' +
-                  '<input type="checkbox" name="type'+temp+'" value="1">' +
-                  '&nbsp;简单提及'+
-                  '<input type="checkbox" name="type'+temp+'" value="2" checked="checked">'+
-                  '&nbsp;相关'+
-                  '<input type="checkbox" name="type'+temp+'" value="3" checked="checked">'+
-                  '&nbsp;使用'+
-                  '<input type="checkbox" name="type'+temp+'" value="4" checked="checked">'+
-                  '&nbsp;对比'+
-                  '<input type="checkbox" name="type'+temp+'" value="5" checked="checked">'+
-                  '&nbsp;不确定</div></li>'
+                    #foreach($citeType in $citeTypeList)
+                    '<input type="checkbox" name="type'+temp+'" class="checkbox" value="$citeType.id"/>&nbsp;$citeType.name'+
+                    #end
+                  '</div></li>'
                   )
     }
     function deleteCite(e){

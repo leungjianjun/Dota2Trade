@@ -27,32 +27,19 @@
                 <ul>
                     <li class="t">$literature.literatureMeta.title</li>
                     <li class="type">类别：
-                            #if($literature.literaturetypeid==1)
-                                图书
+                        #foreach($type in $typeList)
+                            #if($literature.literaturetypeid==$type.id)
+                                <span>$type.name</span>
                             #end
-                            #if($literature.literaturetypeid==2)
-                                图书章节
-                            #end
-                            #if($literature.literaturetypeid==3)
-                                期刊
-                            #end
-                            #if($literature.literaturetypeid==4)
-                                会议
-                            #end
-                            #if($literature.literaturetypeid==5)
-                                学位论文
-                            #end
-                            #if($literature.literaturetypeid==6)
-                                技术报告
-                            #end
-                            #if($literature.literaturetypeid==7)
-                                在线资源
-                            #end
-                        </li>
+                        #end
+                    </li>
                     <li>发行时间：$literature.literatureMeta.published_year</li>
                     <li class="author">作者：$literature.literatureMeta.author</li>
                     <li class="abstract">摘要：$literature.literatureMeta.literature_abstract</li>
                     <li class="keyword">关键字：$literature.literatureMeta.key_words</li>
+                    #foreach($attribute in $attributeList)
+                        <li>$attribute.attributename：$attribute.value</li>
+                    #end
                 </ul>
                 <div class="comment">
                     <div class="t">我来评论</div>
@@ -183,8 +170,8 @@
             </div>
             <div class="right">
                 <ul class="row1">
-                    <li>由<a href="#">梁建均</a>上传于2013－12－18</li>
-                    <li>由<a href="#">李琰</a>最后修改于2013－12－18</li>
+                    <li>最初上传人：<a href="#">$creator</a></li>
+                    <li>最后修改人：<a href="#">$updater</a></li>
                     <li>平均得分：9.2（15人评价）</li>
                     <li class="download clearfix">
                         <div class="l">附件下载:</div>

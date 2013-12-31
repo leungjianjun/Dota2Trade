@@ -93,6 +93,12 @@
                     <label>文献在线链接</label>
                     <input type="text" name="link" class="span12" value="$literature.literatureMeta.link">
                 </div>
+                #foreach($attribute in $literatureAttributeList)
+                    <div>
+                        <label>$attribute.attributename</label>
+                        <input type="text" name="attribute$attribute.id" class="span12" value="$attribute.value" />
+                    </div>
+                #end
                 <div class="exist-attachments" style="overflow: hidden;height: auto;">
                     <label>已有附件</label>
                     <div style="float: left;">

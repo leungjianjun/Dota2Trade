@@ -97,4 +97,16 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         List<User> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(User.class));
         return list;
     }
+
+    @Override
+    public String getAccountById(int id) {
+        String sql = "SELECT account FROM user WHERE id='"+id+"'";
+        List<String> strLst  = getJdbcTemplate().query(sql,
+                new RowMapper(){
+            public Object mapRow(ResultSet rs, int rowNum) throws SQLException{
+                return rs.getString(1);
+            }
+        });
+        return strLst.get(0);
+    }
 }

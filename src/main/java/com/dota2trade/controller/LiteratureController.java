@@ -1,5 +1,6 @@
 package com.dota2trade.controller;
 
+import com.dota2trade.dao.ConfigDao;
 import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.*;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LiteratureController {
     private UserDao userDao;
     private LiteratureDao literatureDao;
+    private ConfigDao configDao;
     private static String LINK_PREFIX="http://localhost:8080/attachment/";
 
     @RequestMapping(value = "/sTest.html",method = RequestMethod.GET)
@@ -50,7 +52,7 @@ public class LiteratureController {
     /**笨方法*/
     @RequestMapping(value = "/doAddLiterature",method = RequestMethod.POST)
     public String doAddLiterature(
-            @RequestParam("literaturetypeid") int literaturetypeid,
+            @RequestParam("literaturetypeidS") String literaturetypeidS,
             @RequestParam("title") String title,
             @RequestParam("author") String author,
             @RequestParam("published_year") String published_year,
@@ -65,8 +67,13 @@ public class LiteratureController {
             @RequestParam("otherAttachment3") MultipartFile otherAttachment3,
             @RequestParam("otherAttachment4") MultipartFile otherAttachment4,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            HttpServletRequest request,
             Model model
     ) throws IOException {
+        String idS=literaturetypeidS.substring(5);
+        int index=Integer.parseInt(idS);
+        System.out.println("index:"+index);
+        int literaturetypeid=configDao.getAllLiteratureTypes().get(index-1).getId();
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
 
         List<Attachment> attachmentList=new ArrayList<Attachment>();
@@ -144,6 +151,22 @@ public class LiteratureController {
         Publisher publisher=new Publisher();
         publisher.setName(new String (publisher_name .getBytes ("iso-8859-1"), "UTF-8"));
 
+        List literatureAttributeList = new ArrayList();
+        int attribute_count=configDao.getAllAttributeOfLiteratureType(literaturetypeid).size();
+        if(attribute_count!=0){
+            for(int i=1;i<=attribute_count;i++){
+                String value = request.getParameter(literaturetypeid+"_attributeValue"+i);
+                value = new String(value.getBytes("iso-8859-1"), "UTF-8");
+                String attribute_name = request.getParameter(literaturetypeid+"_attributeName"+i);
+                attribute_name = new String(attribute_name.getBytes("iso-8859-1"), "UTF-8");
+                int attribute_id = Integer.parseInt(request.getParameter(literaturetypeid+"_attributeId"+i));
+                LiteratureAttribute la = new LiteratureAttribute();
+                la.setAttributeid(attribute_id);
+                la.setAttributename(attribute_name);
+                la.setValue(value);
+                literatureAttributeList.add(la);
+            }
+        }
         Literature literature=new Literature();
 
         literature.setCreatorid(userid);
@@ -153,6 +176,7 @@ public class LiteratureController {
         literature.setLiteratureMeta(literatureMeta);
         literature.setPublisher(publisher);
         literature.setAttachmentList(attachmentList);
+        literature.setLiteratureAttributeList(literatureAttributeList);
 
         model.addAttribute("literature",literature);
 
@@ -175,6 +199,16 @@ public class LiteratureController {
 
     @RequestMapping(value="/addLiterature.html", method= RequestMethod.GET)
     public String addLiterature(ModelMap model){
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+        model.addAttribute("typeList",typeList);
+        List typeAttributeList=new ArrayList();
+        for(int i=0;i<typeList.size();i++){
+            LiteratureType type= (LiteratureType) typeList.get(i);
+            int id=type.getId();
+            typeAttributeList.add(configDao.getAllAttributeOfLiteratureType(id));
+        }
+        model.addAttribute("typeAttributeList",typeAttributeList);
         return "addLiterature";
     }
 
@@ -199,6 +233,7 @@ public class LiteratureController {
             }
             map_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
         }
+        model.addAttribute("citeTypeList",configDao.getAllAttributeByType(3));
         model.addAttribute("type",map);
         model.addAttribute("title",map_name);
         return "editCite";
@@ -207,10 +242,9 @@ public class LiteratureController {
     @RequestMapping(value="/reviseLitera.html",method=RequestMethod.GET)
     public String reviseLiterature(@RequestParam("literatureid")int literatureid,ModelMap model){
         Literature literature=literatureDao.getLiteratureById(literatureid);
-//        SimpleDateFormat format=new SimpleDateFormat("MM/dd/yyyy");
-//        String py=format.format(literature.getLiteratureMeta().getPublished_year());
-//        model.addAttribute("published_year",py);
         model.addAttribute("literature",literature);
+        List<LiteratureAttribute> literatureAttributeList = literatureDao.getLiteratureAttribute(literatureid);
+        model.addAttribute("literatureAttributeList",literatureAttributeList);
         return "reviseLitera";
     }
 
@@ -238,10 +272,21 @@ public class LiteratureController {
         literatureMeta.setKey_words(new String(key_words.getBytes("iso-8859-1"),"UTF-8"));
         literatureMeta.setLink(new String (link.getBytes ("iso-8859-1"), "UTF-8"));
 
-
+        //修改特殊属性
+        List<LiteratureAttribute> newLiteratureAttributeList = new ArrayList<LiteratureAttribute>();
+        List<LiteratureAttribute> literatureAttributeList = literatureDao.getLiteratureAttribute(literatureid);
+        for(int i=0;i<literatureAttributeList.size();i++){
+            LiteratureAttribute la = literatureAttributeList.get(i);
+            int id = la.getId();
+            String value = request.getParameter("attribute" + id);
+            la.setValue(new String(value.getBytes("iso-8859-1"), "UTF-8"));
+            newLiteratureAttributeList.add(la);
+        }
+        //修改出版社
         Publisher publisher=literatureDao.getPublisherByLiteratureId(literatureid);
         publisher.setName(new String(publisher_name.getBytes("iso-8859-1"),"UTF-8"));
 
+        //修改附件
         List<Attachment> attachmentList=new ArrayList<Attachment>();
         int num = Integer.parseInt(request.getParameter("attachment_num"));
         if(num!=0){
@@ -267,6 +312,7 @@ public class LiteratureController {
         literature.setLiteratureMeta(literatureMeta);
         literature.setPublisher(publisher);
         literature.setAttachmentList(attachmentList);
+        literature.setLiteratureAttributeList(newLiteratureAttributeList);
         literatureDao.updateLiterature(literature);
 
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
@@ -296,9 +342,26 @@ public class LiteratureController {
             CiteRelationship cr = cited.get(i);
             cited_name.put(cr.getLiteratureid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getLiteratureid()).getTitle());
         }
+        //上传人，修改人
+        Literature literature = literatureDao.getLiteratureById(literatureid);
+        String creator = userDao.getAccountById(literature.getCreatorid());
+        String updater = "";
+        if(literature.getUpdaterid()==0){
+            updater = creator;
+        }else{
+            updater = userDao.getAccountById(literature.getUpdaterid());
+        }
+        //文献类型
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+
+        model.addAttribute("typeList",typeList);
+        model.addAttribute("creator",creator);
+        model.addAttribute("updater",updater);
         model.addAttribute("citelist",cite_name);
         model.addAttribute("citedlist",cited_name);
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
+        model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
         return "literatureDetail";
     }
 
@@ -353,4 +416,7 @@ public class LiteratureController {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
+    public ConfigDao getConfigDao(){return configDao;}
+    @Autowired
+    public void setConfigDao(ConfigDao configDao){this.configDao=configDao;}
 }

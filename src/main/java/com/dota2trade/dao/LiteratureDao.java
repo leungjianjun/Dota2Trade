@@ -61,6 +61,8 @@ public interface LiteratureDao {
     boolean updateAttachment(Attachment attachment);
     /**更新文献引用关系，主要是在修改已有的引用关系的情况下更新引用类型*/
     boolean updateCiteRelationship(List<CiteRelationship> citeRelationshipList);
+    /**更新文献的某个特殊属性的值*/
+    boolean updateLiteratureAttribute(LiteratureAttribute literatureAttribute);
 
     /*********************get methods************************************/
     /**获取一个文献*/

@@ -20,4 +20,5 @@ public interface UserDao {
 
     int getIdByUserAccount(String account);
     public List<User> getAllUser();
+    public String getAccountById(int id);
 }
