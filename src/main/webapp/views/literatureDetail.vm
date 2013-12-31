@@ -198,6 +198,7 @@
                                         #end
                                         #if($attachment.type==1)
                                             <input type="checkbox" class="checkbox"><span>其他:$attachment.name</span>
+                                            <br>
                                         #end
                                     #end
                                 </div>

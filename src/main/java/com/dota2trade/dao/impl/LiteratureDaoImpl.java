@@ -267,7 +267,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                 boolean r3=this.updateLiteraturePublisher(literature.getId(),
                         this.updatePublisher(literature.getPublisher()));
                 if(r3){
-                    //this.updateAttachment()
+                    this.addAttachment(literature.getAttachmentList());
                     return true;
                 }else{
                     return false;

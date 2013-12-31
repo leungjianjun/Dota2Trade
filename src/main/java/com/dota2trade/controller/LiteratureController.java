@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -225,29 +226,47 @@ public class LiteratureController {
            @RequestParam("publisher_name") String publisher_name,
            @RequestParam("link") String link,
            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
-            Model model) throws UnsupportedEncodingException {
-
+           MultipartHttpServletRequest request,
+            Model model) throws IOException {
+        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         LiteratureMeta literatureMeta=literatureDao.getLiteratureMetaByLiteratureId(literatureid);
        // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
-        literatureMeta.setAuthor(author);
+        literatureMeta.setAuthor(new String(author.getBytes("iso-8859-1"),"UTF-8"));
         literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"),"UTF-8"));
         literatureMeta.setPages(pages);
-        literatureMeta.setLiterature_abstract(literature_abstract);
-        literatureMeta.setKey_words(key_words);
+        literatureMeta.setLiterature_abstract(new String(literature_abstract.getBytes("iso-8859-1"),"UTF-8"));
+        literatureMeta.setKey_words(new String(key_words.getBytes("iso-8859-1"),"UTF-8"));
         literatureMeta.setLink(new String (link.getBytes ("iso-8859-1"), "UTF-8"));
 
 
         Publisher publisher=literatureDao.getPublisherByLiteratureId(literatureid);
-        publisher.setName(publisher_name);
+        publisher.setName(new String(publisher_name.getBytes("iso-8859-1"),"UTF-8"));
 
+        List<Attachment> attachmentList=new ArrayList<Attachment>();
+        int num = Integer.parseInt(request.getParameter("attachment_num"));
+        if(num!=0){
+            for(int i=1;i<=num;i++){
+                MultipartFile attachment = request.getFile("otherAttachment"+i);
+                String other1Name = new String (attachment.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
+                String otherFile1Name = System.currentTimeMillis()+other1Name;
+                FileUploadHelper.uploadFile(attachment, otherFile1Name,"other");
+                Attachment otherAttachment = new Attachment();
+                otherAttachment.setName(other1Name);
+                otherAttachment.setLink(LINK_PREFIX+otherFile1Name);
+                otherAttachment.setCreatorid(userid);
+                otherAttachment.setType(1);
+                otherAttachment.setLiteratureid(literatureid);
+                attachmentList.add(otherAttachment);
+            }
+        }
         Literature literature=literatureDao.getLiteratureById(literatureid);
-        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         //literature.setCreatorid(userid);
         literature.setUpdaterid(userid);
         //literature.setStatus(0);
         //literature.setLiteraturetypeid(literaturetypeid);
         literature.setLiteratureMeta(literatureMeta);
         literature.setPublisher(publisher);
+        literature.setAttachmentList(attachmentList);
         literatureDao.updateLiterature(literature);
 
         model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
