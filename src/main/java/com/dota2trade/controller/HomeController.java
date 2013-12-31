@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 /**
@@ -37,6 +38,11 @@ public class HomeController {
 
     @RequestMapping(value="/login.html", method= RequestMethod.GET)
     public String login(ModelMap model){
+        return "login";
+    }
+    @RequestMapping(value = "/dologout",method=RequestMethod.GET)
+    public String logout(HttpServletRequest request,ModelMap model){
+        request.getSession().setAttribute("sauthentication",null);
         return "login";
     }
 

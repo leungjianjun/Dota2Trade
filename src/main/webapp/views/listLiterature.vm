@@ -2,6 +2,7 @@
 <head>
     <meta charset="utf-8">
     <title>修改文献-已有文献</title>
+    <link rel="shotcut icon" href="/resources/favicon.ico">
     <!-- Bootstrap -->
     <link href="../resources/common/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="../resources/common/bootstrap/css/responsive.css" rel="stylesheet" />
@@ -55,7 +56,7 @@
                                     <!-- Table heading -->
                                     <thead>
                                     <tr>
-                                        <th>SSN</th>
+                                        <th>ID</th>
                                         <th>文献名称</th>
                                         <th>出版时间</th>
                                         <th>评分</th>
@@ -68,7 +69,7 @@
                                         #foreach($literatureMeta in $literatureMetaList)
                                         <tr class="gradeX">
                                             <td>$literatureMeta.literatureid</td>
-                                            <td><a href="#">$literatureMeta.title</a></td>
+                                            <td><a href="literatureDetail.html?id=$literatureMeta.literatureid">$literatureMeta.title</a></td>
                                             <td>$literatureMeta.published_year</td>
                                             <td class="center">6</td>
                                             <td><div class="op">

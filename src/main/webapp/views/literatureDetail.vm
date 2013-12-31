@@ -2,6 +2,7 @@
 <head xmlns="http://www.w3.org/1999/html">
     <meta charset="utf-8">
     <title>文献详情</title>
+    <link rel="shotcut icon" href="/resources/favicon.ico">
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>
@@ -25,20 +26,21 @@
         <div class="main">
             <div class="left">
                 <ul>
-                    <li class="t">云计算安全研究</li>
-                    <li class="type">
-                        <span>类别：论文</span>
-                        <span>发行时间：2011－11</span>
+                    <li class="t">$literature.literatureMeta.title</li>
+                    <li class="type">类别：
+                        #foreach($type in $typeList)
+                            #if($literature.literaturetypeid==$type.id)
+                                <span>$type.name</span>
+                            #end
+                        #end
                     </li>
-                    <li class="author">作者：冯登国， 张敏， 张妍， 徐震</li>
-                    <li class="abstract">
-                        ... 由于云计算代表未来信息技术领域的核心竞争力,当前世界各国政府都十分重视本国云计算的发展,
-                        力争 在未来信息技术的制高点占据一席之地.例如,2009 年9 月,美国总统奥巴马宣布将执行云计算
-                        政策,希望借助应 用虚拟化来压缩美国政府的经济支出;韩国政府计划向云计算领域投资6 ...
-                    </li>
-                    <li class="keyword">
-                        关键字：云计算 信息技术
-                    </li>
+                    <li>发行时间：$literature.literatureMeta.published_year</li>
+                    <li class="author">作者：$literature.literatureMeta.author</li>
+                    <li class="abstract">摘要：$literature.literatureMeta.literature_abstract</li>
+                    <li class="keyword">关键字：$literature.literatureMeta.key_words</li>
+                    #foreach($attribute in $attributeList)
+                        <li>$attribute.attributename：$attribute.value</li>
+                    #end
                 </ul>
                 <div class="comment">
                     <div class="t">我来评论</div>
@@ -66,7 +68,12 @@
                                             </span>
                                         </div>
                                         <textarea cols="2" rows="3" style="width: 362px;"></textarea>
-                                        <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
+                                        <div class="clearfix">
+                                            <button class="btn btn-block btn-primary" type="submit" style="float: right;">提交评论</button>
+                                            <span style="float: right;margin-right: 20px;">
+                                                <input name="state" type="checkbox" style="float: left;height: 29px;">
+                                                <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span></span>
+                                        </div>
                                     </form>
                                 </div>
                                 <div id="tabDetail" class="tab-pane widget-body-regular">
@@ -102,7 +109,12 @@
                                             <label>改进</label>
                                             <textarea cols="3" rows="2"></textarea>
                                         </div>
-                                        <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 262px;">提交评论</button>
+                                        <div class="clearfix">
+                                            <button class="btn btn-block btn-primary" type="submit" style="float: right;">提交评论</button>
+                                            <span style="float: right;margin-right: 20px;">
+                                                <input name="state" type="checkbox" style="float: left;height: 29px;">
+                                                <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span></span>
+                                        </div>
                                     </form>
                                 </div>
                                 <div id="tabTag" class="tab-pane widget-body-regular">
@@ -159,22 +171,24 @@
             </div>
             <div class="right">
                 <ul class="row1">
-                    <li>由<a href="#">梁建均</a>上传于2013－12－18</li>
-                    <li>由<a href="#">李琰</a>最后修改于2013－12－18</li>
+                    <li>最初上传人：<a href="#">$creator</a></li>
+                    <li>最后修改人：<a href="#">$updater</a></li>
                     <li>平均得分：9.2（15人评价）</li>
                     <li class="download clearfix">
                         <div class="l">附件下载:</div>
                         <form name="" method="get" action="">
                             <div class="r">
-                                <div class="widget-body uniformjs">
-                                    <span class="checkbox">
-                                        <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                        论文
-                                    </span>
-                                    <span class="checkbox">
-                                        <input type="checkbox" class="checkbox" value="1" />
-                                        其他
-                                    </span>
+                                <div>
+                                    #foreach($attachment in $literature.attachmentList)
+                                        #if($attachment.type==0)
+                                            <input type="checkbox" checked="true" class="checkbox"><span>论文:$attachment.name</span>
+                                            <br>
+                                        #end
+                                        #if($attachment.type==1)
+                                            <input type="checkbox" class="checkbox"><span>其他:$attachment.name</span>
+                                            <br>
+                                        #end
+                                    #end
                                 </div>
                                 <button class="btn btn-primary" type="submit" style="display: inline-block;">下载</button>
                             </div>
@@ -182,37 +196,21 @@
                     </li>
                 </ul>
                 <div class="cite_list">
-                    <div class="list_title"><span></span>本文引用的文献（8）<a class="more" href="">更多>></a></div>
+                    <div class="list_title"><span></span>本文引用的文献（$citelist.size()）<a class="more" href="">更多>></a></div>
                     <ul>
-                        <li>
-                            <a href="#">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
+                        <li #if($citelist.size()!=0) style="display: none;"#end id="nonecite">暂无引用文献</li>
+                        #foreach($key in $citelist.keySet())
+                            <li><a href="literatureDetail.html?id=$key">$citelist.get($key)</a></li>
+                        #end
                     </ul>
                 </div>
                 <div class="cite_list">
-                    <div class="list_title"><span></span>引用本文的文献（7）<a class="more" href="">更多>></a></div>
+                    <div class="list_title"><span></span>引用本文的文献（$citedlist.size()）<a class="more" href="">更多>></a></div>
                     <ul>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                        </li>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                        </li>
+                        <li #if($citedlist.size()!=0) style="display: none;"#end id="nonecite">暂无文献引用本文</li>
+                        #foreach($key in $citedlist.keySet())
+                            <li><a href="literatureDetail.html?id=$key">$citedlist.get($key)</a></li>
+                        #end
                     </ul>
             </div>
     </div>

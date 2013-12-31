@@ -12,8 +12,11 @@ import java.util.List;
  */
 public interface LiteratureDao {
     /*******************add methods***********************/
-    /**创建新文献*/
-    boolean createLiterature(Literature literature);
+    /**
+     * 创建新文献
+     * @return 文献id
+     * */
+    int createLiterature(Literature literature);
     /**添加文献基本信息*/
     boolean addLiteratureMeta(LiteratureMeta literatureMeta);
     /**添加文献附件信息*/
@@ -61,6 +64,8 @@ public interface LiteratureDao {
     boolean updateAttachment(Attachment attachment);
     /**更新文献引用关系，主要是在修改已有的引用关系的情况下更新引用类型*/
     boolean updateCiteRelationship(List<CiteRelationship> citeRelationshipList);
+    /**更新文献的某个特殊属性的值*/
+    boolean updateLiteratureAttribute(LiteratureAttribute literatureAttribute);
 
     /*********************get methods************************************/
     /**获取一个文献*/
@@ -75,6 +80,8 @@ public interface LiteratureDao {
     List<Attachment> getAllAttachmentByLiteratureId(int literatureid);
     /**获取一个文献的所有引用关系*/
     List<CiteRelationship> getAllCiteRelationshipByLiteratureId(int literatureid);
+    /**获取所有引用一个文献的文献*/
+    List<CiteRelationship> getAllCiteRelationshipByCitedById(int citedbyid);
     /**获取组内所有文献的基本信息*/
     List<LiteratureMeta> getAllLiteratureMeta();
 

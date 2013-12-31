@@ -2,6 +2,7 @@
 <head>
     <meta charset="utf-8">
     <title>文献查询</title>
+    <link rel="shotcut icon" href="/resources/favicon.ico">
     <link rel="stylesheet" media="screen" href="../resources/css/sidebar.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/global.css"></link>
     <link rel="stylesheet" media="screen" href="../resources/css/header.css"></link>

@@ -11,8 +11,17 @@ import java.io.*;
  * Time: 下午8:12
  */
 public class FileUploadHelper {
-    public static void uploadFile(MultipartFile file, String filename) throws IOException {
-        File newFile = new File("attachment",filename);
+    /**
+     * @param type 附件类型：paper or other
+     * */
+    public static void uploadFile(MultipartFile file, String filename,String type) throws IOException {
+        String dir;
+        if(type.equals("paper")){
+            dir="attachment/paper";
+        }else{
+            dir="attachment/other";
+        }
+        File newFile = new File(dir,filename);
         newFile.createNewFile();
         OutputStream outputStream = new FileOutputStream(newFile);
         InputStream inputStream = file.getInputStream();

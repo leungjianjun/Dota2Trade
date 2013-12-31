@@ -94,6 +94,7 @@ var EditableTable = function () {
                 if (confirm("你确定要删除该记录 ?") == false) {
                     return;
                 }
+
                 var nRow = $(this).parents('tr')[0];
                 var aData = oTable.fnGetData(nRow);
                 $.ajax({
@@ -110,9 +111,6 @@ var EditableTable = function () {
                         alert(textStatus);
                     }
                 });
-
-
-
             });
 
             $('#editable-sample a.cancel').live('click', function (e) {
@@ -146,15 +144,24 @@ var EditableTable = function () {
                     var jqInputs = $('input', nRow);
                     aData[1]=jqInputs[0].value;
                     aData[2]=jqInputs[1].value;
-
                     $.ajax({
                         type:'post',
                         url:"/doUpdateUser",
                         data:{id:aData[0],account:aData[1],password:aData[2]},
                         success:function(data){
-                            saveRow(oTable, nEditing);
-                            alert("更新成功! :)");
-                            nEditing = null;
+                            if(true){
+                                saveRow(oTable, nEditing);
+                                alert("更新成功! :)");
+                                nEditing = null;
+                            }else{
+                                if(aData[0]==-1)
+                                    oTable.fnDeleteRow(nRow);
+                                else{
+                                    restoreRow(oTable, nEditing);
+                                    nEditing = null;
+                                }
+                                alert("更新失败! :(")
+                            }
                         },
                         error:function(XMLHttpRequest, textStatus, errorThrown){
                             alert(XMLHttpRequest.status);
@@ -162,8 +169,6 @@ var EditableTable = function () {
                             alert(textStatus);
                         }
                     });
-
-
                 } else {
                     /* No edit in progress - let's start one */
                     editRow(oTable, nRow);

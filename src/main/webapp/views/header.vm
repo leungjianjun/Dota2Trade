@@ -4,8 +4,9 @@
         <h1> 组内文献管理系统</h1>
     </div>
     <div class="top-nav ">
-        <ul class="nav pull-right top-menu">
-            <!-- user login dropdown start-->
+        <span>欢迎你,</span><a href="/dologout">登出</a>
+        <!--<ul class="nav pull-right top-menu">
+            <!-- user login dropdown start
             <li class="dropdown">
                 <a href="#" onclick="dropdown()">
                     <img alt="" src="../resources/css/images/profile.jpg">
@@ -21,8 +22,8 @@
                     <li><a href="login.html"><i class="icon-key"></i> 登出</a></li>
                 </ul>
             </li>
-            <!-- user login dropdown end -->
-        </ul>
+            <!-- user login dropdown end
+        </ul>-->
     </div>
 </header>
 
