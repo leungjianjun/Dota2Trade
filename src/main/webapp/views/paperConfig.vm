@@ -205,7 +205,6 @@
                 }
                 else if(id=="type_attributes")
                     for(var i=0;i<args.length;i++){
-                        alert("type_attr");
                         $("#"+id)[0].value="";
                         $("#"+obj.options[index].value).append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
                     }
@@ -216,7 +215,6 @@
                     }
                 else if(id=="cite_attributes")
                     for(var i=0;i<args.length;i++){
-                        alert("cite");
                         $("#"+id)[0].value="";
                         $("#cite-box").append("<input type='checkbox'  class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
                     }
@@ -301,7 +299,7 @@
                         $(this).remove();
                     });
 
-                }else if(type=="cite-attributes"){
+                }else if(type=="cite_attributes"){
                     alert("删除成功！")
                     $("#cite-box input[type='checkbox']:checked").each(function(){
                         $(this).next().remove();
