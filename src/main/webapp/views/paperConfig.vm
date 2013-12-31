@@ -41,7 +41,10 @@
                         <a><span>保存必选配置</span></a>
                     </div>
                     <div class="save-btn">
-                        <a><span>删除选中项</span></a>
+                        <a><span onclick="deleteConfigs('types')">删除选中配置</span></a>
+                    </div>
+                    <div class="save-btn">
+                        <a><span onclick="deleteConfigs('type_attributes')">删除选中类型</span></a>
                     </div>
                 </div>
                 <div class="row literature">
@@ -60,7 +63,7 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="special">
+                        <div id="special">
                             <label>特色信息配置<span style="color:red">(选中的为必选项)</span>：</label>
                             #set($foo=0)
                             #foreach($typeAttribute in $typeAttributeList)
@@ -94,7 +97,7 @@
                 <div class="head">
                     <h5>详细评价配置</h5>
                     <div class="save-btn">
-                        <a><span>删除选中项</span></a>
+                        <a><span onclick="deleteConfigs('comment_attributes')">删除选中项</span></a>
                     </div>
                 </div>
                 <div class="row">
@@ -116,7 +119,7 @@
                 <div class="head">
                     <h5>引用关系配置</h5>
                     <div class="save-btn">
-                        <a><span>删除选中项</span></a>
+                        <a><span onclick="deleteConfigs('cite_attributes')">删除选中项</span></a>
                     </div>
                 </div>
                 <div class="row">
@@ -178,29 +181,26 @@
     function addConfig(id){
         var configs=document.getElementById(id).value;
         var obj=document.getElementById("select");
-        alert(obj);
         var index=obj.selectedIndex;
         var text=""
         if(index!=-1)
             text=obj.options[index].text;
         configs=configs.trim();
         var args=configs.split(/;|；/)
-        for(var i=0;i<args.length;i++)
-           alert(args[i]);
         $.ajax({
             type:'post',
             url:"/doAddConfigs",
             data:{type:id,args:args,typename:text},
             success:function(data){
                 alert("添加成功！");
-                if(id=="types")
+                if(id=="types"){
                     for(var i=0;i<args.length;i++){
                         var num=$typeList.size()+i+1;
-                        alert("types"+num);
                         $("#"+id)[0].value="";
                         $("#select").append("<option value='type_"+num+"'>"+args[i]+"</option>");
-                        $(".special").append("<div class='checkbox-group'id='type_"+num+"'style='display:none'")
+                        $("#special").append("<div class='checkbox-group'id='type_"+num+"'style='display:none'></div>");
                     }
+                }
                 else if(id=="type_attributes")
                     for(var i=0;i<args.length;i++){
                         alert("type_attr");
@@ -226,16 +226,16 @@
                 alert(textStatus);
             }
         });
-
-
-
     }
 
     function changeArray(obj,type){
 
 
     }
+    function deleteConfigs(type){
+        
 
+    }
 
 </script>
 </body>
