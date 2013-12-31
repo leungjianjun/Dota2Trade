@@ -68,11 +68,18 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     public boolean addLiteraturetypeAttribute(int literatureTypeId, Attribute attribute) {
         int attributeid=this.addAttribute(attribute);
         String sql="INSERT INTO literaturetype_attribute(literaturetypeid," +
-                "attributeid,attributetype,ismust) VALUES(?,?,?,?)";
+                "attributeid,ismust) VALUES(?,?,?)";
         int r=this.getJdbcTemplate().update(sql,literatureTypeId,
-                attributeid,attribute.getType(),1);
+                attributeid,1);
 
         return (r>0)?true:false;
+    }
+
+    @Override
+    public boolean addLiteraturetypeAttribute(String literatureTypeName, Attribute attribute) {
+        String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
+        int literatureId=this.getJdbcTemplate().queryForInt(sql);
+        return  addLiteraturetypeAttribute(literatureId,attribute);
     }
 
     @Override
@@ -166,7 +173,6 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
     @Override
     public List<LiteraturetypeAttribute> getAllAttributeOfLiteratureType(String literatureTypeName){
         String sql="SELECT id from literaturetype where name = '"+literatureTypeName+"'";
-        System.out.println(sql);
         int literatureId=this.getJdbcTemplate().queryForInt(sql);
         return getAllAttributeOfLiteratureType(literatureId);
     }
@@ -201,5 +207,12 @@ public class ConfigDaoImpl extends JdbcDaoSupport implements ConfigDao {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<Attribute> getAllAttributeByType(int type) {
+        String sql="select * from attribute where type="+type;
+        List<Attribute> attributeList=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Attribute.class));
+        return attributeList;
     }
 }

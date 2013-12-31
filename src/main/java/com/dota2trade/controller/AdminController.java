@@ -46,6 +46,49 @@ public class AdminController {
             typeAttributeList.add(configDao.getAllAttributeOfLiteratureType(id));
         }
         model.addAttribute("typeAttributeList",typeAttributeList);
+        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        model.addAttribute("citeAttributeList",configDao.getAllAttributeByType(3));
+        return "paperConfig";
+    }
+
+    @RequestMapping(value="/doAddConfigs",method=RequestMethod.POST)
+    public String doAddConfigs(
+            @RequestParam("type") String type,
+            @RequestParam("args[]") String[] args,
+            @RequestParam("typename") String typename,
+            Model model
+    )throws UnsupportedEncodingException{
+        boolean success=false;
+        if(type.equals("types")){
+            for(int i=0;i<args.length;i++){
+                LiteratureType ltype=new LiteratureType();
+                ltype.setName(args[i]);
+                configDao.addLiteratureType(ltype);
+            }
+        }
+        else if(type.equals("type_attributes")){
+            for(int i=0;i<args.length;i++){
+                LiteraturetypeAttribute ltypeAttr=new LiteraturetypeAttribute();
+                Attribute attr=new Attribute();
+                attr.setName(args[i]);
+                attr.setType(1);
+                configDao.addLiteraturetypeAttribute(typename,attr);
+            }
+        }else if(type.equals("comment_attributes")){
+            for(int i=0;i<args.length;i++){
+                Attribute attr=new Attribute();
+                attr.setName(args[i]);
+                attr.setType(2);
+                configDao.addAttribute(attr);
+            }
+        }else if(type.equals("cite_attributes")){
+            for(int i=0;i<args.length;i++){
+                Attribute attr=new Attribute();
+                attr.setName(args[i]);
+                attr.setType(3);
+                configDao.addAttribute(attr);
+            }
+        }
         return "paperConfig";
     }
 
@@ -73,7 +116,6 @@ public class AdminController {
         userDao.deleteUser(account);
         return "admin";
     }
-
 
 
     public UserDao getUserDao() {

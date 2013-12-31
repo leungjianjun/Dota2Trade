@@ -30,6 +30,8 @@
         <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
     </ul>
     <div class="edit_right">
+    <form name="cite" action="/doaddCite" method="POST">
+        #set($citeNum=$title.size())
         <div class="title">文献修改<span>编辑引用关系</span></div>
         <div class="main clearfix">
             <div class="e_left">
@@ -45,7 +47,7 @@
                     #foreach($literatureMeta in $literatureMetaList)
                         <li>
                             <a class="desc" href="literatureDetail.html?id=$literatureMeta.literatureid">$literatureMeta.title -$literatureMeta.author $literatureMeta.published_year</a>
-                            <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cite',this);"></a>
+                            <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cite',this,$literatureMeta.literatureid)"></a>
                         </li>
                     #end
                 </ul>
@@ -55,84 +57,38 @@
                 <div class="cite_list">
                     <div class="list_title"><span></span>本文引用的文献</div>
                     <ul id="cite">
+                        <li #if($title.size()!=0) style="display: none;"#end id="nonecite">暂无引用文献</li>
+                        #set($i=0)
+                        #foreach($key in $title.keySet())
+                            #set($i=$i+1)
                         <li>
-                            <a href="#">云计算给图书馆管理带来挑战[J] 胡小菁， 范并思</a>
-                            <div class="widget-body uniformjs">
+                            <a href="literatureDetail.html?id=$key">$title.get($key)</a>
+                            <div class="type_checkbox">
+                                <input name="cite$i" type="hidden" value="$key">
                                 <label>引用关系类型：</label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" />
-                                    简单提及
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    相关
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    使用
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    对比
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    不确定
-                                </label>
+                                    <input type="checkbox" name="type$i" class="checkbox" value="1"
+                                        #if($type.get($key).contains(1))
+                                            checked="checked"
+                                        #end />简单提及
+                                    <input type="checkbox" name="type$i" class="checkbox" value="2"
+                                        #if($type.get($key).contains(2))
+                                           checked="checked"
+                                        #end />相关
+                                    <input type="checkbox" name="type$i" class="checkbox" value="3"
+                                        #if($type.get($key).contains(3))
+                                           checked="checked"
+                                        #end />使用
+                                    <input type="checkbox" name="type$i" class="checkbox" value="4"
+                                        #if($type.get($key).contains(4))
+                                           checked="checked"
+                                        #end />对比
+                                    <input type="checkbox" name="type$i" class="checkbox" value="5"
+                                        #if($type.get($key).contains(5))
+                                           checked="checked"
+                                        #end />不确定
                             </div>
                         </li>
-                        <li>
-                            <a href="#">云计算: 系统实例与研究现状 陈康，郑纬民 </a>
-                            <div class="widget-body uniformjs">
-                                <label>引用关系类型：</label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" />
-                                    简单提及
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    相关
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    使用
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    对比
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    不确定
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#">云计算及其关键技术  陈全， 邓倩妮</a>
-                            <div class="widget-body uniformjs">
-                                <label>引用关系类型：</label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" />
-                                    简单提及
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    相关
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    使用
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    对比
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
-                                    不确定
-                                </label>
-                            </div>
-                        </li>
+                        #end
                     </ul>
                 </div>
             </div>
@@ -140,29 +96,34 @@
         <div class="submit">
             <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 235px;">确认修改</button>
             <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+            <input type="hidden" id="citeNum" value="$citeNum" name="citeNum" />
+            <input type="hidden" name="literatureid" value="$literature.literatureMeta.literatureid" />
         </div>
+    </form>
     </div>
 </div>
 <script>
-    function add_cite(id,e){
+    var temp = $citeNum;
+    function add_cite(id,e,literatureid){
+        temp++;
+        $("#citeNum").val(temp);
+        if($("#nonecite")[0].style.display!="none"){
+            $("#nonecite")[0].style.display="none";
+        }
         $("#"+id).append(
              '<li><a href="#">'+$(e).parent().children('.desc').text()+'</a>'+
-                  '<div class="widget-body uniformjs"><label style="margin-right: 4px;">引用关系类型：</label>' +
-                  '<label class="checkbox" style="margin-right: 4px;">' +
-                  '<div class="checker" id="uniform-undefined"><span><input type="checkbox" class="checkbox" value="1" style="opacity: 0;"></span></div>' +
-                  '&nbsp;简单提及</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="2" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;相关</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="3" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;使用</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="4" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;对比</label>'+
-                  '<label class="checkbox" style="margin-right: 4px;">'+
-                  '<div class="checker" id="uniform-undefined"><span class="checked"><input type="checkbox" class="checkbox" value="5" checked="checked" style="opacity: 0;"></span></div>'+
-                  '&nbsp;不确定</label></div></li>'
+                  '<input name="cite'+temp+'" type="hidden" value="'+literatureid+'" />'+
+                  '<div class="type_checkbox"><label style="margin-right: 4px;">引用关系类型：</label>' +
+                  '<input type="checkbox" name="type'+temp+'" value="1">' +
+                  '&nbsp;简单提及'+
+                  '<input type="checkbox" name="type'+temp+'" value="2" checked="checked">'+
+                  '&nbsp;相关'+
+                  '<input type="checkbox" name="type'+temp+'" value="3" checked="checked">'+
+                  '&nbsp;使用'+
+                  '<input type="checkbox" name="type'+temp+'" value="4" checked="checked">'+
+                  '&nbsp;对比'+
+                  '<input type="checkbox" name="type'+temp+'" value="5" checked="checked">'+
+                  '&nbsp;不确定</div></li>'
                   )
     }
     function deleteCite(e){
@@ -171,6 +132,8 @@
 </script>
 <!-- JQuery -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
 
 <!-- JQueryUI -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
@@ -181,13 +144,4 @@
 
 <!-- Holder Plugin -->
 <script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
-<!-- Bootstrap Extended -->
-<script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
-<!-- Uniform Forms Plugin -->
-<script src="../resources/common/theme/scripts/plugins/forms/pixelmatrix-uniform/jquery.uniform.min.js"></script>
-<script>
-    $('.btn-block').click(function(){
-        window.open("/listLiterature.html");
-    })
-</script>
 </body>

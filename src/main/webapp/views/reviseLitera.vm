@@ -32,7 +32,7 @@
     <div class="main-right">
         <div class="title">修改文献信息</div>
         <div class="content">
-            <form method="POST" action="/doEditLiterature">
+            <form method="POST" action="/doEditLiterature" enctype="multipart/form-data">
                 <div class="unable-revise">
                     <div style="display: none"><input type="text" name="literatureid" value="$literature.id"></div>
                     <div class="doc-type">
@@ -93,37 +93,28 @@
                     <label>文献在线链接</label>
                     <input type="text" name="link" class="span12" value="$literature.literatureMeta.link">
                 </div>
-                <div class="exist-attachments">
+                <div class="exist-attachments" style="overflow: hidden;height: auto;">
                     <label>已有附件</label>
-                    <div>
+                    <div style="float: left;">
                      #foreach($attachment in $literature.attachmentList)
                          #if($attachment.type==0)
                          <input type="checkbox" checked="true" disabled="disabled" class="checkbox"><span>论文:$attachment.name</span>
                          <br>
                          #end
                          #if($attachment.type==1)
-                         <input type="checkbox" checked="true" class="checkbox"><span>其他:$attachment.name</span>
+                         <input type="checkbox" checked="true" disabled="disabled" class="checkbox"><span>其他:$attachment.name</span>
+                         <br>
                          #end
                      #end
                     </div>
                 </div>
-                <div>
+                <div style="margin: 11px 0;">
                     <label>添加附件</label>
-                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                        <div class="input-append">
-                            <div class="uneditable-input span3" style="display: inline-table;">
-                                <i class="icon-file fileupload-exists"></i>
-                                <span class="fileupload-preview"></span>
-                            </div>
-                            <span class="btn btn-default btn-file">
-                                <span class="fileupload-new">选择文件</span>
-                                <span class="fileupload-exists">修改</span>
-                                <input type="file" />
-                            </span>
-                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">删除</a>
-                        </div>
-                    </div>
+                    <button class="btn btn-block" id="add-attachment" type="button" style="display: inline-block;font-weight: normal;">添加附件</button>
                 </div>
+                <ul id="attachment" style="margin-left: 103px;">
+                    <input type="hidden" value="0" name="attachment_num" id="num" >
+                </ul>
                 <div class="submit">
                     <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改文献</button>
                     <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
@@ -140,6 +131,34 @@
 <script src="../resources/common/theme/scripts/demo/common.js"></script>
 <script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
 <script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
+
+<script>
+    var num = 0;
+    $(document).ready(function(){
+        $("#add-attachment").click(function(){
+            num = num +1;
+            $("#attachment").append('<li>' +
+                    '<div class="fileupload fileupload-new" id="fileupload-type'+num+'" data-provides="fileupload">'+
+                    '<div class="input-append">'+
+                    '<div class="uneditable-input span3" style="display: inline-table;">'+
+                    '<i class="icon-file fileupload-exists"></i>'+
+                    '<span class="fileupload-preview"></span>'+
+                    '</div>'+
+                    '<span class="btn btn-default btn-file">'+
+                    '<span class="fileupload-new">选择文件</span>'+
+                    '<span class="fileupload-exists">修改</span>'+
+                    '<input type="file" name="otherAttachment'+num+'"/>'+
+                    '</span>'+
+                    '<a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>'+
+                    '</div>'+
+                    '</div></li>');
+            $("#num").val(num);
+        })
+        $(".fake-delete").click(function(){
+            $(this).parent().parent().parent().hide();
+        })
+    })
+</script>
 
 <!-- JQueryUI -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>

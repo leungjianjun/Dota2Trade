@@ -55,7 +55,7 @@
                                     <!-- Table heading -->
                                     <thead>
                                     <tr>
-                                        <th>SSN</th>
+                                        <th>ID</th>
                                         <th>文献名称</th>
                                         <th>出版时间</th>
                                         <th>评分</th>
