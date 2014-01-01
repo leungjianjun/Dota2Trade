@@ -51,7 +51,7 @@
          <span class="left">高级搜索</span>
          <a class="right" href="#" onclick="hideAdvanced();"></a>
      </div>
-     <form name="" method="get" action="/searchResult.html">
+     <form name="" method="post" action="/doComplexSearch">
          <div>
              <label>文献类型</label>
              <select class="selectpicker span6" data-style="btn-default">
@@ -67,48 +67,48 @@
          </div>
          <div class="widget-body uniformjs collapse in">
              <label class="radio">
-                 <div class="radio" id="uniform-undefined"><input type="radio" class="radio" name="radio" value="1" style="opacity: 0;"></div>
+                 <div class="radio" id="uniform-undefined"><input type="radio" class="radio" name="radio" checked="checked" value="0" style="opacity: 0;"></div>
                  按文献详细信息查询
              </label>
          </div>
          <div>
              <label>包含所有关键字</label>
-             <input type="text" class="span12">
+             <input type="text" class="span12" name="allKeywordsHave">
          </div>
          <div>
              <label>包含精确短语</label>
-             <input type="text" class="span12">
+             <input type="text" class="span12" name="phraseHave">
          </div>
          <div>
              <label>包含至少一个关键字</label>
-             <input type="text" class="span12">
+             <input type="text" class="span12" name="oneOrMoreKeywordHave">
          </div>
          <div>
              <label>不包含关键字</label>
-             <input type="text" class="span12">
+             <input type="text" class="span12" name="noKeywordHave">
          </div>
          <div>
              <label>关键字位置</label>
-             <select class="selectpicker span6" data-style="btn-default">
-                 <option>文章中任意位置</option>
-                 <option>文章标题</option>
+             <select class="selectpicker span6" data-style="btn-default" name="keywordsLocated">
+                 <option value="paper">文章中任意位置</option>
+                 <option value="title">文章标题</option>
              </select>
          </div>
          <div>
              <label>文献作者</label>
-             <input type="text" class="span12" placeholder="例如：丁肇中 或 'PJ Hayes'">
+             <input type="text" class="span12" placeholder="例如：丁肇中 或 'PJ Hayes'" name="author">
          </div>
          <div>
              <label>出版单位</label>
-             <input type="text" class="span12">
+             <input type="text" class="span12" name="publisher">
          </div>
          <div>
              <label>发行时间</label>
-             <input type="text" class="span12 time0" placeholder="2012"><span>——</span><input type="text" class="span12 time0" placeholder="2013">
+             <input type="text" class="span12 time0" placeholder="2012" name="begin"><span>——</span><input type="text" class="span12 time0" placeholder="2013" name="end">
          </div>
          <div class="widget-body uniformjs collapse in">
              <label class="radio">
-                 <div class="radio" id="uniform-undefined"><input type="radio" class="radio" name="radio" value="1" checked="checked" style="opacity: 0;"></div>
+                 <div class="radio" id="uniform-undefined"><input type="radio" class="radio" name="radio" value="1"  style="opacity: 0;"></div>
                  按标签查询
              </label>
          </div>
