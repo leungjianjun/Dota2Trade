@@ -73,7 +73,7 @@ public class HomeController {
         byte[] bytes = fileName.getBytes("UTF-8");
         String s2 = new String(bytes, "UTF-8");
         System.out.println(s2);
-        return new FileSystemResource(new File("attachment/other"+s2+"."+type));
+        return new FileSystemResource(new File("attachment/other/"+s2+"."+type));
     }
     @RequestMapping(value = "/attachment/paper/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
     @ResponseBody
@@ -81,7 +81,7 @@ public class HomeController {
         byte[] bytes = fileName.getBytes("UTF-8");
         String s2 = new String(bytes, "UTF-8");
         System.out.println(s2);
-        return new FileSystemResource(new File("attachment/paper"+s2+"."+type));
+        return new FileSystemResource(new File("attachment/paper/"+s2+"."+type));
     }
 
 }
