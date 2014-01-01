@@ -78,42 +78,18 @@
                                 </div>
                                 <div id="tabDetail" class="tab-pane widget-body-regular">
                                     <form name="" action="" method="get">
-                                        <div class="rating clearfix">
-                                            <input type="hidden" id="d_star" name="star" value="" />
-                                            <span>打个分数吧（可选）：</span>
-                                            <span class="stars">
-                                              <span class="star" id="d_star1" onmouseover="selectStar('d_star',1)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',1)"></span>
-                                              <span class="star" id="d_star2" onmouseover="selectStar('d_star',2)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',2)"></span>
-                                              <span class="star" id="d_star3" onmouseover="selectStar('d_star',3)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',3)"></span>
-                                              <span class="star" id="d_star4" onmouseover="selectStar('d_star',4)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',4)"></span>
-                                              <span class="star" id="d_star5" onmouseover="selectStar('d_star',5)" onmouseout="cancelSelect('d_star')" onclick="confirmSelect('d_star',5)"></span>
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <label>解决问题</label>
-                                            <textarea cols="3" rows="2"></textarea>
-                                        </div>
-                                        <div>
-                                            <label>主要思路</label>
-                                            <textarea cols="3" rows="2"></textarea>
-                                        </div>
-                                        <div>
-                                            <label>实验结果</label>
-                                            <textarea cols="3" rows="2"></textarea>
-                                        </div>
-                                        <div>
-                                            <label>贡献</label>
-                                            <textarea cols="3" rows="2"></textarea>
-                                        </div>
-                                        <div>
-                                            <label>改进</label>
-                                            <textarea cols="3" rows="2"></textarea>
-                                        </div>
+                                        #foreach($commentAttribute in $commentAttributeList)
+                                            <div>
+                                                <label>$commentAttribute.name</label>
+                                                <textarea cols="3" rows="2"></textarea>
+                                            </div>
+                                        #end
                                         <div class="clearfix">
                                             <button class="btn btn-block btn-primary" type="submit" style="float: right;">提交评论</button>
                                             <span style="float: right;margin-right: 20px;">
                                                 <input name="state" type="checkbox" style="float: left;height: 29px;">
-                                                <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span></span>
+                                                <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span>
+                                            </span>
                                         </div>
                                     </form>
                                 </div>

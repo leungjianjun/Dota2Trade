@@ -365,6 +365,7 @@ public class LiteratureController {
         model.addAttribute("citedlist",cited_name);
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
+        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
         return "literatureDetail";
     }
 
