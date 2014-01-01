@@ -67,7 +67,7 @@ public class HomeController {
         return "no";
     }
 
-    @RequestMapping(value = "/attachment/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
+    @RequestMapping(value = "/attachment/{subname}/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
     @ResponseBody
     public FileSystemResource getFile(@PathVariable String fileName,@PathVariable String type) throws UnsupportedEncodingException {
         byte[] bytes = fileName.getBytes("UTF-8");
