@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <label>标题</label>
-                    <input type="text" name="title" class="span12">
+                    <input type="text" name="title" class="span12" id="title-title">
                 </div>
                 <div>
                     <label>作者</label>
@@ -202,6 +202,7 @@
 
 <!-- JQuery -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>
+<script src="../resources/js/jquery.autocomplete.js"></script>
 <!-- JQueryUI -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
 <!-- Bootstrap -->
@@ -229,6 +230,7 @@
         document.getElementById(value).style.display="block";
     }
     $(document).ready(function(){
+
         $(".fake-delete").click(function(){
             $(this).parent().parent().hide();
         })
@@ -254,6 +256,28 @@
             }
         })
     })
+
+    $(function() {
+        //输入缩写进行提示
+        //期刊名
+        var availableTags = {"BE":["Biomolecular Engineering"],"Cell. Polym.":["Cellular Polymers"]}
+        $( "[name='3_attributeValue1']" ).autocomplete({
+            source: function(request, response){
+                console.log(request.term)
+                response(availableTags[request.term])
+            }
+        });
+        //出版社
+        var publisher_nameTags = {"安大":["安徽大学出版社"],
+                                  "商务":["商务印书馆"],
+                                   "南大":["南京大学出版社"]}
+        $( "[name='publisher_name']" ).autocomplete({
+            source: function(request, response){
+                console.log(request.term)
+                response(publisher_nameTags[request.term])
+            }
+        });
+    });
 </script>
 <script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
 </body>
