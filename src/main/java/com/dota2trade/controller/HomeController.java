@@ -67,9 +67,17 @@ public class HomeController {
         return "no";
     }
 
-    @RequestMapping(value = "/attachment/{subname}/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
+    @RequestMapping(value = "/attachment/other/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
     @ResponseBody
-    public FileSystemResource getFile(@PathVariable String fileName,@PathVariable String type) throws UnsupportedEncodingException {
+    public FileSystemResource getOtherFile(@PathVariable String fileName,@PathVariable String type) throws UnsupportedEncodingException {
+        byte[] bytes = fileName.getBytes("UTF-8");
+        String s2 = new String(bytes, "UTF-8");
+        System.out.println(s2);
+        return new FileSystemResource(new File("attachment/"+s2+"."+type));
+    }
+    @RequestMapping(value = "/attachment/paper/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
+    @ResponseBody
+    public FileSystemResource getPaperFile(@PathVariable String fileName,@PathVariable String type) throws UnsupportedEncodingException {
         byte[] bytes = fileName.getBytes("UTF-8");
         String s2 = new String(bytes, "UTF-8");
         System.out.println(s2);
