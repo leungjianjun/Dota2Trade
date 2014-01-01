@@ -14,6 +14,7 @@ public class CommentAttribute {
     private String attributeName;
     private String value;
     private int commenterId;
+    private String commenter;
     private Date commentTime;
     private int status;
 
@@ -34,6 +35,9 @@ public class CommentAttribute {
 
     public void setCommenterId(int commenterId){this.commenterId=commenterId;}
     public int getCommenterId(){return this.commenterId;}
+
+    public void setCommenter(String commenter){this.commenter=commenter;}
+    public String getCommenter(){return this.commenter;}
 
     public void setStatus(int status){this.status=status;}
     public int getStatus(){return this.status;}

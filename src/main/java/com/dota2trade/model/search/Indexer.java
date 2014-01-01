@@ -1,5 +1,6 @@
 package com.dota2trade.model.search;
 
+import com.dota2trade.model.LiteratureMeta;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -83,5 +84,44 @@ public class Indexer {
             System.out.println("finally block");
         }
     }
+    /**
+     * 对文献的元信息进行索引
+     * */
+    public void indexDB(LiteratureMeta literatureMeta){
+        try {
+            // 实例化IKAnalyzer分词器
+            analyzer = new IKAnalyzer();
 
+            // 索引文件夹
+            directory = FSDirectory.open(new File(Util.DB_INDEX_DIR));
+            // 配置IndexWriterConfig
+            IndexWriterConfig iwConfig = new IndexWriterConfig(
+                    Version.LUCENE_34, analyzer);
+            iwConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+            iwriter = new IndexWriter(directory, iwConfig);
+            // 写入索引
+            Document doc = new Document();
+            doc.add(new Field("ID", Integer.toString(literatureMeta.getLiteratureid()), Field.Store.YES,
+                    Field.Index.NOT_ANALYZED));// ID不做索引
+            doc.add(new Field(Util.TITLE_INDEX_FIELD, literatureMeta.getTitle(), Field.Store.YES,
+                    Field.Index.ANALYZED));// 做索引
+            doc.add(new Field(Util.ABSTRACT_INDEX_FIELD, literatureMeta.getLiterature_abstract(), Field.Store.YES,
+                    Field.Index.ANALYZED));// 做索引
+            doc.add(new Field(Util.AUTHOR_INDEX_FIELD, literatureMeta.getAuthor(), Field.Store.YES,
+                    Field.Index.ANALYZED));// 做索引
+            doc.add(new Field(Util.PUBLISHED_YEAR_INDEX_FIELD, literatureMeta.getPublished_year(), Field.Store.YES,
+                    Field.Index.ANALYZED));// 做索引
+            doc.add(new Field(Util.KEY_WORDS_INDEX_FIELD, literatureMeta.getKey_words(), Field.Store.YES,
+                    Field.Index.ANALYZED));// 做索引
+
+            iwriter.addDocument(doc);
+            iwriter.close();
+        } catch (CorruptIndexException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("finally block");
+        }
+    }
 }

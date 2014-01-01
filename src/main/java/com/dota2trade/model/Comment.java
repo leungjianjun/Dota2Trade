@@ -11,6 +11,7 @@ import java.util.Date;
 public class Comment {
     private int id;
     private int commenterId;
+    private String commenter;
     private int literatureId;
     private String shortContent;
     private int score;
@@ -22,6 +23,9 @@ public class Comment {
 
     public void setCommenterId(int commenterId){this.commenterId=commenterId;}
     public int getCommenterId(){return this.commenterId;}
+
+    public void setCommenter(String commenter){this.commenter=commenter;}
+    public String getCommenter(){return this.commenter;}
 
     public void setLiteratureId(int literatureId){this.literatureId=literatureId;}
     public int getLiteratureId(){return this.literatureId;}
