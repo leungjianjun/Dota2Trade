@@ -2,6 +2,7 @@ package com.dota2trade.controller;
 
 import com.dota2trade.dao.*;
 import com.dota2trade.model.*;
+import com.dota2trade.model.search.ComplexCondition;
 import com.dota2trade.model.search.Indexer;
 import com.dota2trade.model.search.Searcher;
 import com.dota2trade.util.FileUploadHelper;
@@ -341,13 +342,54 @@ public class LiteratureController {
         return "searchLiterature";
     }
     @RequestMapping(value="/searchResult.html",method=RequestMethod.GET)
-    public String searchResult(@RequestParam("words") String words,ModelMap model)throws IOException{
+    public String searchResult(
+            @RequestParam("words") String words,
+            ModelMap model)throws IOException{
         //words = new String(words.getBytes("iso-8859-1"), "UTF-8");
         List<Literature> list = new ArrayList<Literature>();
         long begin = System.currentTimeMillis();
         list= searcher.simpleSearch(words);
         long end = System.currentTimeMillis();
         double cost = (end-begin)/1000.0;
+        model.addAttribute("cost",cost);
+        model.addAttribute("literatureList",list);
+        return "searchResult";
+    }
+
+    @RequestMapping(value="/doComplexSearch",method=RequestMethod.POST)
+    public String doComplexSearch(
+            @RequestParam("radio") int radio,
+            @RequestParam("allKeywordsHave") String allKeywordsHave,
+            @RequestParam("phraseHave") String phraseHave,
+            @RequestParam("oneOrMoreKeywordHave") String oneOrMoreKeywordHave,
+            @RequestParam("noKeywordHave") String noKeywordHave,
+            @RequestParam("keywordsLocated") String keywordsLocated,
+            @RequestParam("author") String author,
+            @RequestParam("publisher") String publisher,
+            @RequestParam("begin") String begin,
+            @RequestParam("end") String end,
+            ModelMap model
+    ){
+        List<Literature> list = new ArrayList<Literature>();
+        double cost=0.0;
+        if(radio==0){
+            ComplexCondition complexCondition=new ComplexCondition();
+            complexCondition.setAllKeywordsHave(allKeywordsHave);
+            complexCondition.setPhraseHave(phraseHave);
+            complexCondition.setOneOrMoreKeywordHave(oneOrMoreKeywordHave);
+            complexCondition.setNoKeywordHave(noKeywordHave);
+            complexCondition.setKeywordsLocated(keywordsLocated);
+            complexCondition.setAuthor(author);
+            complexCondition.setPublisher(publisher);
+            complexCondition.setBegin(begin);
+            complexCondition.setEnd(end);
+            System.out.println(allKeywordsHave+ " "+keywordsLocated);
+            long start = System.currentTimeMillis();
+            list= searcher.complexSearch(complexCondition);
+            long finish = System.currentTimeMillis();
+            cost = (finish-start)/1000.0;
+        }
+
         model.addAttribute("cost",cost);
         model.addAttribute("literatureList",list);
         return "searchResult";
