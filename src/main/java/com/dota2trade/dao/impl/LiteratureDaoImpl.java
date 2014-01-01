@@ -2,6 +2,7 @@ package com.dota2trade.dao.impl;
 
 import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.model.*;
+import com.dota2trade.model.search.Indexer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -53,6 +54,10 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
             //添加文档的基本信息（通用信息，必须有的信息）
             boolean addMetaResult=this.addLiteratureMeta(literature.getLiteratureMeta());
             if(addMetaResult==true){
+                /************做索引**************/
+                Indexer indexer=new Indexer();
+                indexer.indexDB(literature.getLiteratureMeta());
+
                 //添加出版社信息
                 int publisherId= this.addPublisher(literature.getPublisher());
                 if(publisherId!=-1){
