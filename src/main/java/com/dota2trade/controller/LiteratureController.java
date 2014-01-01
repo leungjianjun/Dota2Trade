@@ -5,6 +5,7 @@ import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.*;
 import com.dota2trade.model.search.Indexer;
+import com.dota2trade.model.search.Searcher;
 import com.dota2trade.util.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ public class LiteratureController {
     private UserDao userDao;
     private LiteratureDao literatureDao;
     private ConfigDao configDao;
+    private Searcher searcher;
     private static String LINK_PREFIX="http://localhost:8080/attachment/";
 
     @RequestMapping(value = "/sTest.html",method = RequestMethod.GET)
@@ -86,7 +88,7 @@ public class LiteratureController {
         paper.setName(attachmentName);
         String paperFileName = System.currentTimeMillis()+attachmentName;
         paper.setLink(LINK_PREFIX+"paper/"+paperFileName);
-        FileUploadHelper.uploadFile(fileAttachment,paperFileName,"paper");
+        FileUploadHelper.uploadFile(fileAttachment, paperFileName, "paper");
         paper.setCreatorid(userid);
         paper.setType(0);
         attachmentList.add(paper);
@@ -97,7 +99,7 @@ public class LiteratureController {
             FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name,"other");
             attachment1=new Attachment();
             attachment1.setName(other1Name);
-            attachment1.setLink(LINK_PREFIX+"other/"+otherFile1Name);
+            attachment1.setLink(LINK_PREFIX + "other/" + otherFile1Name);
             attachment1.setCreatorid(userid);
             attachment1.setType(1);
             attachmentList.add(attachment1);
@@ -180,6 +182,7 @@ public class LiteratureController {
         literature.setLiteratureAttributeList(literatureAttributeList);
 
         model.addAttribute("literature",literature);
+        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
 
         int id=literatureDao.createLiterature(literature);
 
@@ -337,7 +340,15 @@ public class LiteratureController {
         return "searchLiterature";
     }
     @RequestMapping(value="/searchResult.html",method=RequestMethod.GET)
-    public String searchResult(ModelMap model){
+    public String searchResult(@RequestParam("words") String words,ModelMap model)throws IOException{
+        //words = new String(words.getBytes("iso-8859-1"), "UTF-8");
+        List<Literature> list = new ArrayList<Literature>();
+        long begin = System.currentTimeMillis();
+        list= searcher.simpleSearch(words);
+        long end = System.currentTimeMillis();
+        double cost = (end-begin)/1000.0;
+        model.addAttribute("cost",cost);
+        model.addAttribute("literatureList",list);
         return "searchResult";
     }
     @RequestMapping(value="/literatureDetail.html",method=RequestMethod.GET)
@@ -405,7 +416,10 @@ public class LiteratureController {
      * 添加引用关系
      */
     @RequestMapping(value = "/doaddCite",method=RequestMethod.POST)
-    public String addCite(HttpServletRequest request,Model model){
+    public String addCite(
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            HttpServletRequest request,
+            Model model){
         int citeNum=Integer.parseInt(request.getParameter("citeNum"));
         int literatureid = Integer.parseInt(request.getParameter("literatureid"));
         ArrayList<CiteRelationship> list = new ArrayList<CiteRelationship>();
@@ -423,7 +437,19 @@ public class LiteratureController {
             }
         }
         literatureDao.updateCiteRelationship(list);
-        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+        //文献类型
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+        model.addAttribute("typeList",typeList);
+        int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
+        List<LiteratureMeta> list1 = literatureDao.getAllLiteratureMetaByUserid(userid);
+        List<Literature> literatureList = new ArrayList<Literature>();
+        for(int i=0;i<list1.size();i++){
+            LiteratureMeta meta = list1.get(i);
+            Literature literature = literatureDao.getLiteratureById(meta.getLiteratureid());
+            literatureList.add(literature);
+        }
+        model.addAttribute("literatureList",literatureList);
         return "listLiterature";
     }
 
@@ -445,4 +471,7 @@ public class LiteratureController {
     public ConfigDao getConfigDao(){return configDao;}
     @Autowired
     public void setConfigDao(ConfigDao configDao){this.configDao=configDao;}
+    public Searcher getSearcher(){return  searcher;}
+    @Autowired
+    public void setSearcher(Searcher searcher){this.searcher = searcher;}
 }

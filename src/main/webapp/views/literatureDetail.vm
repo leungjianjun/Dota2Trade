@@ -25,21 +25,21 @@
         <div class="title">文献详情<a href="./searchResult.html">返回</a></div>
         <div class="main">
             <div class="left">
-                <ul>
+                <ul class="literature">
                     <li class="t">$literature.literatureMeta.title</li>
-                    <li class="type">类别：
+                    <li class="type"><span>类别：</span>
                         #foreach($type in $typeList)
                             #if($literature.literaturetypeid==$type.id)
                                 <span>$type.name</span>
                             #end
                         #end
                     </li>
-                    <li>发行时间：$literature.literatureMeta.published_year</li>
-                    <li class="author">作者：$literature.literatureMeta.author</li>
-                    <li class="abstract">摘要：$literature.literatureMeta.literature_abstract</li>
-                    <li class="keyword">关键字：$literature.literatureMeta.key_words</li>
+                    <li><span>发行时间：</span>$literature.literatureMeta.published_year</li>
+                    <li class="author"><span>作者：</span>$literature.literatureMeta.author</li>
+                    <li class="abstract"><span>摘要：</span>$literature.literatureMeta.literature_abstract</li>
+                    <li class="keyword"><span>关键字：</span>$literature.literatureMeta.key_words</li>
                     #foreach($attribute in $attributeList)
-                        <li>$attribute.attributename：$attribute.value</li>
+                        <li><span>$attribute.attributename：</span>$attribute.value</li>
                     #end
                 </ul>
                 <div class="comment">
@@ -159,7 +159,7 @@
                                         <br>
                                     #end
                                     #if($attachment.type==1)
-                                        其他:<a href="$attachment.link" title="点击下载附件">$attachment.name</a>
+                                        其他:<a href="$attachment.link" title="点击下ß载附件">$attachment.name</a>
                                         <br>
                                     #end
                                 #end
