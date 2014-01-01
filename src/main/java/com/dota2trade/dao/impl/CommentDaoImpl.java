@@ -80,21 +80,63 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
     @Override
     public List<Comment> getAllSimpleCommentByLiteratureId(int literatureId, int status) {
         String sql="SELECT * from comment where literatureid="+literatureId+" AND status="+status;
-        List<Comment> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Comment.class));
+        List<Comment> list=this.getJdbcTemplate().query(sql,
+                new RowMapper() {
+                    public Object mapRow(ResultSet rs, int i) throws SQLException {
+                        Comment comment=new Comment();
+                        comment.setId(rs.getInt("id"));
+                        comment.setStatus(rs.getInt("status"));
+                        comment.setLiteratureId(rs.getInt("literatureid"));
+                        comment.setCommentTime(rs.getTime("commentTime"));
+                        comment.setCommenterId(rs.getInt("commenterid"));
+                        comment.setScore(rs.getInt("score"));
+                        comment.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        return comment;
+                    }
+                }
+        );
         return list;
     }
 
     @Override
     public List<Comment> getAllSimpleCommentByUserId(int userId, int status) {
         String sql="SELECT * from comment where commenterid="+userId+" AND status="+status;
-        List<Comment> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Comment.class));
+        List<Comment> list=this.getJdbcTemplate().query(sql,
+                new RowMapper() {
+                    public Object mapRow(ResultSet rs, int i) throws SQLException {
+                       Comment comment=new Comment();
+                        comment.setId(rs.getInt("id"));
+                        comment.setStatus(rs.getInt("status"));
+                        comment.setLiteratureId(rs.getInt("literatureid"));
+                        comment.setCommentTime(rs.getTime("commentTime"));
+                        comment.setCommenterId(rs.getInt("commenterid"));
+                        comment.setScore(rs.getInt("score"));
+                        comment.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        return comment;
+                    }
+                }
+         );
         return list;
     }
 
     @Override
     public List<Comment> getAllSimpleCommentByUserIdAndLiteratureId(int userId, int literatureId, int status) {
         String sql="SELECT * from comment where commenterid="+userId+" AND literatureId="+literatureId+" AND status="+status;
-        List<Comment> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Comment.class));
+        List<Comment> list=this.getJdbcTemplate().query(sql,
+                new RowMapper() {
+                    public Object mapRow(ResultSet rs, int i) throws SQLException {
+                        Comment comment=new Comment();
+                        comment.setId(rs.getInt("id"));
+                        comment.setStatus(rs.getInt("status"));
+                        comment.setLiteratureId(rs.getInt("literatureid"));
+                        comment.setCommentTime(rs.getTime("commentTime"));
+                        comment.setCommenterId(rs.getInt("commenterid"));
+                        comment.setScore(rs.getInt("score"));
+                        comment.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        return comment;
+                    }
+                }
+        );
         return list;
     }
 
@@ -107,29 +149,85 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
 
     @Override
     public int addComplexCommentAttribute(CommentAttribute commentAttribute) {
-        int id=commentAttribute.getId();
         int commenterId=commentAttribute.getCommenterId();
-
-        return 0;
+        int literatureId=commentAttribute.getLiteratureId();
+        int attributeId=commentAttribute.getAttributeId();
+        String attributeName=commentAttribute.getAttributeName();
+        String value=commentAttribute.getValue();
+        Date commentTime=commentAttribute.getCommentTime();
+        int status=commentAttribute.getStatus();
+        String sql="INSERT into commentattribute (literatureid,attributeid,attributename,value,commenterid,commenttime,status) values("
+                +literatureId+","
+                +attributeId+",'"
+                +attributeName+"','"
+                +value+"',"
+                +commenterId+",'"
+                +commentTime+"',"
+                +status
+                +")";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int updateCount=this.getJdbcTemplate().update(sql,keyHolder);
+        if(updateCount>0){
+            return keyHolder.getKey().intValue();
+        }else{
+            return -1;
+        }
     }
 
     @Override
     public boolean deleteComplexCommentAttribute(int id) {
-        return false;
+        String sql="DELETE FROM commentattribute WHERE id='"+id+"'";
+        int r=this.getJdbcTemplate().update(sql);
+        return (r>0)?true:false;
     }
 
     @Override
     public List<Integer> addComplexComment(ComplexComment complexComment) {
-        return null;
+        List<Integer> ids=new ArrayList<Integer>();
+        int literatureId=complexComment.getLiteratureId();
+        int commenterId=complexComment.getCommenterId();
+        String commenter=complexComment.getCommenter();
+        Date commentTime=complexComment.getCommentTime();
+        int status=complexComment.getStatus();
+        List<CommentAttribute> list=complexComment.getCommentAttributes();
+        //判断是否是已经存在的复杂评论
+        if(list.get(0).getId()>0){
+           //说明是已经存在的评论属性
+            for(CommentAttribute commentAttribute:list){
+                String sql="UPDATE commentattribute SET value='"
+                        +commentAttribute.getValue()+"',commenttime='"
+                        +commentTime+"',status="
+                        +status;
+                int r=this.getJdbcTemplate().update(sql);
+                if(r>0){
+                    ids.add(commentAttribute.getId());
+                }
+                System.out.println("更新失败！");
+                ids.add(-1);
+            }
+        }
+        //新插入一个复杂评论
+        for(CommentAttribute commentAttribute:list){
+            int id=addComplexCommentAttribute(commentAttribute);
+            ids.add(id);
+        }
+        return ids;
     }
 
     @Override
-    public boolean deleteComplexComment(int literatureId, int userId, List<Integer> idList) {
-        return false;
+    public boolean deleteComplexComment(List<Integer> idList) {
+        boolean result=true;
+        for(int id:idList){
+            result=deleteComplexCommentAttribute(id);
+            if(!result)
+                break;
+        }
+        return result;
     }
 
     @Override
     public List<ComplexComment> getAllComplexCommentByLiteratureId(int literatureId, int status) {
+        List<CommentAttribute> list;
         return null;
     }
 
@@ -141,5 +239,85 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
     @Override
     public List<ComplexComment> getAllComplexCommentByUserIdAndLiteratureId(int userId, int literatureId, int status) {
         return null;
+    }
+
+    @Override
+    public List<CommentAttribute> getAllCommentAttributeByLiteratureId(int literatureId, int status) {
+        String sql="SELECT * from commentattribute where literatureid="+literatureId+" AND status="+status;
+        List<CommentAttribute> list=this.getJdbcTemplate().query(sql,
+                new RowMapper() {
+                    public Object mapRow(ResultSet rs, int i) throws SQLException {
+                        CommentAttribute commentAttribute=new CommentAttribute();
+                        commentAttribute.setId(rs.getInt("id"));
+                        commentAttribute.setStatus(rs.getInt("status"));
+                        commentAttribute.setLiteratureId(rs.getInt("literatureid"));
+                        commentAttribute.setAttributeId(rs.getInt("attributeid"));
+                        commentAttribute.setAttributeName(rs.getString("attributename"));
+                        commentAttribute.setCommentTime(rs.getTime("commentTime"));
+                        commentAttribute.setCommenterId(rs.getInt("commenterid"));
+                        commentAttribute.setValue(rs.getString("value"));
+                        commentAttribute.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        return commentAttribute;
+                    }
+                }
+        );
+        return list;
+    }
+
+    @Override
+    public List<CommentAttribute> getAllCommentAttributeByUserId(int userId, int status) {
+        String sql="SELECT * from commentattribute where commenterid="+userId+" AND status="+status;
+        List<CommentAttribute> list=this.getJdbcTemplate().query(sql,
+                new RowMapper() {
+                    public Object mapRow(ResultSet rs, int i) throws SQLException {
+                        CommentAttribute commentAttribute=new CommentAttribute();
+                        commentAttribute.setId(rs.getInt("id"));
+                        commentAttribute.setStatus(rs.getInt("status"));
+                        commentAttribute.setLiteratureId(rs.getInt("literatureid"));
+                        commentAttribute.setAttributeId(rs.getInt("attributeid"));
+                        commentAttribute.setAttributeName(rs.getString("attributename"));
+                        commentAttribute.setCommentTime(rs.getTime("commentTime"));
+                        commentAttribute.setCommenterId(rs.getInt("commenterid"));
+                        commentAttribute.setValue(rs.getString("value"));
+                        commentAttribute.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        return commentAttribute;
+                    }
+                }
+        );
+        return list;
+    }
+
+    @Override
+    public List<CommentAttribute> getAllCommentAttributeByUserIdAndLiteratureId(int userId, int literatureId, int status) {
+        String sql="SELECT * from commentattribute where literatureid="+literatureId+" AND commenterid="+userId+"status="+status;
+        List<CommentAttribute> list=this.getJdbcTemplate().query(sql,
+                new RowMapper() {
+                    public Object mapRow(ResultSet rs, int i) throws SQLException {
+                        CommentAttribute commentAttribute=new CommentAttribute();
+                        commentAttribute.setId(rs.getInt("id"));
+                        commentAttribute.setStatus(rs.getInt("status"));
+                        commentAttribute.setLiteratureId(rs.getInt("literatureid"));
+                        commentAttribute.setAttributeId(rs.getInt("attributeid"));
+                        commentAttribute.setAttributeName(rs.getString("attributename"));
+                        commentAttribute.setCommentTime(rs.getTime("commentTime"));
+                        commentAttribute.setCommenterId(rs.getInt("commenterid"));
+                        commentAttribute.setValue(rs.getString("value"));
+                        commentAttribute.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        return commentAttribute;
+                    }
+                }
+        );
+        return list;
+    }
+
+    private String getAccountById(int id){
+        String sql = "SELECT account FROM user WHERE id='"+id+"'";
+        List<String> strLst  = getJdbcTemplate().query(sql,
+                new RowMapper(){
+                    public Object mapRow(ResultSet rs, int rowNum) throws SQLException{
+                        return rs.getString(1);
+                    }
+                });
+        return strLst.get(0);
     }
 }

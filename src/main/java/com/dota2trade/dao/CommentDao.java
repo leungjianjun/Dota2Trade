@@ -30,10 +30,15 @@ public interface CommentDao {
 
     /**对一篇文献的复杂评论操作**/
     public List<Integer> addComplexComment(ComplexComment complexComment);
-    public boolean deleteComplexComment(int literatureId,int userId,List<Integer> idList);
+    public boolean deleteComplexComment(List<Integer> idList);
 
     /**获得复杂评论**/
     public List<ComplexComment> getAllComplexCommentByLiteratureId(int literatureId,int status);
     public List<ComplexComment> getAllComplexCommentByUserId(int userId,int status);
     public List<ComplexComment> getAllComplexCommentByUserIdAndLiteratureId(int userId,int literatureId,int status);
+
+    /**配合获得复杂评论的方法**/
+    public List<CommentAttribute> getAllCommentAttributeByLiteratureId(int literatureId,int status);
+    public List<CommentAttribute> getAllCommentAttributeByUserId(int userId,int status);
+    public List<CommentAttribute> getAllCommentAttributeByUserIdAndLiteratureId(int userId,int literatureId,int status);
 }
