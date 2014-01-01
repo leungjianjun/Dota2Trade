@@ -1,6 +1,7 @@
 package com.dota2trade.controller;
 
 import com.dota2trade.dao.ConfigDao;
+import com.dota2trade.dao.LabelDao;
 import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.*;
@@ -40,6 +41,7 @@ public class LiteratureController {
     private LiteratureDao literatureDao;
     private ConfigDao configDao;
     private Searcher searcher;
+    private LabelDao labelDao;
     private static String LINK_PREFIX="http://localhost:8080/attachment/";
 
     @RequestMapping(value = "/sTest.html",method = RequestMethod.GET)
@@ -354,7 +356,9 @@ public class LiteratureController {
     @RequestMapping(value="/literatureDetail.html",method=RequestMethod.GET)
     public String literatureDetail(
             @RequestParam("id")int literatureid,
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             ModelMap model){
+        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         Map<Integer,String> cite_name = new HashMap<Integer,String>();
         Map<Integer,String> cited_name = new HashMap<Integer,String>();
         List<CiteRelationship> cite = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
@@ -379,7 +383,16 @@ public class LiteratureController {
         //文献类型
         List typeList=new ArrayList();
         typeList=configDao.getAllLiteratureTypes();
+        //文献对应标签
+        List<Label> labelList = labelDao.getLabelListByLiteratureId(literatureid);
+        //我的标签
+        List<Label> myLabelList = labelDao.getLabelListByuserId(userid);
+        //常用标签
+        List<Label> commonLabelList = labelDao.getCommonLabelList();
 
+        model.addAttribute("labelList",labelList);
+        model.addAttribute("myLabelList",myLabelList);
+        model.addAttribute("commonLabelList",commonLabelList);
         model.addAttribute("typeList",typeList);
         model.addAttribute("creator",creator);
         model.addAttribute("updater",updater);
@@ -453,6 +466,75 @@ public class LiteratureController {
         return "listLiterature";
     }
 
+    /**
+     * 添加标签
+     */
+    @RequestMapping(value = "/doaddLabel",method=RequestMethod.POST)
+    public String addLabel(
+            @RequestParam("literatureid")int literatureid,
+            @RequestParam("tags") String tags,
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            Model model) throws IOException{
+        int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
+        String[] args = tags.split("\\;|\\；");
+        for(int i=0;i<args.length;i++){
+            Label label = new Label();
+            label.setCreateid(userid);
+            label.setName(args[i]);
+            int result = labelDao.addLabel(label);
+            if(result!=-1){
+                LabelLiterature labelLiterature = new LabelLiterature();
+                labelLiterature.setLabelid(result);
+                labelLiterature.setUserid(userid);
+                labelLiterature.setLiteratureid(literatureid);
+                boolean addLabelResult = labelDao.addLiteratureLabel(labelLiterature);
+            }
+        }
+        Map<Integer,String> cite_name = new HashMap<Integer,String>();
+        Map<Integer,String> cited_name = new HashMap<Integer,String>();
+        List<CiteRelationship> cite = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
+        for(int i=0;i<cite.size();i++){
+            CiteRelationship cr = cite.get(i);
+            cite_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
+        }
+        List<CiteRelationship> cited = literatureDao.getAllCiteRelationshipByCitedById(literatureid);
+        for(int i=0;i<cited.size();i++){
+            CiteRelationship cr = cited.get(i);
+            cited_name.put(cr.getLiteratureid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getLiteratureid()).getTitle());
+        }
+        //上传人，修改人
+        Literature literature = literatureDao.getLiteratureById(literatureid);
+        String creator = userDao.getAccountById(literature.getCreatorid());
+        String updater = "";
+        if(literature.getUpdaterid()==0){
+            updater = creator;
+        }else{
+            updater = userDao.getAccountById(literature.getUpdaterid());
+        }
+        //文献类型
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+        //文献对应标签
+        List<Label> labelList = labelDao.getLabelListByLiteratureId(literatureid);
+        //我的标签
+        List<Label> myLabelList = labelDao.getLabelListByuserId(userid);
+        //常用标签
+        List<Label> commonLabelList = labelDao.getCommonLabelList();
+
+        model.addAttribute("labelList",labelList);
+        model.addAttribute("myLabelList",myLabelList);
+        model.addAttribute("commonLabelList",commonLabelList);
+        model.addAttribute("typeList",typeList);
+        model.addAttribute("creator",creator);
+        model.addAttribute("updater",updater);
+        model.addAttribute("citelist",cite_name);
+        model.addAttribute("citedlist",cited_name);
+        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
+        model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
+        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        return "literatureDetail";
+    }
+
     public LiteratureDao getLiteratureDao() {
         return literatureDao;
     }
@@ -474,4 +556,7 @@ public class LiteratureController {
     public Searcher getSearcher(){return  searcher;}
     @Autowired
     public void setSearcher(Searcher searcher){this.searcher = searcher;}
+    public LabelDao getLabelDao(){return labelDao;}
+    @Autowired
+    public void setLabelDao(LabelDao labelDao){this.labelDao = labelDao;}
 }

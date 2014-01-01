@@ -28,5 +28,7 @@
     <bean id="searcher" class="com.dota2trade.model.search.Searcher">
         <property name="literatureDao"><ref bean="literatureDao" /></property>
     </bean>
-
+    <bean id="labelDao" class="com.dota2trade.dao.impl.LabelDaoImpl">
+        <constructor-arg><ref bean="dataSource" /></constructor-arg>
+    </bean>
 </beans>
