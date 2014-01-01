@@ -84,25 +84,36 @@
                                         <div class="clearfix">
                                             <button class="btn btn-block btn-primary" type="submit" style="float: right;">提交评论</button>
                                             <span style="float: right;margin-right: 20px;">
-                                                <input name="state" type="checkbox" style="float: left;height: 29px;" onclick="changeState(this)" value="1">
-                                                <input name="status" type="hidden" value="1" id="status">
+                                                <input name="state" type="checkbox" style="float: left;height: 29px;" onclick="changeState(this,'simple_status')" value="1">
+                                                <input name="status" type="hidden" value="1" id="simple_status">
                                                 <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span>
                                             </span>
                                         </div>
                                     </form>
                                 </div>
                                 <div id="tabDetail" class="tab-pane widget-body-regular">
-                                    <form name="" action="" method="get">
+                                    <form name="complexComment" action="/doAddComplexComment" method="POST">
+                                        <input name="literatureid" type="hidden" value="$literature.id" />
                                         #foreach($commentAttribute in $commentAttributeList)
                                             <div>
                                                 <label>$commentAttribute.name</label>
-                                                <textarea cols="3" rows="2"></textarea>
+                                                <input name="attribute$commentAttribute.id" type="hidden" value="$commentAttribute.id" />
+                                                <textarea name="value$commentAttribute.id" cols="3" rows="2">
+                                                    #if($complexComment.status!=-1)
+                                                    #foreach($attribute in $complexComment.commentAttributes)
+                                                        #if($attribute.id==$commentAttribute.id)
+                                                            $attribute.value
+                                                        #end
+                                                    #end
+                                                    #end
+                                                </textarea>
                                             </div>
                                         #end
                                         <div class="clearfix">
                                             <button class="btn btn-block btn-primary" type="submit" style="float: right;">提交评论</button>
                                             <span style="float: right;margin-right: 20px;">
-                                                <input name="state" type="checkbox" style="float: left;height: 29px;" onclick="changeState(this)" value="1">
+                                                <input name="state1" type="checkbox" style="float: left;height: 29px;" onclick="changeState(this,'complex_status')" value="1">
+                                                <input name="status1" type="hidden" value="1" id="complex_status">
                                                 <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span>
                                             </span>
                                         </div>
@@ -164,7 +175,7 @@
                 <ul class="row1">
                     <li>最初上传人：<a href="#">$creator</a></li>
                     <li>最后修改人：<a href="#">$updater</a></li>
-                    <li>平均得分：9.2（15人评价）</li>
+                    <li>平均得分：9.2（$simpleComments.size()人评价）</li>
                     <li class="download clearfix">
                         <div class="l">附件下载:</div>
                         <div class="r">
@@ -230,11 +241,11 @@
             tags = ""+tags+tagname+";";
             $("#addtag").val(tags);
         }
-        function changeState(e){
+        function changeState(e,id){
             if($(e).attr("checked")=="checked"){
-                $("#status").val(0);
+                $("#"+id).val(0);
             }else{
-                $("#status").val(1);
+                $("#"+id).val(1);
             }
         }
     </script>
