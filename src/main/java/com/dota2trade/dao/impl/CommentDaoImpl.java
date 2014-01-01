@@ -45,7 +45,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
             String sql="UPDATE comment SET short_content='"+shortContent+"',"
                     +"score="+score+","
                     +"status="+status
-                    +"WHERE id="+id;
+                    +" WHERE id="+id;
             int r=this.getJdbcTemplate().update(sql);
             if(r>0){
                 return id;
@@ -215,8 +215,10 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                 if(r>0){
                     ids.add(commentAttribute.getId());
                 }
-                System.out.println("更新失败！");
-                ids.add(-1);
+                else{
+                    System.out.println("更新失败！");
+                    ids.add(-1);
+                }
             }
         }
         //新插入一个复杂评论
@@ -240,18 +242,86 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
 
     @Override
     public List<ComplexComment> getAllComplexCommentByLiteratureId(int literatureId, int status) {
-        List<CommentAttribute> list;
-        return null;
+        List<CommentAttribute> list = this.getAllCommentAttributeByLiteratureId(literatureId,status);
+        List<ComplexComment> complexCommentList = new ArrayList<ComplexComment>();
+        for(int i=0;i<list.size();){
+            ComplexComment complexComment=new ComplexComment();
+            complexComment.setLiteratureId(literatureId);
+            complexComment.setStatus(status);
+            int userid=list.get(i).getCommenterId();
+            Date commentTime=list.get(i).getCommentTime();
+            complexComment.setCommenterId(userid);
+            complexComment.setCommenter(this.getAccountById(userid));
+            complexComment.addCommentAttribute(list.get(i));
+            complexComment.setCommentTime(commentTime);
+            int j=i+1;
+            for(;j<list.size();j++){
+                if(list.get(j).getCommenterId()==userid && list.get(j).getCommentTime().equals(commentTime))
+                    complexComment.addCommentAttribute(list.get(j));
+                else{
+                    complexCommentList.add(complexComment);
+                    break;
+                }
+            }
+            i=j;
+        }
+        return complexCommentList;
     }
 
     @Override
     public List<ComplexComment> getAllComplexCommentByUserId(int userId, int status) {
-        return null;
+        List<CommentAttribute> list = this.getAllCommentAttributeByUserId(userId, status);
+        List<ComplexComment> complexCommentList = new ArrayList<ComplexComment>();
+        for(int i=0;i<list.size();){
+            ComplexComment complexComment=new ComplexComment();
+            int literatureId=list.get(i).getLiteratureId();
+            complexComment.setLiteratureId(literatureId);
+            complexComment.setStatus(status);
+            Date commentTime=list.get(i).getCommentTime();
+            complexComment.setCommenterId(userId);
+            complexComment.setCommenter(this.getAccountById(userId));
+            complexComment.addCommentAttribute(list.get(i));
+            complexComment.setCommentTime(commentTime);
+            int j=i+1;
+            for(;j<list.size();j++){
+                if(list.get(j).getLiteratureId()==literatureId && list.get(j).getCommentTime().equals(commentTime))
+                    complexComment.addCommentAttribute(list.get(j));
+                else{
+                    complexCommentList.add(complexComment);
+                    break;
+                }
+            }
+            i=j;
+        }
+        return complexCommentList;
     }
 
     @Override
     public List<ComplexComment> getAllComplexCommentByUserIdAndLiteratureId(int userId, int literatureId, int status) {
-        return null;
+
+        List<CommentAttribute> list = this.getAllCommentAttributeByUserIdAndLiteratureId(userId, literatureId, status);
+        List<ComplexComment> complexCommentList = new ArrayList<ComplexComment>();
+        for(int i=0;i<list.size();){
+            ComplexComment complexComment=new ComplexComment();
+            complexComment.setLiteratureId(literatureId);
+            complexComment.setStatus(status);
+            Date commentTime=list.get(i).getCommentTime();
+            complexComment.setCommenterId(userId);
+            complexComment.setCommenter(this.getAccountById(userId));
+            complexComment.addCommentAttribute(list.get(i));
+            complexComment.setCommentTime(commentTime);
+            int j=i+1;
+            for(;j<list.size();j++){
+                if(list.get(j).getCommentTime().equals(commentTime))
+                    complexComment.addCommentAttribute(list.get(j));
+                else{
+                    complexCommentList.add(complexComment);
+                    break;
+                }
+            }
+            i=j;
+        }
+        return complexCommentList;
     }
 
     @Override
@@ -302,7 +372,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
 
     @Override
     public List<CommentAttribute> getAllCommentAttributeByUserIdAndLiteratureId(int userId, int literatureId, int status) {
-        String sql="SELECT * from commentattribute where literatureid="+literatureId+" AND commenterid="+userId+"status="+status;
+        String sql="SELECT * from commentattribute where literatureid="+literatureId+" AND commenterid="+userId+" and status="+status;
         List<CommentAttribute> list=this.getJdbcTemplate().query(sql,
                 new RowMapper() {
                     public Object mapRow(ResultSet rs, int i) throws SQLException {

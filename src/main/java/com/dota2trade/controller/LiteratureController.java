@@ -406,10 +406,18 @@ public class LiteratureController {
         //获得用户该文献的复杂评论草稿
         List<ComplexComment> complexDraftList = commentDao.getAllComplexCommentByUserIdAndLiteratureId(userid,literatureid,0);
 
+        System.out.println(complexDraftList.size());
+        ComplexComment complexComment0 = new ComplexComment();
+        if(complexDraftList.size()!=0){
+            complexComment0 = complexDraftList.get(0);
+        }
+        else{
+            complexComment0.setStatus(-1);
+        }
         model.addAttribute("simpleComments",simpleComments);
         model.addAttribute("complexComments",complexComments);
         model.addAttribute("simpleDraft",comment);
-        model.addAttribute("complexDraftList",complexDraftList);
+        model.addAttribute("complexDraftList",complexComment0);
         model.addAttribute("labelList",labelList);
         model.addAttribute("myLabelList",myLabelList);
         model.addAttribute("commonLabelList",commonLabelList);
@@ -559,10 +567,17 @@ public class LiteratureController {
         //获得用户该文献的复杂评论草稿
         List<ComplexComment> complexDraftList = commentDao.getAllComplexCommentByUserIdAndLiteratureId(userid,literatureid,0);
 
+        ComplexComment complexComment0 = new ComplexComment();
+        if(complexDraftList.size()!=0){
+            complexComment0 = complexDraftList.get(0);
+        }
+        else{
+            complexComment0.setStatus(-1);
+        }
         model.addAttribute("simpleComments",simpleComments);
         model.addAttribute("complexComments",complexComments);
         model.addAttribute("simpleDraft",comment);
-        model.addAttribute("complexDraftList",complexDraftList);
+        model.addAttribute("complexDraft",complexComment0);
         model.addAttribute("labelList",labelList);
         model.addAttribute("myLabelList",myLabelList);
         model.addAttribute("commonLabelList",commonLabelList);
@@ -645,11 +660,119 @@ public class LiteratureController {
         List<ComplexComment> complexComments = commentDao.getAllComplexCommentByLiteratureId(literatureid,1);
         //获得用户该文献的复杂评论草稿
         List<ComplexComment> complexDraftList = commentDao.getAllComplexCommentByUserIdAndLiteratureId(userid,literatureid,0);
+        ComplexComment complexComment0 = new ComplexComment();
+        if(complexDraftList.size()!=0){
+            complexComment0 = complexDraftList.get(0);
+        }
+        else{
+            complexComment0.setStatus(-1);
+        }
 
         model.addAttribute("simpleComments",simpleComments);
         model.addAttribute("complexComments",complexComments);
         model.addAttribute("simpleDraft",comment);
-        model.addAttribute("complexDraftList",complexDraftList);
+        model.addAttribute("complexDraft",complexComment0);
+        model.addAttribute("labelList",labelList);
+        model.addAttribute("myLabelList",myLabelList);
+        model.addAttribute("commonLabelList",commonLabelList);
+        model.addAttribute("typeList",typeList);
+        model.addAttribute("creator",creator);
+        model.addAttribute("updater",updater);
+        model.addAttribute("citelist",cite_name);
+        model.addAttribute("citedlist",cited_name);
+        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
+        model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
+        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        return "literatureDetail";
+    }
+    /**
+     * 添加复杂评论
+     */
+    @RequestMapping(value = "/doAddComplexComment",method=RequestMethod.POST)
+    public String addComplexComment(
+            @RequestParam("literatureid")int literatureid,
+            @RequestParam("status1") int status,
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            HttpServletRequest request,
+            Model model) throws IOException{
+        int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
+        List<Attribute> attributeList = configDao.getAllAttributeByType(2);
+        ComplexComment complexComment = new ComplexComment();
+        complexComment.setCommenterId(userid);
+        complexComment.setLiteratureId(literatureid);
+        complexComment.setStatus(status);
+        for(int i=0;i<attributeList.size();i++){
+            Attribute attribute = attributeList.get(i);
+            int attributeId = Integer.parseInt(request.getParameter("attribute" + attribute.getId()));
+            String attributeValue = request.getParameter("value"+attribute.getId());
+            String attributeName = attribute.getName();
+            CommentAttribute newAttribute = new CommentAttribute();
+            newAttribute.setId(attributeId);
+            newAttribute.setAttributeId(attributeId);
+            newAttribute.setAttributeName(attributeName);
+            newAttribute.setValue(attributeValue);
+            complexComment.addCommentAttribute(newAttribute);
+        }
+        commentDao.addComplexComment(complexComment);
+
+        Map<Integer,String> cite_name = new HashMap<Integer,String>();
+        Map<Integer,String> cited_name = new HashMap<Integer,String>();
+        List<CiteRelationship> cite = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
+        for(int i=0;i<cite.size();i++){
+            CiteRelationship cr = cite.get(i);
+            cite_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
+        }
+        List<CiteRelationship> cited = literatureDao.getAllCiteRelationshipByCitedById(literatureid);
+        for(int i=0;i<cited.size();i++){
+            CiteRelationship cr = cited.get(i);
+            cited_name.put(cr.getLiteratureid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getLiteratureid()).getTitle());
+        }
+        //上传人，修改人
+        Literature literature = literatureDao.getLiteratureById(literatureid);
+        String creator = userDao.getAccountById(literature.getCreatorid());
+        String updater = "";
+        if(literature.getUpdaterid()==0){
+            updater = creator;
+        }else{
+            updater = userDao.getAccountById(literature.getUpdaterid());
+        }
+        //文献类型
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+        //文献对应标签
+        List<Label> labelList = labelDao.getLabelListByLiteratureId(literatureid);
+        //我的标签
+        List<Label> myLabelList = labelDao.getLabelListByuserId(userid);
+        //常用标签
+        List<Label> commonLabelList = labelDao.getCommonLabelList();
+        //获得所有正式简单评论
+        List<Comment> simpleComments = commentDao.getAllSimpleCommentByLiteratureId(literatureid,1);
+        //获得用户该文献的草稿
+        List<Comment> simpleDraftList = commentDao.getAllSimpleCommentByUserIdAndLiteratureId(userid,literatureid,0);
+        Comment comment = new Comment();
+        if(simpleDraftList.size()!=0){
+            comment = simpleDraftList.get(0);
+        }
+        else{
+            comment.setShortContent("");
+            comment.setId(-1);
+            comment.setScore(0);
+        }
+        //获得所有正式复杂评论
+        List<ComplexComment> complexComments = commentDao.getAllComplexCommentByLiteratureId(literatureid,1);
+        //获得用户该文献的复杂评论草稿
+        List<ComplexComment> complexDraftList = commentDao.getAllComplexCommentByUserIdAndLiteratureId(userid,literatureid,0);
+        ComplexComment complexComment0 = new ComplexComment();
+        if(complexDraftList.size()!=0){
+            complexComment0 = complexDraftList.get(0);
+        }
+        else{
+            complexComment0.setStatus(-1);
+        }
+        model.addAttribute("simpleComments",simpleComments);
+        model.addAttribute("complexComments",complexComments);
+        model.addAttribute("simpleDraft",comment);
+        model.addAttribute("complexDraft",complexComment0);
         model.addAttribute("labelList",labelList);
         model.addAttribute("myLabelList",myLabelList);
         model.addAttribute("commonLabelList",commonLabelList);
