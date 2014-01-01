@@ -152,23 +152,18 @@
                     <li>平均得分：9.2（15人评价）</li>
                     <li class="download clearfix">
                         <div class="l">附件下载:</div>
-                        <form name="" method="get" action="">
-                            <div class="r">
-                                <div>
-                                    #foreach($attachment in $literature.attachmentList)
-                                        #if($attachment.type==0)
-                                            <input type="checkbox" checked="true" class="checkbox"><span>论文:$attachment.name</span>
-                                            <br>
-                                        #end
-                                        #if($attachment.type==1)
-                                            <input type="checkbox" class="checkbox"><span>其他:$attachment.name</span>
-                                            <br>
-                                        #end
+                        <div class="r">
+                                #foreach($attachment in $literature.attachmentList)
+                                    #if($attachment.type==0)
+                                        论文:<a href="$attachment.link" title="点击下载附件">$attachment.name</a>
+                                        <br>
                                     #end
-                                </div>
-                                <button class="btn btn-primary" type="submit" style="display: inline-block;">下载</button>
-                            </div>
-                        </form>
+                                    #if($attachment.type==1)
+                                        其他:<a href="$attachment.link" title="点击下载附件">$attachment.name</a>
+                                        <br>
+                                    #end
+                                #end
+                        </div>
                     </li>
                 </ul>
                 <div class="cite_list">

@@ -85,7 +85,7 @@ public class LiteratureController {
         String attachmentName = new String (fileAttachment.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
         paper.setName(attachmentName);
         String paperFileName = System.currentTimeMillis()+attachmentName;
-        paper.setLink(LINK_PREFIX+paperFileName);
+        paper.setLink(LINK_PREFIX+"paper/"+paperFileName);
         FileUploadHelper.uploadFile(fileAttachment,paperFileName,"paper");
         paper.setCreatorid(userid);
         paper.setType(0);
@@ -97,7 +97,7 @@ public class LiteratureController {
             FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name,"other");
             attachment1=new Attachment();
             attachment1.setName(other1Name);
-            attachment1.setLink(LINK_PREFIX+otherFile1Name);
+            attachment1.setLink(LINK_PREFIX+"other/"+otherFile1Name);
             attachment1.setCreatorid(userid);
             attachment1.setType(1);
             attachmentList.add(attachment1);
@@ -109,7 +109,7 @@ public class LiteratureController {
             FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name,"other");
             attachment2=new Attachment();
             attachment2.setName(other2Name);
-            attachment2.setLink(LINK_PREFIX+otherFile2Name);
+            attachment2.setLink(LINK_PREFIX+"other/"+otherFile2Name);
             attachment2.setCreatorid(userid);
             attachment2.setType(1);
             attachmentList.add(attachment2);
@@ -121,7 +121,7 @@ public class LiteratureController {
             FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name,"other");
             attachment3=new Attachment();
             attachment3.setName(other3Name);
-            attachment3.setLink(LINK_PREFIX+otherFile3Name);
+            attachment3.setLink(LINK_PREFIX+"other/"+otherFile3Name);
             attachment3.setCreatorid(userid);
             attachment3.setType(1);
             attachmentList.add(attachment3);
@@ -133,7 +133,7 @@ public class LiteratureController {
             FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name,"other");
             attachment4=new Attachment();
             attachment4.setName(other4Name);
-            attachment4.setLink(LINK_PREFIX+otherFile4Name);
+            attachment4.setLink(LINK_PREFIX+"other/"+otherFile4Name);
             attachment4.setCreatorid(userid);
             attachment4.setType(1);
             attachmentList.add(attachment4);
@@ -300,7 +300,7 @@ public class LiteratureController {
                 FileUploadHelper.uploadFile(attachment, otherFile1Name,"other");
                 Attachment otherAttachment = new Attachment();
                 otherAttachment.setName(other1Name);
-                otherAttachment.setLink(LINK_PREFIX+otherFile1Name);
+                otherAttachment.setLink(LINK_PREFIX+"other/"+otherFile1Name);
                 otherAttachment.setCreatorid(userid);
                 otherAttachment.setType(1);
                 otherAttachment.setLiteratureid(literatureid);
@@ -318,7 +318,18 @@ public class LiteratureController {
         literature.setLiteratureAttributeList(newLiteratureAttributeList);
         literatureDao.updateLiterature(literature);
 
-        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+        //文献类型
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+        model.addAttribute("typeList",typeList);
+        List<LiteratureMeta> list = literatureDao.getAllLiteratureMetaByUserid(userid);
+        List<Literature> literatureList = new ArrayList<Literature>();
+        for(int i=0;i<list.size();i++){
+            LiteratureMeta meta = list.get(i);
+            Literature literature1 = literatureDao.getLiteratureById(meta.getLiteratureid());
+            literatureList.add(literature1);
+        }
+        model.addAttribute("literatureList",literatureList);
         return "listLiterature";
     }
     @RequestMapping(value="/searchLiterature.html",method=RequestMethod.GET)
