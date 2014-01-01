@@ -12,6 +12,13 @@ public class Util {
 	public static String DB_INDEX_DIR="index/dbindex/";
 
     public static int SEARCH_RESULT=10;//查询结果数
+
+    public static String TITLE_INDEX_FIELD="TITLE";
+    public static String ABSTRACT_INDEX_FIELD="ABSTRACT";
+    public static String AUTHOR_INDEX_FIELD="AUTHOR";
+    public static String PUBLISHED_YEAR_INDEX_FIELD="PUBLISHED_YEAR";
+    public static String KEY_WORDS_INDEX_FIELD="KEY_WORDS";
+
 	/**
 	 * 取得不带扩展名的文件名
 	 * */
