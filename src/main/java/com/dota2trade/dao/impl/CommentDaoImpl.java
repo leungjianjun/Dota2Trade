@@ -33,19 +33,19 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
     @Override
     public int addSimpleComment(Comment comment) {
         int id=comment.getId();
-        String shortContent=comment.getShortContent();
-        int literatureId=comment.getLiteratureId();
-        int commenterId=comment.getCommenterId();
-        int score=comment.getScore();
+        final String shortContent=comment.getShortContent();
+        final int literatureId=comment.getLiteratureId();
+        final int commenterId=comment.getCommenterId();
+        final int score=comment.getScore();
         Date commentTime=comment.getCommentTime();
-        int status=comment.getStatus();
+        final int status=comment.getStatus();
         /**判断是否已经存在**/
         if(id>0){
             //已经存在，说明这是一次修改，新插入的无id，默认为0
             String sql="UPDATE comment SET short_content='"+shortContent+"',"
-                    +"commenttime='"+commentTime+"',"
                     +"score="+score+","
-                    +"status="+status;
+                    +"status="+status
+                    +"WHERE id="+id;
             int r=this.getJdbcTemplate().update(sql);
             if(r>0){
                 return id;
@@ -54,15 +54,20 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
             return -1;
         }
         /**不存在，新插入**/
-        String sql="INSERT into comment(commenterid,literatureid,short_content,score,status,commenttime) values("
-                +commenterId+","
-                +literatureId+",'"
-                +shortContent+"',"
-                +score+","
-                +status+",'"
-                +commentTime+"')";
+        final String sql="INSERT into comment(commenterid,literatureid,short_content,score,status) values(?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        int updateCount=this.getJdbcTemplate().update(sql,keyHolder);
+        PreparedStatementCreator preparedStatementCreator=new PreparedStatementCreator(){
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, commenterId);
+                ps.setInt(2, literatureId);
+                ps.setString(3,shortContent);
+                ps.setInt(4,score);
+                ps.setInt(5,status);
+                return ps;
+            }
+        };
+        int updateCount=this.getJdbcTemplate().update(preparedStatementCreator,keyHolder);
         if(updateCount>0){
             return keyHolder.getKey().intValue();
         }else{
@@ -91,6 +96,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         comment.setCommenterId(rs.getInt("commenterid"));
                         comment.setScore(rs.getInt("score"));
                         comment.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        comment.setShortContent(rs.getString("short_content"));
                         return comment;
                     }
                 }
@@ -112,6 +118,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         comment.setCommenterId(rs.getInt("commenterid"));
                         comment.setScore(rs.getInt("score"));
                         comment.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        comment.setShortContent(rs.getString("short_content"));
                         return comment;
                     }
                 }
@@ -133,6 +140,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         comment.setCommenterId(rs.getInt("commenterid"));
                         comment.setScore(rs.getInt("score"));
                         comment.setCommenter(getAccountById(rs.getInt("commenterid")));
+                        comment.setShortContent(rs.getString("short_content"));
                         return comment;
                     }
                 }
@@ -149,24 +157,28 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
 
     @Override
     public int addComplexCommentAttribute(CommentAttribute commentAttribute) {
-        int commenterId=commentAttribute.getCommenterId();
-        int literatureId=commentAttribute.getLiteratureId();
-        int attributeId=commentAttribute.getAttributeId();
-        String attributeName=commentAttribute.getAttributeName();
-        String value=commentAttribute.getValue();
+        final int commenterId=commentAttribute.getCommenterId();
+        final int literatureId=commentAttribute.getLiteratureId();
+        final int attributeId=commentAttribute.getAttributeId();
+        final String attributeName=commentAttribute.getAttributeName();
+        final String value=commentAttribute.getValue();
         Date commentTime=commentAttribute.getCommentTime();
-        int status=commentAttribute.getStatus();
-        String sql="INSERT into commentattribute (literatureid,attributeid,attributename,value,commenterid,commenttime,status) values("
-                +literatureId+","
-                +attributeId+",'"
-                +attributeName+"','"
-                +value+"',"
-                +commenterId+",'"
-                +commentTime+"',"
-                +status
-                +")";
+        final int status=commentAttribute.getStatus();
+        final String sql="INSERT into commentattribute (literatureid,attributeid,attributename,value,commenterid,status) values(?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        int updateCount=this.getJdbcTemplate().update(sql,keyHolder);
+        PreparedStatementCreator preparedStatementCreator=new PreparedStatementCreator(){
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, literatureId);
+                ps.setInt(2, attributeId);
+                ps.setString(3,attributeName);
+                ps.setString(4, value);
+                ps.setInt(5,commenterId);
+                ps.setInt(6,status);
+                return ps;
+            }
+        };
+        int updateCount=this.getJdbcTemplate().update(preparedStatementCreator,keyHolder);
         if(updateCount>0){
             return keyHolder.getKey().intValue();
         }else{
@@ -197,7 +209,8 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                 String sql="UPDATE commentattribute SET value='"
                         +commentAttribute.getValue()+"',commenttime='"
                         +commentTime+"',status="
-                        +status;
+                        +status
+                        +" where id="+commentAttribute.getId();
                 int r=this.getJdbcTemplate().update(sql);
                 if(r>0){
                     ids.add(commentAttribute.getId());

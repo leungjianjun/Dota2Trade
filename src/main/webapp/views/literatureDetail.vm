@@ -66,24 +66,28 @@
                         <div class="widget-body">
                             <div class="tab-content">
                                 <div id="tabSimple" class="active tab-pane widget-body-regular">
-                                    <form name="" action="" method="get">
+                                    <form name="simple" action="/doSimpleComment" method="POST">
+                                        <input type="hidden" name="literatureid" value="$literature.id" />
                                         <div class="rating clearfix">
-                                            <input type="hidden" id="s_star" name="star" value="" />
+                                            <input type="hidden" id="s_star" name="star" value="$simpleDraft.score" />
                                             <span>打个分数吧（可选）：</span>
                                             <span class="stars">
-                                              <span class="star" id="s_star1" onmouseover="selectStar('s_star',1)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',1)"></span>
-                                              <span class="star" id="s_star2" onmouseover="selectStar('s_star',2)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',2)"></span>
-                                              <span class="star" id="s_star3" onmouseover="selectStar('s_star',3)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',3)"></span>
-                                              <span class="star" id="s_star4" onmouseover="selectStar('s_star',4)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',4)"></span>
-                                              <span class="star" id="s_star5" onmouseover="selectStar('s_star',5)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',5)"></span>
+                                              <span class="star#if($simpleDraft.score>=1) on#end" id="s_star1" onmouseover="selectStar('s_star',1)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',1)"></span>
+                                              <span class="star#if($simpleDraft.score>=2) on#end" id="s_star2" onmouseover="selectStar('s_star',2)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',2)"></span>
+                                              <span class="star#if($simpleDraft.score>=3) on#end" id="s_star3" onmouseover="selectStar('s_star',3)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',3)"></span>
+                                              <span class="star#if($simpleDraft.score>=4) on#end" id="s_star4" onmouseover="selectStar('s_star',4)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',4)"></span>
+                                              <span class="star#if($simpleDraft.score>=5) on#end" id="s_star5" onmouseover="selectStar('s_star',5)" onmouseout="cancelSelect('s_star')" onclick="confirmSelect('s_star',5)"></span>
                                             </span>
                                         </div>
-                                        <textarea cols="2" rows="3" style="width: 362px;"></textarea>
+                                        <input type="hidden" name="commentid" value="$simpleDraft.id" />
+                                        <textarea name="comment" cols="2" rows="3" style="width: 362px;">$simpleDraft.shortContent</textarea>
                                         <div class="clearfix">
                                             <button class="btn btn-block btn-primary" type="submit" style="float: right;">提交评论</button>
                                             <span style="float: right;margin-right: 20px;">
-                                                <input name="state" type="checkbox" style="float: left;height: 29px;">
-                                                <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span></span>
+                                                <input name="state" type="checkbox" style="float: left;height: 29px;" onclick="changeState(this)" value="1">
+                                                <input name="status" type="hidden" value="1" id="status">
+                                                <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span>
+                                            </span>
                                         </div>
                                     </form>
                                 </div>
@@ -98,7 +102,7 @@
                                         <div class="clearfix">
                                             <button class="btn btn-block btn-primary" type="submit" style="float: right;">提交评论</button>
                                             <span style="float: right;margin-right: 20px;">
-                                                <input name="state" type="checkbox" style="float: left;height: 29px;">
+                                                <input name="state" type="checkbox" style="float: left;height: 29px;" onclick="changeState(this)" value="1">
                                                 <span style="height: 36px;line-height: 36px;float: right;margin-left: 5px;">存为草稿</span>
                                             </span>
                                         </div>
@@ -147,20 +151,12 @@
                 <div class="otherComments">
                     <div class="t">其他人的评论</div>
                     <ul>
-                        <li>
-                            <div class="info"><a class="name">梁建均</a><span>评分：4</span><span>2013-11-20</span></div>
-                            <div>好文章，必须赞～</div>
-                        </li>
-                        <li>
-                            <div class="info"><a class="name">戴娟</a><span>评分：4</span><span>2013-11-20</span></div>
-                            <div>云计算技术以其强大的功能已在世界的一些商业领域得到了初步的应用。在不久的将来,
-                                云计算技术也将在图书馆中得到大规模的普及应用。文章在分析云计算与图书馆的关系
-                                基础上,探讨了云计算技术在图书馆建设与服务中的应用</div>
-                        </li>
-                        <li>
-                            <div class="info"><a class="name">丁玲娟</a><span>评分：5</span><span>2013-11-20</span></div>
-                            <div>好文章，必须赞～</div>
-                        </li>
+                        #foreach($comment in $simpleComments)
+                            <li>
+                                <div class="info"><a class="name">$comment.commenter</a><span>评分：$comment.score</span><span>$comment.commentTime</span></div>
+                                <div>$comment.shortContent</div>
+                            </li>
+                        #end
                     </ul>
                 </div>
             </div>
@@ -233,6 +229,13 @@
             var tags = $("#addtag").val();
             tags = ""+tags+tagname+";";
             $("#addtag").val(tags);
+        }
+        function changeState(e){
+            if($(e).attr("checked")=="checked"){
+                $("#status").val(0);
+            }else{
+                $("#status").val(1);
+            }
         }
     </script>
     <!-- JQuery -->
