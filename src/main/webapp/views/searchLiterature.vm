@@ -39,7 +39,7 @@
         <div class="title">文献查询</div>
         <div class="simple_search">
             <form name="" method="get" action="/searchResult.html">
-                <input type="text" class="span12" placeholder="输入文字查询相关文献">
+                <input type="text" name="words" class="span12" placeholder="输入文字查询相关文献" style="color: #333">
                 <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;">查询文献</button>
             </form>
         </div>

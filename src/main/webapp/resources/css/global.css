@@ -2,7 +2,7 @@
 body{
     font: 12px/1.5 tahoma,arial;
     background: none repeat scroll 0% 0% rgb(253, 253, 253);
-    color: rgb(124, 124, 124);
+    color: #333;
 }
 .container0{margin: 30px auto;width: 94%;overflow: hidden;}
 ul,li,dd,dl{padding:0;margin:0;list-style:none;text-align:left;}

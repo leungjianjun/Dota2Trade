@@ -40,3 +40,6 @@
 .comment .t{margin: 3px 0;}
 .otherComments .info span{margin-left: 15px;}
 .otherComments .info .name{float: left;width: 40px;}
+.left .literature li span {
+    font-weight: bold;
+}
