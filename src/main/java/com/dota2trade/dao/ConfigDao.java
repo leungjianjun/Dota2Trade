@@ -40,6 +40,7 @@ public interface ConfigDao {
     boolean deleteAttribute(String name,int type);
     /**改变类型-属性关系的ismust字段,使得结果与原来相反*/
     boolean changeAttributeIsmust(int literatureTypeId,int attributeId,int ismust);
+    boolean changeAttributeIsmust(String literatureTypeName,String attributeName,int ismust);
     /**删除一条类型-属性*/
     boolean deleteLiteraturetypeAttribute(int literatureTypeId,Attribute attribute);
     boolean deleteLiteraturetypeAttribute(String literatureTypeName,Attribute attribute);

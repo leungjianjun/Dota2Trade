@@ -46,8 +46,24 @@ public class AdminController {
             typeAttributeList.add(configDao.getAllAttributeOfLiteratureType(id));
         }
         model.addAttribute("typeAttributeList",typeAttributeList);
+        model.addAttribute("basicAttributeList",configDao.getAllAttributeByType(1));
         model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
         model.addAttribute("citeAttributeList",configDao.getAllAttributeByType(3));
+        return "paperConfig";
+    }
+    @RequestMapping(value="/doChangeMust",method=RequestMethod.POST)
+    public String doChangeMust(
+            @RequestParam("args1[]") String[] args1,
+            @RequestParam("args2[]") String[] args2,
+            @RequestParam("typename") String typename,
+            Model model){
+        boolean success=false;
+        for(int i=0;i<args1.length;i++){
+             configDao.changeAttributeIsmust(typename,args1[i],0);
+        }
+        for(int i=0;i<args2.length;i++){
+            configDao.changeAttributeIsmust(typename,args2[i],1);
+        }
         return "paperConfig";
     }
 
@@ -71,7 +87,7 @@ public class AdminController {
                 Attribute attr=new Attribute();
                 attr.setName(args[i]);
                 attr.setType(1);
-                configDao.addLiteraturetypeAttribute(typename,attr);
+                configDao.addLiteraturetypeAttribute(typename, attr);
             }
         }else if(type.equals("comment_attributes")){
             for(int i=0;i<args.length;i++){
@@ -116,7 +132,7 @@ public class AdminController {
 
         }else if(type.equals("cite_attributes")){
             for(int i=0;i<chk_value.length;i++){
-                configDao.deleteAttribute(chk_value[i],3);
+                configDao.deleteAttribute(chk_value[i], 3);
             }
 
         }
