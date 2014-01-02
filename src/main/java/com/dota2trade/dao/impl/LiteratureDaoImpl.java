@@ -490,13 +490,13 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     @Override
     public List<Integer> publishedYearIdList(String begin, String end) {
 
-        String sql="SELECT id FROM literaturemeta " +
+        String sql="SELECT literatureid FROM literaturemeta " +
                 "WHERE published_year BETWEEN '"+begin+"' AND '"+end+"'";
         List<Integer> allIdList =  this.getJdbcTemplate().query(sql,
                 new RowMapper() {
                     @Override
                     public Object mapRow(ResultSet rs, int i) throws SQLException {
-                        int id=rs.getInt("id");
+                        int id=rs.getInt("literatureid");
                         return new Integer(id);
                     }
                 }

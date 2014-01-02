@@ -206,21 +206,37 @@ public class Searcher {
             System.out.println("complexSearch finally block.");
         }
         boolean tag=true;//全为空条件的标志
-        for(int i=0;i<empty.length;i++){
+        for(int i=0;i<empty.length-1;i++){
             if(empty[i]==false){
                 tag=false;
             }
         }
-        if(tag==false){
-            //不是空条件查询
+        if(tag==true){
+            //前六个条件都为空
+            if(empty[6]==false){
+                //查询年份区间不为空
+                idList=Util.getStrList(
+                        literatureDao.publishedYearIdList(
+                                complexCondition.getBegin(),complexCondition.getEnd()));
+                for(Iterator iterator=idList.iterator();iterator.hasNext();){
+                    String id_str=(String)iterator.next();
+                    literatureList.add(literatureDao.getLiteratureById(Integer.valueOf(id_str)));
+                }
+                System.out.println("empty[6]==false:"+complexCondition.getBegin());
+                return literatureList;
+            }else{
+                //是空条件
+                System.out.println("空条件");
+                return literatureDao.getAllLiterature();
+            }
+        }else{
+            //空条件查询
             for(Iterator iterator=idList.iterator();iterator.hasNext();){
                 String id_str=(String)iterator.next();
                 literatureList.add(literatureDao.getLiteratureById(Integer.valueOf(id_str)));
             }
+            System.out.println("falfalfalfal");
             return literatureList;
-        }else{
-            //是空条件
-            return literatureDao.getAllLiterature();
         }
     }
 
