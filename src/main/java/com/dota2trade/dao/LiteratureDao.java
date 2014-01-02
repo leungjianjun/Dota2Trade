@@ -89,4 +89,6 @@ public interface LiteratureDao {
 
     /**获取一个文献的所有特有属性信息*/
     List<LiteratureAttribute> getLiteratureAttribute(int literatureid);
+
+    List<Integer> publishedYearIdList(String begin,String end);
 }

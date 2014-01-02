@@ -1,6 +1,7 @@
 package com.dota2trade.model.search;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -94,6 +95,7 @@ public class Util {
 
     /**
      * 两个数组筛选
+     * 过滤掉第一个数组中在第二个数组中出现的元素
      * */
     public static List<String> filt(List<String> list1,List<String> list2){
         //去重
@@ -108,5 +110,33 @@ public class Util {
         }
 
         return list1;
+    }
+    /**
+     * 取两个数组的交集
+     * */
+    public static List<String> mixfilt(List<String> list1,List<String> list2){
+        List<String> list=new ArrayList<String>();
+        //去重
+        for(Iterator iterator1=list1.iterator();iterator1.hasNext();){
+            String str1=(String)iterator1.next();
+            for(Iterator iterator2=list2.iterator();iterator2.hasNext();){
+                String str2=(String)iterator2.next();
+                if(str1.equals(str2)){
+                    list.add(str1);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public static List<String> getStrList(List<Integer> integerList){
+        List<String> list=new ArrayList<String>();
+        for(Iterator iterator=integerList.iterator();iterator.hasNext();){
+            Integer integer=(Integer)iterator.next();
+            String str=integer.toString();
+            list.add(str);
+        }
+        return list;
     }
 }

@@ -95,6 +95,7 @@ public class Searcher {
     public List<Literature> complexSearch(ComplexCondition complexCondition){
         List<Literature> literatureList=new ArrayList<Literature>();
         List<String> idList=new ArrayList<String>();
+        boolean empty[]={true,true,true,true,true,true,true};
         try {
             // 实例化IKAnalyzer分词器
             analyzer = new IKAnalyzer();
@@ -118,15 +119,16 @@ public class Searcher {
 
             isearcher=new IndexSearcher(ireader);
 
+
                 if(!complexCondition.getAllKeywordsHave().equals("")
                         &&!complexCondition.getAllKeywordsHave().equals(" ")){
                    //不是空串
                    Query query=parser.parse(complexCondition.getAllKeywordsHave());
                    booleanQuery.add(query, BooleanClause.Occur.MUST);
                    idList=this.getIDList(booleanQuery,isearcher);
-
+                    empty[0]=false;
                 }else{
-
+                    empty[0]=true;
                 }
                 if(!complexCondition.getPhraseHave().equals("")
                         &&!complexCondition.getPhraseHave().equals(" ")){
@@ -134,9 +136,9 @@ public class Searcher {
                     Query query=parser.parse(complexCondition.getPhraseHave());
                     booleanQuery.add(query, BooleanClause.Occur.MUST);
                     idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
-
+                    empty[1]=false;
                 }else{
-
+                    empty[1]=true;
                 }
                 if(!complexCondition.getOneOrMoreKeywordHave().equals("")
                         &&!complexCondition.getOneOrMoreKeywordHave().equals(" ")){
@@ -144,9 +146,9 @@ public class Searcher {
                     Query query=parser.parse(complexCondition.getOneOrMoreKeywordHave());
                     booleanQuery.add(query, BooleanClause.Occur.SHOULD);
                     idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
-
+                    empty[2]=false;
                 }else{
-
+                    empty[2]=true;
                 }
                 if(!complexCondition.getNoKeywordHave().equals("")
                         &&!complexCondition.getNoKeywordHave().equals(" ")){
@@ -154,9 +156,9 @@ public class Searcher {
                     Query query=parser.parse(complexCondition.getNoKeywordHave());
                     booleanQuery.add(query, BooleanClause.Occur.MUST);
                     idList=Util.filt(idList,this.getIDList(booleanQuery,isearcher));
-
+                    empty[3]=false;
                 }else{
-
+                    empty[3]=true;
                 }
                 if(!complexCondition.getAuthor().equals("")
                         &&!complexCondition.getAuthor().equals(" ")){
@@ -166,9 +168,9 @@ public class Searcher {
                     Query query=parser.parse(complexCondition.getAuthor());
                     booleanQuery.add(query, BooleanClause.Occur.SHOULD);
                     idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
-
+                    empty[4]=false;
                 }else{
-
+                    empty[4]=true;
                 }
                 if(!complexCondition.getPublisher().equals("")
                         &&!complexCondition.getPublisher().equals(" ")){
@@ -177,18 +179,22 @@ public class Searcher {
                     Query query=parser.parse(complexCondition.getPublisher());
                     booleanQuery.add(query, BooleanClause.Occur.MUST);
                     idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
-
+                    empty[5]=false;
                 }else{
-
+                    empty[5]=true;
                 } if(!complexCondition.getBegin().equals("")
                         &&!complexCondition.getBegin().equals(" ")){
-                    //*不是空串
+                    /*/*//*不是空串
                     Query query=parser.parse(complexCondition.getBegin());
-                    booleanQuery.add(query, BooleanClause.Occur.MUST);
-                    idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
+                    booleanQuery.add(query, BooleanClause.Occur.MUST);*/
 
+                    idList=Util.mixfilt(idList,
+                            Util.getStrList(
+                                    literatureDao.publishedYearIdList(
+                                            complexCondition.getBegin(),complexCondition.getEnd())));
+                empty[6]=false;
                 }else{
-
+                empty[6]=true;
                 }
         } catch (LockObtainFailedException e) {
             e.printStackTrace();
@@ -199,13 +205,21 @@ public class Searcher {
         } finally {
             System.out.println("complexSearch finally block.");
         }
-        if(idList.size()!=0){
+        boolean tag=true;//全为空条件的标志
+        for(int i=0;i<empty.length;i++){
+            if(empty[i]==false){
+                tag=false;
+            }
+        }
+        if(tag==false){
+            //不是空条件查询
             for(Iterator iterator=idList.iterator();iterator.hasNext();){
                 String id_str=(String)iterator.next();
                 literatureList.add(literatureDao.getLiteratureById(Integer.valueOf(id_str)));
             }
             return literatureList;
         }else{
+            //是空条件
             return literatureDao.getAllLiterature();
         }
     }
