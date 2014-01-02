@@ -193,6 +193,26 @@ public class LiteratureController {
         indexer.indexPaper(paperFileName,id);
 
         System.out.println("result:"+id);
+        Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+        Map<Integer,String> map_name = new HashMap<Integer,String>();
+        List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(id);
+        for(int i=0;i<temp.size();i++){
+            CiteRelationship cr = temp.get(i);
+            if(!(map.containsKey(cr.getCitedbyid()))){
+                ArrayList<Integer> typeList = new ArrayList<Integer>();
+                typeList.add(cr.getCitedtypeid());
+                map.put(cr.getCitedbyid(),typeList);
+            }
+            else{
+                ArrayList<Integer> typeList = map.get(cr.getCitedbyid());
+                typeList.add(cr.getCitedtypeid());
+                map.put(cr.getCitedbyid(),typeList);
+            }
+            map_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
+        }
+        model.addAttribute("citeTypeList",configDao.getAllAttributeByType(3));
+        model.addAttribute("type",map);
+        model.addAttribute("title",map_name);
 
         return "/editCite";
     }
