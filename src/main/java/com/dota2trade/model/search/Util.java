@@ -1,6 +1,8 @@
 package com.dota2trade.model.search;
 
 import java.io.*;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 通用方法类
@@ -67,5 +69,44 @@ public class Util {
         br.close();
         reader.close();
         return result;
+    }
+
+    /**
+     * 两个数组的去重合并
+     * */
+    public static List<String> removeDuplicate(List<String> list1,List<String> list2){
+        //去重
+        for(Iterator iterator1=list1.iterator();iterator1.hasNext();){
+            String str1=(String)iterator1.next();
+            for(Iterator iterator2=list2.iterator();iterator2.hasNext();){
+                String str2=(String)iterator2.next();
+                if(str1.equals(str2)){
+                    iterator2.remove();
+                }
+            }
+        }
+        //合并
+        for(Iterator iterator2=list2.iterator();iterator2.hasNext();){
+            list1.add((String)iterator2.next());
+        }
+        return list1;
+    }
+
+    /**
+     * 两个数组筛选
+     * */
+    public static List<String> filt(List<String> list1,List<String> list2){
+        //去重
+        for(Iterator iterator1=list1.iterator();iterator1.hasNext();){
+            String str1=(String)iterator1.next();
+            for(Iterator iterator2=list2.iterator();iterator2.hasNext();){
+                String str2=(String)iterator2.next();
+                if(str1.equals(str2)){
+                    iterator1.remove();
+                }
+            }
+        }
+
+        return list1;
     }
 }

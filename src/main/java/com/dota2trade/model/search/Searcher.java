@@ -4,6 +4,7 @@ import com.dota2trade.dao.LiteratureDao;
 import com.dota2trade.model.Literature;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -19,6 +20,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -32,12 +34,9 @@ import java.util.List;
 @ContextConfiguration(locations={"classpath:spring/root-context.xml","classpath:spring/servlet-context.xml"})
 public class Searcher {
     private Analyzer analyzer;
-    private Directory paper_index_directory = null;
-    private Directory db_index_directory = null;
-    private IndexReader paperireader = null;
-    private IndexSearcher paperisearcher = null;
-    private IndexReader dbireader = null;
-    private IndexSearcher dbisearcher = null;
+    private Directory index_directory = null;
+    private IndexReader ireader = null;
+    private IndexSearcher isearcher = null;
 
     private LiteratureDao literatureDao;
     @Autowired
@@ -55,23 +54,23 @@ public class Searcher {
             // 实例化IKAnalyzer分词器
             analyzer = new IKAnalyzer();
             // 索引文件夹
-            paper_index_directory = FSDirectory.open(new File(Util.PAPER_INDEX_DIR));
+            index_directory = FSDirectory.open(new File(Util.PAPER_INDEX_DIR));
             // 搜索过程**********************************
             // 实例化搜索器
-            paperireader = IndexReader.open(paper_index_directory);
-            paperisearcher = new IndexSearcher(paperireader);
+            ireader = IndexReader.open(index_directory);
+            isearcher = new IndexSearcher(ireader);
             // 使用QueryParser查询分析器构造Query对象
             QueryParser qp = new QueryParser(Version.LUCENE_34, "CONTENT",
                     analyzer);
             qp.setDefaultOperator(QueryParser.AND_OPERATOR);
             Query query = qp.parse(keyWord);
             // 搜索相似度最高的n条记录
-            TopDocs topDocs = paperisearcher.search(query,Util.SEARCH_RESULT);
+            TopDocs topDocs = isearcher.search(query,Util.SEARCH_RESULT);
             System.out.println("命中：" + topDocs.totalHits);
             // 输出结果
             ScoreDoc[] scoreDocs = topDocs.scoreDocs;
                 for (int i = 0; i < topDocs.totalHits; i++) {
-                Document targetDoc = paperisearcher.doc(scoreDocs[i].doc);
+                Document targetDoc = isearcher.doc(scoreDocs[i].doc);
                 int id=Integer.valueOf(targetDoc.get("ID"));
                 System.out.println("ID: "+id);
                 literatureList.add(literatureDao.getLiteratureById(id));
@@ -95,101 +94,102 @@ public class Searcher {
      * */
     public List<Literature> complexSearch(ComplexCondition complexCondition){
         List<Literature> literatureList=new ArrayList<Literature>();
+        List<String> idList=new ArrayList<String>();
         try {
             // 实例化IKAnalyzer分词器
             analyzer = new IKAnalyzer();
-            // paper索引文件夹
-            paper_index_directory = FSDirectory.open(new File(Util.PAPER_INDEX_DIR));
-            // DB索引文件夹
-            db_index_directory = FSDirectory.open(new File(Util.DB_INDEX_DIR));
-            // 搜索过程**********************************
-            // 实例化搜索器
-            paperireader = IndexReader.open(paper_index_directory);
-            paperisearcher = new IndexSearcher(paperireader);
-            // 实例化搜索器
-            dbireader = IndexReader.open(db_index_directory);
-            dbisearcher = new IndexSearcher(dbireader);
+
             // 使用QueryParser查询分析器构造Query对象
             BooleanQuery booleanQuery=new BooleanQuery();
             String location=complexCondition.getKeywordsLocated();
+            System.out.println("关键词检索范围："+location);
+            QueryParser parser=null;
             if(location.equals("title")){
-                QueryParser title_qp = new QueryParser(Version.LUCENE_34, Util.TITLE_INDEX_FIELD,analyzer);
-                if(!complexCondition.getAllKeywordsHave().equals("")){
-                   //不是空串
-                   Query title_query=title_qp.parse(complexCondition.getAllKeywordsHave());
-                   booleanQuery.add(title_query, BooleanClause.Occur.MUST);
-                }else{
-                   Query title_query=title_qp.parse("test");
-                   booleanQuery.add(title_query, BooleanClause.Occur.MUST);
-                }
-                /*if(!complexCondition.getPhraseHave().equals("")){
-                    *//*//*不是空串
-                    Query title_query=title_qp.parse(complexCondition.getAllKeywordsHave());
-                    booleanQuery.add(title_query, BooleanClause.Occur.MUST);*//*
-                }
-                if(!complexCondition.getOneOrMoreKeywordHave().equals("")){
-
-                }
-                if(!complexCondition.getNoKeywordHave().equals("")){
-
-                }*/
-                // 搜索相似度最高的n条记录
-                TopDocs topDocs = dbisearcher.search(booleanQuery,Util.SEARCH_RESULT);
-                System.out.println("命中：" + topDocs.totalHits);
-                // 输出结果
-                ScoreDoc[] scoreDocs = topDocs.scoreDocs;
-                for (int i = 0; i < topDocs.totalHits; i++) {
-                    Document targetDoc = dbisearcher.doc(scoreDocs[i].doc);
-                    int id=Integer.valueOf(targetDoc.get("ID"));
-                    System.out.println("ID: "+id);
-                    literatureList.add(literatureDao.getLiteratureById(id));
-                    System.out.println("ID"+targetDoc.get("ID")+"匹配度"+scoreDocs[i].score+" 文件名：" + targetDoc.get("FILENAME"));
-                }
-
+                index_directory=FSDirectory.open(new File(Util.DB_INDEX_DIR));
+                ireader=IndexReader.open(index_directory);
+                parser=new QueryParser(Version.LUCENE_34, Util.TITLE_INDEX_FIELD,analyzer);
             }else if(location.equals("paper")){
-                QueryParser paper_qp = new QueryParser(Version.LUCENE_34, "CONTENT",analyzer);
-                if(!complexCondition.getAllKeywordsHave().equals("")){
-                    //不是空串
-                    Query title_query=paper_qp.parse(complexCondition.getAllKeywordsHave());
-                    booleanQuery.add(title_query, BooleanClause.Occur.MUST);
-                }else{
-                    Query title_query=paper_qp.parse("test");
-                    booleanQuery.add(title_query, BooleanClause.Occur.MUST);
-                }
-                // 搜索相似度最高的n条记录
-                TopDocs topDocs = paperisearcher.search(booleanQuery,Util.SEARCH_RESULT);
-                System.out.println("命中：" + topDocs.totalHits);
-                // 输出结果
-                ScoreDoc[] scoreDocs = topDocs.scoreDocs;
-                for (int i = 0; i < topDocs.totalHits; i++) {
-                    Document targetDoc = paperisearcher.doc(scoreDocs[i].doc);
-                    int id=Integer.valueOf(targetDoc.get("ID"));
-                    System.out.println("ID: "+id);
-                    literatureList.add(literatureDao.getLiteratureById(id));
-                    System.out.println("ID"+targetDoc.get("ID")+"匹配度"+scoreDocs[i].score+" 文件名：" + targetDoc.get("FILENAME"));
-                }
+                index_directory=FSDirectory.open(new File(Util.PAPER_INDEX_DIR));
+                ireader=IndexReader.open(index_directory);
+                parser=new QueryParser(Version.LUCENE_34, "CONTENT",analyzer);
             }else{
-                System.out.println("未知的关键词查询位置！");
+                System.out.println("未知的关键字位置！");
             }
 
-            /*QueryParser author_qp = new QueryParser(Version.LUCENE_34, Util.AUTHOR_INDEX_FIELD,analyzer);
+            isearcher=new IndexSearcher(ireader);
 
-            QueryParser qp = new QueryParser(Version.LUCENE_34, "CONTENT",
-                    analyzer);
-            qp.setDefaultOperator(QueryParser.AND_OPERATOR);
-            Query query = qp.parse(keyWord);
-            // 搜索相似度最高的n条记录
-            TopDocs topDocs = isearcher.search(query,Util.SEARCH_RESULT);
-            System.out.println("命中：" + topDocs.totalHits);
-            // 输出结果
-            ScoreDoc[] scoreDocs = topDocs.scoreDocs;
-            for (int i = 0; i < topDocs.totalHits; i++) {
-                Document targetDoc = isearcher.doc(scoreDocs[i].doc);
-                int id=Integer.valueOf(targetDoc.get("ID"));
-                System.out.println("ID: "+id);
-                literatureList.add(literatureDao.getLiteratureById(id));
-                System.out.println("ID"+targetDoc.get("ID")+"匹配度"+scoreDocs[i].score+" 文件名：" + targetDoc.get("FILENAME"));
-            }*/
+                if(!complexCondition.getAllKeywordsHave().equals("")
+                        &&!complexCondition.getAllKeywordsHave().equals(" ")){
+                   //不是空串
+                   Query query=parser.parse(complexCondition.getAllKeywordsHave());
+                   booleanQuery.add(query, BooleanClause.Occur.MUST);
+                   idList=this.getIDList(booleanQuery,isearcher);
+
+                }else{
+
+                }
+                if(!complexCondition.getPhraseHave().equals("")
+                        &&!complexCondition.getPhraseHave().equals(" ")){
+                    //*不是空串
+                    Query query=parser.parse(complexCondition.getPhraseHave());
+                    booleanQuery.add(query, BooleanClause.Occur.MUST);
+                    idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
+
+                }else{
+
+                }
+                if(!complexCondition.getOneOrMoreKeywordHave().equals("")
+                        &&!complexCondition.getOneOrMoreKeywordHave().equals(" ")){
+                    //*不是空串
+                    Query query=parser.parse(complexCondition.getOneOrMoreKeywordHave());
+                    booleanQuery.add(query, BooleanClause.Occur.SHOULD);
+                    idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
+
+                }else{
+
+                }
+                if(!complexCondition.getNoKeywordHave().equals("")
+                        &&!complexCondition.getNoKeywordHave().equals(" ")){
+                    //*不是空串
+                    Query query=parser.parse(complexCondition.getNoKeywordHave());
+                    booleanQuery.add(query, BooleanClause.Occur.MUST);
+                    idList=Util.filt(idList,this.getIDList(booleanQuery,isearcher));
+
+                }else{
+
+                }
+                if(!complexCondition.getAuthor().equals("")
+                        &&!complexCondition.getAuthor().equals(" ")){
+                    //*不是空串
+                    /**这里还需改*/
+                    //QueryParser parser_temp=new QueryParser(Version.LUCENE_34, Util.AUTHOR_INDEX_FIELD,analyzer);
+                    Query query=parser.parse(complexCondition.getAuthor());
+                    booleanQuery.add(query, BooleanClause.Occur.SHOULD);
+                    idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
+
+                }else{
+
+                }
+                if(!complexCondition.getPublisher().equals("")
+                        &&!complexCondition.getPublisher().equals(" ")){
+                    //*不是空串
+                    /**这里还需改*/
+                    Query query=parser.parse(complexCondition.getPublisher());
+                    booleanQuery.add(query, BooleanClause.Occur.MUST);
+                    idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
+
+                }else{
+
+                } if(!complexCondition.getBegin().equals("")
+                        &&!complexCondition.getBegin().equals(" ")){
+                    //*不是空串
+                    Query query=parser.parse(complexCondition.getBegin());
+                    booleanQuery.add(query, BooleanClause.Occur.MUST);
+                    idList=Util.removeDuplicate(idList,this.getIDList(booleanQuery,isearcher));
+
+                }else{
+
+                }
         } catch (LockObtainFailedException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -197,12 +197,43 @@ public class Searcher {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("simpleSearch finally block.");
+            System.out.println("complexSearch finally block.");
         }
-
-        return literatureList;
+        if(idList.size()!=0){
+            for(Iterator iterator=idList.iterator();iterator.hasNext();){
+                String id_str=(String)iterator.next();
+                literatureList.add(literatureDao.getLiteratureById(Integer.valueOf(id_str)));
+            }
+            return literatureList;
+        }else{
+            return literatureDao.getAllLiterature();
+        }
     }
 
+    /**
+     * 匹配结果的ID list
+     * */
+    public List<String> getIDList(Query query,IndexSearcher isearcher){
+        List<String> idList=new ArrayList<String>();
+        try{
+        // 搜索相似度最高的n条记录
+        TopDocs topDocs = isearcher.search(query,Util.SEARCH_RESULT);
+        System.out.println("命中：" + topDocs.totalHits);
+        // 输出结果
+        ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+        for (int i = 0; i < topDocs.totalHits; i++) {
+            Document targetDoc = isearcher.doc(scoreDocs[i].doc);
+            idList.add(targetDoc.get("ID"));
+        }
+        } catch (CorruptIndexException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("木有异常！");
+        }
+        return idList;
+    }
     /**
      * 只按照文献标签检索
      * */
