@@ -207,8 +207,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
            //说明是已经存在的评论属性
             for(CommentAttribute commentAttribute:list){
                 String sql="UPDATE commentattribute SET value='"
-                        +commentAttribute.getValue()+"',commenttime='"
-                        +commentTime+"',status="
+                        +commentAttribute.getValue()+"',status="
                         +status
                         +" where id="+commentAttribute.getId();
                 int r=this.getJdbcTemplate().update(sql);
@@ -220,6 +219,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                     ids.add(-1);
                 }
             }
+            return ids;
         }
         //新插入一个复杂评论
         for(CommentAttribute commentAttribute:list){
@@ -312,13 +312,14 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
             complexComment.setCommentTime(commentTime);
             int j=i+1;
             for(;j<list.size();j++){
-                if(list.get(j).getCommentTime().equals(commentTime))
+                if(list.get(j).getCommentTime().equals(commentTime)){
                     complexComment.addCommentAttribute(list.get(j));
+                }
                 else{
-                    complexCommentList.add(complexComment);
                     break;
                 }
             }
+            complexCommentList.add(complexComment);
             i=j;
         }
         return complexCommentList;
