@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -192,6 +193,26 @@ public class LiteratureController {
         indexer.indexPaper(paperFileName,id);
 
         System.out.println("result:"+id);
+        Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+        Map<Integer,String> map_name = new HashMap<Integer,String>();
+        List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(id);
+        for(int i=0;i<temp.size();i++){
+            CiteRelationship cr = temp.get(i);
+            if(!(map.containsKey(cr.getCitedbyid()))){
+                ArrayList<Integer> typeList = new ArrayList<Integer>();
+                typeList.add(cr.getCitedtypeid());
+                map.put(cr.getCitedbyid(),typeList);
+            }
+            else{
+                ArrayList<Integer> typeList = map.get(cr.getCitedbyid());
+                typeList.add(cr.getCitedtypeid());
+                map.put(cr.getCitedbyid(),typeList);
+            }
+            map_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
+        }
+        model.addAttribute("citeTypeList",configDao.getAllAttributeByType(3));
+        model.addAttribute("type",map);
+        model.addAttribute("title",map_name);
 
         return "/editCite";
     }
@@ -339,6 +360,7 @@ public class LiteratureController {
     }
     @RequestMapping(value="/searchLiterature.html",method=RequestMethod.GET)
     public String searchLiterature(ModelMap model){
+        model.addAttribute("labels",labelDao.getAllLabels());
         return "searchLiterature";
     }
     @RequestMapping(value="/searchResult.html",method=RequestMethod.GET)
@@ -368,6 +390,7 @@ public class LiteratureController {
             @RequestParam("publisher") String publisher,
             @RequestParam("begin") String begin,
             @RequestParam("end") String end,
+            @RequestParam("labelid") int labelid,
             ModelMap model
     ){
         List<Literature> list = new ArrayList<Literature>();
@@ -388,6 +411,11 @@ public class LiteratureController {
             list= searcher.complexSearch(complexCondition);
             long finish = System.currentTimeMillis();
             cost = (finish-start)/1000.0;
+        }else{
+            List<LabelLiterature> list_temp = labelDao.getLiteratureListByLabelId(labelid);
+            for(int i=0;i<list_temp.size();i++){
+                list.add(literatureDao.getLiteratureById(list_temp.get(i).getLiteratureid()));
+            }
         }
 
         model.addAttribute("cost",cost);
@@ -459,7 +487,7 @@ public class LiteratureController {
         model.addAttribute("simpleComments",simpleComments);
         model.addAttribute("complexComments",complexComments);
         model.addAttribute("simpleDraft",comment);
-        model.addAttribute("complexDraftList",complexComment0);
+        model.addAttribute("complexDraft",complexComment0);
         model.addAttribute("labelList",labelList);
         model.addAttribute("myLabelList",myLabelList);
         model.addAttribute("commonLabelList",commonLabelList);
@@ -743,13 +771,18 @@ public class LiteratureController {
         complexComment.setCommenterId(userid);
         complexComment.setLiteratureId(literatureid);
         complexComment.setStatus(status);
+        Date ud = new java.util.Date();
+        Date sd = new java.sql.Date(ud.getTime());
+        complexComment.setCommentTime(sd);
         for(int i=0;i<attributeList.size();i++){
             Attribute attribute = attributeList.get(i);
+            int commentAttributeId = Integer.parseInt(request.getParameter("commentAttribute"+attribute.getId()));
             int attributeId = Integer.parseInt(request.getParameter("attribute" + attribute.getId()));
             String attributeValue = request.getParameter("value"+attribute.getId());
+            System.out.println(attributeValue);
             String attributeName = attribute.getName();
             CommentAttribute newAttribute = new CommentAttribute();
-            newAttribute.setId(attributeId);
+            newAttribute.setId(commentAttributeId);
             newAttribute.setAttributeId(attributeId);
             newAttribute.setAttributeName(attributeName);
             newAttribute.setValue(attributeValue);

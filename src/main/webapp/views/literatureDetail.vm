@@ -98,15 +98,17 @@
                                             <div>
                                                 <label>$commentAttribute.name</label>
                                                 <input name="attribute$commentAttribute.id" type="hidden" value="$commentAttribute.id" />
-                                                <textarea name="value$commentAttribute.id" cols="3" rows="2">
-                                                    #if($complexComment.status!=-1)
-                                                    #foreach($attribute in $complexComment.commentAttributes)
-                                                        #if($attribute.id==$commentAttribute.id)
-                                                            $attribute.value
+                                                #if($complexDraft.status!=-1)
+                                                    #foreach($attribute in $complexDraft.commentAttributes)
+                                                        #if($attribute.attributeId==$commentAttribute.id)
+                                                        <input name="commentAttribute$commentAttribute.id" type="hidden" value="$attribute.id" />
                                                         #end
                                                     #end
-                                                    #end
-                                                </textarea>
+                                                #end
+                                                #if($complexDraft.status==-1)
+                                                    <input name="commentAttribute$commentAttribute.id" type="hidden" value="-1" />
+                                                #end
+                                                <textarea name="value$commentAttribute.id" cols="3" rows="2">#if($complexDraft.status!=-1)#foreach($attribute in $complexDraft.commentAttributes)#if($attribute.attributeId==$commentAttribute.id)$attribute.value#end#end#end</textarea>
                                             </div>
                                         #end
                                         <div class="clearfix">

@@ -147,4 +147,11 @@ public class LabelDaoImpl extends JdbcDaoSupport implements LabelDao{
         }
         return ret;
     }
+
+    @Override
+    public List<Label> getAllLabels() {
+        String sql="SELECT * FROM label";
+        List<Label> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Label.class));
+        return list;
+    }
 }

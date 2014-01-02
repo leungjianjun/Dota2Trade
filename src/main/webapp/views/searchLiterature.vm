@@ -114,7 +114,9 @@
          </div>
          <div>
              <label>标签</label>
-             <input type="text" class="span12" placeholder="多个标签之间用‘;’隔开">
+             <input id="label_name" name="labelname" type="text" class="span12" placeholder="从下面已有标签中选择">
+             <input type="hidden" id="label_id" name="labelid" value="0" />
+             <div>已有标签:#foreach($label in $labels)<a style="margin-right: 6px;" onclick="changeValue($label.id,'$label.name')">$label.name</a>#end</div>
          </div>
          <div>
              <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 201px;margin-top: 15px;">查询</button>
@@ -127,6 +129,10 @@
     }
     function hideAdvanced(){
         $("#advanced").hide();
+    }
+    function changeValue(id,name){
+        $("#label_id").val(id);
+        $("#label_name").val(name);
     }
 </script>
 <!-- JQuery -->

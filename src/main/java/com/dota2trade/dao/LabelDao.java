@@ -23,4 +23,6 @@ public interface LabelDao {
     public List<LabelLiterature> getLiteratureListByLabelId(int labelid);
     /**获得常用标签*/
     public List<Label> getCommonLabelList();
+    /**获得所有标签*/
+    public List<Label> getAllLabels();
 }
