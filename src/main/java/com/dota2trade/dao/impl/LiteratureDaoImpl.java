@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -455,6 +457,27 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
         String sql="SELECT * FROM literaturemeta";
         List<LiteratureMeta> list=this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(LiteratureMeta.class));
         return list;
+    }
+
+    @Override
+    public List<Literature> getAllLiterature() {
+        List<Literature> literatureList=new ArrayList<Literature>();
+        String selectSql="SELECT id FROM literature";
+        //先检查是否有重名的出版社
+        List<Integer> allIdList =  this.getJdbcTemplate().query(selectSql,
+                new RowMapper() {
+                    @Override
+                    public Object mapRow(ResultSet rs, int i) throws SQLException {
+                        int id=rs.getInt("id");
+                        return new Integer(id);
+                    }
+                }
+        );
+        for(Iterator iterator=allIdList.iterator();iterator.hasNext();){
+            Integer integer=(Integer)iterator.next();
+            literatureList.add(this.getLiteratureById(integer.intValue()));
+        }
+        return literatureList;
     }
 
     @Override
