@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +37,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     @Override
     public int createLiterature(final Literature literature) {
 
-        final String sql="INSERT INTO literature (creatorid,status,literaturetypeid) VALUES (?,?,?)";
+        final String sql="INSERT INTO literature (creatorid,status,literaturetypeid,createtime) VALUES (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator preparedStatementCreator=new PreparedStatementCreator(){
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -44,6 +45,7 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
                 ps.setInt(1, literature.getCreatorid());
                 ps.setInt(2, literature.getStatus());
                 ps.setInt(3,literature.getLiteraturetypeid());
+                ps.setString(4,(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new java.util.Date()));
                 return ps;
             }
         };
@@ -283,9 +285,10 @@ public class LiteratureDaoImpl extends JdbcDaoSupport implements LiteratureDao{
     public boolean updateLiterature(Literature literature) {
         String sql="UPDATE literature SET " +
                 //"creatorid='"+literature.getCreatorid()+"'," +
-                "updaterid='"+literature.getUpdaterid()+"'" +
+                "updaterid='"+literature.getUpdaterid()+"'," +
                 //"status='"+literature.getStatus()+"'" +
                 //"literaturetypeid='"+literature.getLiteraturetypeid()+"'" +
+                "updatetime='"+(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new java.util.Date())+"'"+
                 "WHERE id='"+literature.getId()+"'";
         int r=this.getJdbcTemplate().update(sql);
         if(r>0){
