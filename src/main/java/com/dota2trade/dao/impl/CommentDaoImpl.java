@@ -150,7 +150,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
 
     @Override
     public int getScoreByLiteratureId(int literatureId) {
-        String sql="SELECT AVG(score) from comment where literatireid="+literatureId+" AND score > 0";
+        String sql="SELECT AVG(score) from comment where literatureid="+literatureId+" AND score > 0";
         int avg=this.getJdbcTemplate().queryForInt(sql);
         return avg;
     }

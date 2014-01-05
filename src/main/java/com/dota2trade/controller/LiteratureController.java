@@ -499,6 +499,7 @@ public class LiteratureController {
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
         model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        model.addAttribute("average_score",commentDao.getScoreByLiteratureId(literatureid));
         return "literatureDetail";
     }
 
@@ -659,6 +660,7 @@ public class LiteratureController {
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
         model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        model.addAttribute("average_score",commentDao.getScoreByLiteratureId(literatureid));
         return "literatureDetail";
     }
     /**
@@ -753,6 +755,7 @@ public class LiteratureController {
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
         model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        model.addAttribute("average_score",commentDao.getScoreByLiteratureId(literatureid));
         return "literatureDetail";
     }
     /**
@@ -859,6 +862,7 @@ public class LiteratureController {
         model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
         model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
         model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
+        model.addAttribute("average_score",commentDao.getScoreByLiteratureId(literatureid));
         return "literatureDetail";
     }
 

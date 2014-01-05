@@ -177,7 +177,7 @@
                 <ul class="row1">
                     <li>最初上传人：<a href="#">$creator</a></li>
                     <li>最后修改人：<a href="#">$updater</a></li>
-                    <li>平均得分：9.2（$simpleComments.size()人评价）</li>
+                    <li>平均得分：$average_score（$simpleComments.size()人评价）</li>
                     <li class="download clearfix">
                         <div class="l">附件下载:</div>
                         <div class="r">

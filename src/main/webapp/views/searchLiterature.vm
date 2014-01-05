@@ -52,7 +52,7 @@
          <a class="right" href="#" onclick="hideAdvanced();"></a>
      </div>
      <form name="" method="post" action="/doComplexSearch">
-         <div>
+         <div style="display: none;">
              <label>文献类型</label>
              <select class="selectpicker span6" data-style="btn-default">
                  <option>所有</option>
