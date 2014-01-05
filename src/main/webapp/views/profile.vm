@@ -44,27 +44,21 @@
                    <div class="widget widget-tabs widget-tabs-double-2">
                        <div class="widget-head">
                            <ul>
-                               <li class="active"><a class="glyphicons list" href="#tabBook" data-toggle="tab"><span>图&nbsp&nbsp书</span></a></li>
-                               <li><a class="glyphicons user" href="#tabChp" data-toggle="tab"><span>图书章节</span></a></li>
-                               <li><a class="glyphicons credit_card" href="#tabMag" data-toggle="tab"><span>期&nbsp&nbsp刊</span></a></li>
-                               <li><a class="glyphicons cogwheel" href="#tabMeeting" data-toggle="tab"><span>会&nbsp&nbsp议</span></a></li>
-                               <li><a class="glyphicons snowflake" href="#tabThesis" data-toggle="tab"><span>学位论文</span></a></li>
-                               <li><a class="glyphicons snowflake" href="#tabLecture" data-toggle="tab"><span>技术报告</span></a></li>
-                               <li><a class="glyphicons snowflake" href="#tabOnline" data-toggle="tab"><span>在线资源</span></a></li>
+                               #set($i=0)
+                               #foreach($type in $typeList)
+                                   #set($i=$i+1)
+                                   <li #if($i==1)class="active"#end><a class="glyphicons" href="#tab$type.id" data-toggle="tab"><span>$type.name</span></a></li>
+                               #end
                            </ul>
                        </div>
                        <div class="widget-body">
                            <div class="tab-content">
-                               <div id="tabBook" class="tab-pane active widget-body-regular">
-                                   <!-- Widget -->
-                                   <div class="widget">
-
-                                       <div class="widget-body">
-
-                                           <!-- Table -->
-                                           <table class="dynamicTable table table-striped table-bordered table-condensed">
-
-                                               <!-- Table heading -->
+                               #set($j=0)
+                               #foreach($type in $typeList)
+                                   #set($j=$j+1)
+                                   <div id="tab$type.id" class="tab-pane #if($j==1)active#end widget-body-regular">
+                                       <div class="adv-table">
+                                           <table class="display table table-bordered table-striped" id="self_upload$type.id">
                                                <thead>
                                                <tr>
                                                    <th>ID</th>
@@ -73,52 +67,22 @@
                                                    <th>评分</th>
                                                </tr>
                                                </thead>
-                                               <!-- // Table heading END -->
-
-                                               <!-- Table body -->
                                                <tbody>
-                                                   #foreach($literatureMeta in $literatureMetaList)
-                                                   <tr>
-                                                       <td>$literatureMeta.literatureid</td>
-                                                       <td><a href="literatureDetail.html?id=$literatureMeta.literatureid">$literatureMeta.title</a></td>
-                                                       <td>$literatureMeta.published_year</td>
-                                                       <td class="center">X</td>
-                                                   </tr>
+                                                   #foreach($literature in $literatureList)
+                                                       #if($literature.literaturetypeid==$type.id)
+                                                       <tr class="gradeX">
+                                                           <td>$literature.literatureMeta.literatureid</td>
+                                                           <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid">$literature.literatureMeta.title</a></td>
+                                                           <td>$literature.literatureMeta.published_year</td>
+                                                           <td class="center">$score.get($literature.literatureMeta.literatureid)</td>
+                                                       </tr>
+                                                       #end
                                                    #end
                                                </tbody>
-                                               <!-- // Table body END -->
-
                                            </table>
-                                           <!-- // Table END -->
-
                                        </div>
                                    </div>
-                                   <!-- // Widget END -->
-                               </div>
-                               <div id="tabChp" class="tab-pane widget-body-regular">
-                                   <h5>Account tab content</h5>
-                                   <p>Donec at nunc dui. Integer eget sem sit amet arcu ...</p>
-                               </div>
-                               <div id="tabMag" class="tab-pane widget-body-regular">
-                                   <h5>Payments tab content</h5>
-                                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ...</p>
-                               </div>
-                               <div id="tabMeeting" class="tab-pane widget-body-regular">
-                                   <h5>Support tab content</h5>
-                                   <p>Integer porttitor, enim eu egestas ullamcorper ...</p>
-                               </div>
-                               <div id="tabThesis" class="tab-pane widget-body-regular">
-                                   <h5>Features tab content</h5>
-                                   <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                               </div>
-                               <div id="tabLecture" class="tab-pane widget-body-regular">
-                                   <h5>hello</h5>
-                                   <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                               </div>
-                               <div id="tabOnline" class="tab-pane widget-body-regular">
-                                   <h5>lalalalalalallalalaallalalala</h5>
-                                   <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                               </div>
+                               #end
                            </div>
                        </div>
                    </div>

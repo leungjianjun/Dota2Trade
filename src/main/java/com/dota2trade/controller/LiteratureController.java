@@ -220,9 +220,31 @@ public class LiteratureController {
     /**个人信息*/
     @RequestMapping(value = "/profile.html" , method = RequestMethod.GET)
     public String getProfile( @ModelAttribute("sauthentication") SAuthentication sAuthentication,Model model){
+        //评分
+        Map<Integer,String> score = new HashMap<Integer,String>();
+        String score_str = "";
+        //文献类型
+        List typeList=new ArrayList();
+        typeList=configDao.getAllLiteratureTypes();
+        model.addAttribute("typeList",typeList);
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         List<LiteratureMeta> literatureMetaList=literatureDao.getAllLiteratureMetaByUserid(userid);
-        model.addAttribute("literatureMetaList",literatureMetaList);
+        List<Literature> literatureList = new ArrayList<Literature>();
+        for(int i=0;i<literatureMetaList.size();i++){
+            LiteratureMeta meta = literatureMetaList.get(i);
+            Literature literature = literatureDao.getLiteratureById(meta.getLiteratureid());
+            literatureList.add(literature);
+            int temp = commentDao.getScoreByLiteratureId(meta.getLiteratureid());
+            if(temp==0){
+                score_str="-";
+            }
+            else{
+                score_str=Integer.toString(temp);
+            }
+            score.put(meta.getLiteratureid(),score_str);
+        }
+        model.addAttribute("score",score);
+        model.addAttribute("literatureList",literatureList);
         return "profile";
     }
 
@@ -512,8 +534,8 @@ public class LiteratureController {
         List typeList=new ArrayList();
         typeList=configDao.getAllLiteratureTypes();
         model.addAttribute("typeList",typeList);
-        int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
-        List<LiteratureMeta> list = literatureDao.getAllLiteratureMetaByUserid(userid);
+        //int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
+        List<LiteratureMeta> list = literatureDao.getAllLiteratureMeta();
         List<Literature> literatureList = new ArrayList<Literature>();
         for(int i=0;i<list.size();i++){
             LiteratureMeta meta = list.get(i);
