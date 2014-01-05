@@ -31,7 +31,7 @@ CREATE TABLE `attachment` (
   `type` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,6 @@ CREATE TABLE `attachment` (
 
 LOCK TABLES `attachment` WRITE;
 /*!40000 ALTER TABLE `attachment` DISABLE KEYS */;
-INSERT INTO `attachment` VALUES (6,'c0861_assignment01.pdf','http://localhost:8080/attachment/paper/1388587299575c0861_assignment01.pdf',9,19,0),(7,'c0861_assignment02.pdf','http://localhost:8080/attachment/paper/1388587364368c0861_assignment02.pdf',9,20,0),(8,'c0861_lecture03.pdf','http://localhost:8080/attachment/paper/1388587435854c0861_lecture03.pdf',9,21,0);
 /*!40000 ALTER TABLE `attachment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +64,7 @@ CREATE TABLE `attribute` (
 
 LOCK TABLES `attribute` WRITE;
 /*!40000 ALTER TABLE `attribute` DISABLE KEYS */;
-INSERT INTO `attribute` VALUES (1,'编辑',1),(2,'ISBN',1),(3,'期刊名',1),(4,'卷',1),(5,'期',1),(6,'地点',1),(7,'DOI',1),(8,'待解决问题',2),(9,'主要思路',2),(10,'实验结果',2),(11,'贡献',2),(12,'改进',2),(13,'简单提及',3),(14,'相关',3),(15,'使用',3),(16,'对比',3),(17,'不确定',3),(18,'导师',1),(19,'属性一',1),(20,'属性二',1),(21,'属性三',1),(22,'属性四',1),(30,'关系三',3);
+INSERT INTO `attribute` VALUES (1,'编辑',1),(2,'ISBN',1),(3,'期刊名',1),(4,'卷',1),(5,'期',1),(6,'地点',1),(7,'DOI',1),(8,'待解决问题',2),(9,'主要思路',2),(10,'实验结果',2),(11,'贡献',2),(12,'改进',2),(13,'简单提及',3),(14,'相关',3),(15,'使用',3),(16,'对比',3),(17,'不确定',3);
 /*!40000 ALTER TABLE `attribute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +139,7 @@ CREATE TABLE `commentattribute` (
   `commenttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='根据attribute表，动态的详细评论表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='根据attribute表，动态的详细评论表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,9 +213,11 @@ CREATE TABLE `literature` (
   `updaterid` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `literaturetypeid` int(11) NOT NULL,
+  `createtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +226,6 @@ CREATE TABLE `literature` (
 
 LOCK TABLES `literature` WRITE;
 /*!40000 ALTER TABLE `literature` DISABLE KEYS */;
-INSERT INTO `literature` VALUES (19,9,9,0,1),(20,9,0,0,1),(21,9,0,0,1);
 /*!40000 ALTER TABLE `literature` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +241,7 @@ CREATE TABLE `literature_publisher` (
   `literatureid` int(11) NOT NULL,
   `publisherid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +250,6 @@ CREATE TABLE `literature_publisher` (
 
 LOCK TABLES `literature_publisher` WRITE;
 /*!40000 ALTER TABLE `literature_publisher` DISABLE KEYS */;
-INSERT INTO `literature_publisher` VALUES (16,19,115),(17,20,115),(18,21,116);
 /*!40000 ALTER TABLE `literature_publisher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,7 +267,7 @@ CREATE TABLE `literatureattribute` (
   `attributename` varchar(20) NOT NULL,
   `value` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -277,7 +276,6 @@ CREATE TABLE `literatureattribute` (
 
 LOCK TABLES `literatureattribute` WRITE;
 /*!40000 ALTER TABLE `literatureattribute` DISABLE KEYS */;
-INSERT INTO `literatureattribute` VALUES (1,19,1,'编辑','未知'),(2,19,2,'ISBN','1111'),(3,20,1,'编辑','未知'),(4,20,2,'ISBN','1111'),(5,21,1,'编辑','未知'),(6,21,2,'ISBN','11223');
 /*!40000 ALTER TABLE `literatureattribute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +305,6 @@ CREATE TABLE `literaturemeta` (
 
 LOCK TABLES `literaturemeta` WRITE;
 /*!40000 ALTER TABLE `literaturemeta` DISABLE KEYS */;
-INSERT INTO `literaturemeta` VALUES (19,'傲慢与偏见','挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书挺好的书','william','1997','小说','www','30-32'),(20,'红与黑','很好很好','cancy','1991','小说；图书','www','30'),(21,'包法利夫人','你好啊你好啊','author','1947','小说','www','30');
 /*!40000 ALTER TABLE `literaturemeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +329,7 @@ CREATE TABLE `literaturetype` (
 
 LOCK TABLES `literaturetype` WRITE;
 /*!40000 ALTER TABLE `literaturetype` DISABLE KEYS */;
-INSERT INTO `literaturetype` VALUES (1,'图书'),(2,'图书章节'),(3,'期刊'),(4,'会议'),(5,'学位论文'),(6,'技术报告'),(7,'在线资源'),(8,'type1'),(9,'type2'),(10,'type3'),(11,'type4');
+INSERT INTO `literaturetype` VALUES (1,'图书'),(2,'图书章节'),(3,'期刊'),(4,'会议'),(5,'学位论文'),(6,'技术报告'),(7,'在线资源');
 /*!40000 ALTER TABLE `literaturetype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,7 +355,7 @@ CREATE TABLE `literaturetype_attribute` (
 
 LOCK TABLES `literaturetype_attribute` WRITE;
 /*!40000 ALTER TABLE `literaturetype_attribute` DISABLE KEYS */;
-INSERT INTO `literaturetype_attribute` VALUES (1,1,1,1),(2,1,2,1),(3,3,3,1),(4,3,4,1),(5,3,5,1),(6,4,6,1),(7,4,7,1),(8,2,1,1),(9,3,7,1),(10,5,18,1),(11,8,19,1),(12,8,20,0),(15,8,21,1),(16,9,19,1),(17,9,20,1),(18,8,22,0),(27,10,19,1),(28,10,20,1);
+INSERT INTO `literaturetype_attribute` VALUES (1,1,1,1),(2,1,2,1),(3,3,3,1),(4,3,4,1),(5,3,5,1),(6,4,6,1),(7,4,7,1),(8,2,1,1),(9,3,7,1);
 /*!40000 ALTER TABLE `literaturetype_attribute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,7 +380,7 @@ CREATE TABLE `publisher` (
 
 LOCK TABLES `publisher` WRITE;
 /*!40000 ALTER TABLE `publisher` DISABLE KEYS */;
-INSERT INTO `publisher` VALUES (115,'上海文艺出版社'),(116,'南京大学出版社');
+INSERT INTO `publisher` VALUES (1,'上海文艺出版社'),(2,'南京大学出版社');
 /*!40000 ALTER TABLE `publisher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,7 +405,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (9,'test','123456'),(10,'admin','admin'),(11,'hello','123456'),(12,'hi','123'),(15,'hihi','123');
+INSERT INTO `user` VALUES (1,'admin','admin'),(2,'test','123456');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +424,7 @@ CREATE TABLE `user_info` (
   `major` varchar(45) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,6 +433,7 @@ CREATE TABLE `user_info` (
 
 LOCK TABLES `user_info` WRITE;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
+INSERT INTO `user_info` VALUES (1,2,'test','测试','软件工程','mf1332000@software.nju.edu.cn');
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -448,4 +446,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-01 23:48:57
+-- Dump completed on 2014-01-05 16:28:28
