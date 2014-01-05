@@ -1,6 +1,7 @@
 package com.dota2trade.dao;
 
 import com.dota2trade.model.User;
+import com.dota2trade.model.UserInfo;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface UserDao {
     int getIdByUserAccount(String account);
     public List<User> getAllUser();
     public String getAccountById(int id);
+    public UserInfo getUserInfoByUserId(int userid);
+    public boolean addUserInfo(UserInfo userInfo);
 }

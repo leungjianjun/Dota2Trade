@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.HashMap;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA.
@@ -243,9 +244,67 @@ public class LiteratureController {
             }
             score.put(meta.getLiteratureid(),score_str);
         }
+        //个人信息
+        if(userDao.getUserInfoByUserId(userid).getName()==null){
+            model.addAttribute("sign",0);
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserid(userid);
+            userInfo.setAccount(sAuthentication.getAccount());
+            userInfo.setName("尚未设置");
+            userInfo.setMajor("尚未设置");
+            userInfo.setEmail("尚未设置");
+            model.addAttribute("userInfo",userInfo);
+        }else{
+            model.addAttribute("sign",1);
+            model.addAttribute("userInfo",userDao.getUserInfoByUserId(userid));
+        }
         model.addAttribute("score",score);
         model.addAttribute("literatureList",literatureList);
         return "profile";
+    }
+    @RequestMapping(value = "/doEditInfo",method = RequestMethod.POST)
+    public String editInfo(
+            @RequestParam("name") String name,
+            @RequestParam("major") String major,
+            @RequestParam("email") String email,
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            Model model){
+        UserInfo userInfo = new UserInfo();
+        String account = sAuthentication.getAccount();
+        int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
+        userInfo.setUserid(userid);
+        userInfo.setAccount(account);
+        userInfo.setEmail(email);
+        userInfo.setMajor(major);
+        userInfo.setName(name);
+        userDao.addUserInfo(userInfo);
+        return getProfile(sAuthentication,model);
+    }
+    @RequestMapping(value = "checkPw",method = RequestMethod.POST)
+    public void checkPw(
+            @RequestParam("oldPass") String oldPass,
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            HttpServletResponse response,
+            Model model
+    ) throws IOException{
+        if(userDao.getUser(sAuthentication.getAccount(),oldPass)==null){
+            response.getWriter().print("false");
+        }
+        else{
+            response.getWriter().print("true");
+        }
+    }
+    @RequestMapping(value = "/doEditPw",method = RequestMethod.POST)
+    public String editPw(
+            @RequestParam("oldpassword") String oldpassword,
+            @RequestParam("newpassword") String newpassword,
+            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            Model model
+    ){
+        User user = userDao.getUser(sAuthentication.getAccount(),oldpassword);
+        user.setPassword(newpassword);
+        userDao.updateUser(user);
+        return "login";
     }
 
     @RequestMapping(value="/addLiterature.html", method= RequestMethod.GET)

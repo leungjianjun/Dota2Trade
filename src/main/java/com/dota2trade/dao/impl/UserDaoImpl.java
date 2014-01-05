@@ -2,6 +2,7 @@ package com.dota2trade.dao.impl;
 
 import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.User;
+import com.dota2trade.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -108,5 +109,32 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
             }
         });
         return strLst.get(0);
+    }
+
+    @Override
+    public UserInfo getUserInfoByUserId(int userid) {
+        String sql = "SELECT * FROM user_info WHERE userid='"+userid+"'";
+        UserInfo userInfo = new UserInfo();
+        if(this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(UserInfo.class)).size()!=0){
+            userInfo = (UserInfo)this.getJdbcTemplate().query(sql,new BeanPropertyRowMapper(UserInfo.class)).get(0);
+        }
+
+        return userInfo;
+    }
+
+    @Override
+    public boolean addUserInfo(UserInfo userInfo) {
+        String exist="SELECT COUNT(*) FROM user_info WHERE account='"+userInfo.getAccount()+"'";
+        int s=this.getJdbcTemplate().queryForInt(exist);
+        if(s!=0){
+            //用户名已存在
+            String sql="UPDATE user_info SET name='"+userInfo.getName()+"', email='"+userInfo.getEmail()+"', major='"+userInfo.getMajor()+"' WHERE account='"+userInfo.getAccount()+"'";
+            int r=this.getJdbcTemplate().update(sql);
+            return (r>0)?true:false;
+        }else{
+            String sql="INSERT INTO user_info(userid,account,name,major,email) VALUES(?,?,?,?,?)";
+            int r=this.getJdbcTemplate().update(sql,userInfo.getUserid(),userInfo.getAccount(),userInfo.getName(),userInfo.getMajor(),userInfo.getEmail());
+            return (r>0)?true:false;
+        }
     }
 }

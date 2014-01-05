@@ -201,10 +201,10 @@
                            <a href="#">
                                <img src="../resources/css/images/avatar.jpg" alt="">
                            </a>
-                           <h1> 梁 建均 </h1>
-                           <p> jsmith@flatlab.com</p>
-                           <p> 云计算方向</p>
-                           <p> 硕士研究生</p>
+                           <h1>$userInfo.account</h1>
+                           <p>$userInfo.name</p>
+                           <p>$userInfo.email</p>
+                           <p>$userInfo.major</p>
                        </div>
 
                        <ul class="nav nav-pills nav-stacked">
@@ -216,22 +216,18 @@
                </aside>
                <div class="edit-info" id="edit-info" style="display:none;">
                  <div class="edit-head">个人信息修改</div>
-                 <form class="info-form" action="">
+                 <form class="info-form" action="/doEditInfo" method="post">
                    <div>
                        <label>姓名：</label>
-                       <input type="text" value="梁建均" name="username" disabled="disabled"/>
+                       <input type="text" value="$userInfo.name" name="name" />
                    </div>
                    <div>
                        <label>邮箱：</label>
-                       <input type="text" value="梁建均" name="username" />
+                       <input type="text" value="$userInfo.email" name="email" />
                    </div>
                    <div>
                        <label>研究方向：</label>
-                       <input type="text" value="云计算" name="major" />
-                   </div>
-                   <div>
-                       <label>学位：</label>
-                       <input type="text" value="硕士研究生" name="level" />
+                       <input type="text" value="$userInfo.major" name="major" />
                    </div>
                    <div class="submit">
                          <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改</button>
@@ -241,21 +237,22 @@
                </div>
                <div class="edit-info" id="edit-login" style="display:none;">
                    <div class="edit-head">登录密码修改</div>
-                   <form class="info-form">
+                   <form class="info-form" action="/doEditPw" method="post">
                        <div>
                            <label>旧密码：</label>
-                           <input type="password" value="123" name="oldpassword" />
+                           <input type="password" id="oldPassword" name="oldpassword" />
                        </div>
                        <div>
                            <label>新密码：</label>
-                           <input type="password"  name="newpassword" />
+                           <input type="password" id="password" name="newpassword" />
                        </div>
                        <div>
                            <label>重复新密码：</label>
-                           <input type="password"  name="repeat-newpassword" />
+                           <input type="password" id="rePassword" name="repeat-newpassword" />
+                           <span id="content" style="display:none;font-size: 12px; color:red;">两次输入的密码不一样</span>
                        </div>
                        <div class="submit">
-                           <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改</button>
+                           <button id="edit-login" class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改</button>
                            <button class="btn btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
                        </div>
                    </form>
@@ -268,8 +265,61 @@
    </div>
 
 <!--JS-->
-
 <script src="../resources/js/jquery-1.8.3.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var oldPass = $("#oldPassword");
+        var pass = $("#password");
+        var rePass = $("#rePassword");
+        //$("#content").hide("slow");
+        //检查要提交的修改密码表单
+        $("#edit-login").submit(function() {
+            //flag用于判断是否提交表单
+            var flag = false;
+            if(oldPass.val() == '') {
+                alert("请输入您的原始密码！");
+                oldPass[0].focus();
+                return false;
+            }else if(rePass.val() != pass.val()){
+                $("#content").show("slow");
+                rePass[0].focus();
+                return false;
+            }else if(rePass.val() == '' || pass.val() == ''){
+                alert("请输入您的新密码！");
+                return false;
+            }else{
+                $.ajax({
+                    type : 'POST',
+                    url : '/checkPw',
+                    data: 'oldPass=' + oldPass.val(),
+                    dataType : 'text',
+                    //同步
+                    async : false,
+                    success : function(data) {
+                        if("false" == data) {
+                            alert("原始密码输入错误！");
+                            oldPass.val('');
+                            oldPass[0].focus();
+                            flag = false;
+                        }else if("true" == data) {
+                            flag = true;
+                        }
+                    },
+                    error : function() {
+                        alert("修改密码错误，请重新输入");
+                        flag = false;
+                    }
+                });
+            }
+            /*  if(flag) {
+                alert("密码修改成功，请您重新登录！");
+             } */
+            return flag;
+        });
+
+    });
+</script>
+
 <script src="../resources/common/theme/scripts/demo/common.js"></script>
 <script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
 <script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
