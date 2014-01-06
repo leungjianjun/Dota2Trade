@@ -204,8 +204,12 @@
             type:'post',
             url:"/doChangeMust",
             data:{args1:unchecked,args2:checked,typename:text},
+            dataType:'json',
             success:function(data){
-                alert("保存必选项成功！");
+                if(data.success){
+                    alert("保存必选项成功！");
+                }
+                else alert("保存必选项失败！");
             },
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest.status);
@@ -270,32 +274,39 @@
             type:'post',
             url:"/doAddConfigs",
             data:{type:id,args:args,typename:text},
+            dataType:'json',
             success:function(data){
-                alert("添加成功！");
-                if(id=="types"){
-                    for(var i=0;i<args.length;i++){
-                        var num=$typeList.size()+i+1;
-                        $("#"+id)[0].value="";
-                        $("#select").append("<option value='type_"+num+"'>"+args[i]+"</option>");
-                        $("#special").append("<div class='checkbox-group'id='type_"+num+"'style='display:none'></div>");
+                if(data.success){
+
+                    alert("添加成功！");
+                    if(id=="types"){
+                        for(var i=0;i<args.length;i++){
+                            var num=$typeList.size()+i+1;
+                            $("#"+id)[0].value="";
+                            $("#select").append("<option value='type_"+num+"'>"+args[i]+"</option>");
+                            $("#special").append("<div class='checkbox-group'id='type_"+num+"'style='display:none'></div>");
+                        }
+                        $("#select").get(0).options[$typeList.size()].selected=true;
                     }
-                    $("#select").get(0).options[$typeList.size()].selected=true;
+                    else if(id=="type_attributes")
+                        for(var i=0;i<args.length;i++){
+                            $("#"+id)[0].value="";
+                            $("#"+obj.options[index].value).append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                        }
+                    else if(id=="comment_attributes")
+                        for(var i=0;i<args.length;i++){
+                            $("#"+id)[0].value="";
+                            $("#comment-box").append("<input type='checkbox'  class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                        }
+                    else if(id=="cite_attributes")
+                        for(var i=0;i<args.length;i++){
+                            $("#"+id)[0].value="";
+                            $("#cite-box").append("<input type='checkbox'  class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
+                        }
+
+                }else{
+                    alert("添加失败！");
                 }
-                else if(id=="type_attributes")
-                    for(var i=0;i<args.length;i++){
-                        $("#"+id)[0].value="";
-                        $("#"+obj.options[index].value).append("<input type='checkbox' checked='checked' class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
-                    }
-                else if(id=="comment_attributes")
-                    for(var i=0;i<args.length;i++){
-                        $("#"+id)[0].value="";
-                        $("#comment-box").append("<input type='checkbox'  class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
-                    }
-                else if(id=="cite_attributes")
-                    for(var i=0;i<args.length;i++){
-                        $("#"+id)[0].value="";
-                        $("#cite-box").append("<input type='checkbox'  class='checkbox' value='"+args[i]+"'><span>"+args[i]+"</span>");
-                    }
             },
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest.status);
@@ -360,32 +371,38 @@
             type:'post',
             url:"/doDeleteConfigs",
             data:{type:type,typename:text,chk_value:chk_value},
+            dataType:'json',
             success:function(data){
-                if(type=="types"){
-                    alert("删除成功！");
-                    window.location.reload();
-                }else if(type=="type_attributes"){
-                    alert("删除成功！")
-                    var i=index+1;
-                    var checkboxes=$("#type_"+i+" input[type='checkbox']:checked").each(function(){
-                        $(this).next().remove();
-                        $(this).remove();
-                    });
-                }else if(type=="comment_attributes"){
-                    alert("删除成功！")
-                    $("#comment-box input[type='checkbox']:checked").each(function(){
-                        $(this).next().remove();
-                        $(this).remove();
-                    });
+                if(data.success){
 
-                }else if(type=="cite_attributes"){
-                    alert("删除成功！")
-                    $("#cite-box input[type='checkbox']:checked").each(function(){
-                        $(this).next().remove();
-                        $(this).remove();
-                    });
+                    if(type=="types"){
+                        alert("删除成功！");
+                        window.location.reload();
+                    }else if(type=="type_attributes"){
+                        alert("删除成功！")
+                        var i=index+1;
+                        var checkboxes=$("#type_"+i+" input[type='checkbox']:checked").each(function(){
+                            $(this).next().remove();
+                            $(this).remove();
+                        });
+                    }else if(type=="comment_attributes"){
+                        alert("删除成功！")
+                        $("#comment-box input[type='checkbox']:checked").each(function(){
+                            $(this).next().remove();
+                            $(this).remove();
+                        });
+
+                    }else if(type=="cite_attributes"){
+                        alert("删除成功！")
+                        $("#cite-box input[type='checkbox']:checked").each(function(){
+                            $(this).next().remove();
+                            $(this).remove();
+                        });
+                    }
+
+                }else{
+                    alert("操作失败！");
                 }
-
             },
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest.status);
@@ -394,8 +411,6 @@
             }
 
         });
-
-
     }
 
 </script>
