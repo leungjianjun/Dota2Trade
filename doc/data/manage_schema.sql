@@ -29,6 +29,7 @@ CREATE TABLE `attachment` (
   `creatorid` int(11) NOT NULL,
   `literatureid` int(11) NOT NULL,
   `type` int(3) NOT NULL,
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
@@ -385,6 +386,41 @@ INSERT INTO `publisher` VALUES (1,'上海文艺出版社'),(2,'南京大学出�
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `statistics`
+--
+
+DROP TABLE IF EXISTS `statistics`;
+/*!50001 DROP VIEW IF EXISTS `statistics`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `statistics` (
+  `Userid` int(10) unsigned,
+  `Account` varchar(32),
+  `Name` varchar(45),
+  `Cliterature` bigint(21),
+  `CAttachment` bigint(21),
+  `CSimple` bigint(21),
+  `CComplex` bigint(21),
+  `W_Cliterature` bigint(21),
+  `W_CAttachment` bigint(21),
+  `W_CSimple` bigint(21),
+  `W_CComplex` bigint(21),
+  `M_Cliterature` bigint(21),
+  `M_CAttachment` bigint(21),
+  `M_CSimple` bigint(21),
+  `M_CComplex` bigint(21),
+  `H_Cliterature` bigint(21),
+  `H_CAttachment` bigint(21),
+  `H_CSimple` bigint(21),
+  `H_CComplex` bigint(21),
+  `Y_Cliterature` bigint(21),
+  `Y_CAttachment` bigint(21),
+  `Y_CSimple` bigint(21),
+  `Y_CComplex` bigint(21)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `user`
 --
 
@@ -436,6 +472,25 @@ LOCK TABLES `user_info` WRITE;
 INSERT INTO `user_info` VALUES (1,2,'test','测试','软件工程','mf1332000@software.nju.edu.cn');
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `statistics`
+--
+
+/*!50001 DROP TABLE IF EXISTS `statistics`*/;
+/*!50001 DROP VIEW IF EXISTS `statistics`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `statistics` AS (select `u`.`id` AS `Userid`,`u`.`account` AS `Account`,(select `us`.`name` from `user_info` `us` where (`us`.`userid` = `u`.`id`)) AS `Name`,(select count(0) from `literature` where (`literature`.`creatorid` = `u`.`id`)) AS `Cliterature`,(select count(0) from `attachment` where (`attachment`.`creatorid` = `u`.`id`)) AS `CAttachment`,(select count(0) from `comment` where (`comment`.`commenterid` = `u`.`id`)) AS `CSimple`,(select count(distinct `commentattribute`.`commenttime`) from `commentattribute` where (`commentattribute`.`commenterid` = `u`.`id`)) AS `CComplex`,(select count(0) from `literature` where ((`literature`.`creatorid` = `u`.`id`) and (`literature`.`createtime` >= (now() - interval 7 day)))) AS `W_Cliterature`,(select count(0) from `attachment` where ((`attachment`.`creatorid` = `u`.`id`) and (`attachment`.`createtime` >= (now() - interval 7 day)))) AS `W_CAttachment`,(select count(0) from `comment` where ((`comment`.`commenterid` = `u`.`id`) and (`comment`.`commenttime` >= (now() - interval 7 day)))) AS `W_CSimple`,(select count(distinct `commentattribute`.`commenttime`) from `commentattribute` where ((`commentattribute`.`commenterid` = `u`.`id`) and (`commentattribute`.`commenttime` >= (now() - interval 7 day)))) AS `W_CComplex`,(select count(0) from `literature` where ((`literature`.`creatorid` = `u`.`id`) and (`literature`.`createtime` >= (now() - interval 1 month)))) AS `M_Cliterature`,(select count(0) from `attachment` where ((`attachment`.`creatorid` = `u`.`id`) and (`attachment`.`createtime` >= (now() - interval 1 month)))) AS `M_CAttachment`,(select count(0) from `comment` where ((`comment`.`commenterid` = `u`.`id`) and (`comment`.`commenttime` >= (now() - interval 1 month)))) AS `M_CSimple`,(select count(distinct `commentattribute`.`commenttime`) from `commentattribute` where ((`commentattribute`.`commenterid` = `u`.`id`) and (`commentattribute`.`commenttime` >= (now() - interval 1 month)))) AS `M_CComplex`,(select count(0) from `literature` where ((`literature`.`creatorid` = `u`.`id`) and (`literature`.`createtime` >= (now() - interval 0.5 year)))) AS `H_Cliterature`,(select count(0) from `attachment` where ((`attachment`.`creatorid` = `u`.`id`) and (`attachment`.`createtime` >= (now() - interval 0.5 year)))) AS `H_CAttachment`,(select count(0) from `comment` where ((`comment`.`commenterid` = `u`.`id`) and (`comment`.`commenttime` >= (now() - interval 0.5 year)))) AS `H_CSimple`,(select count(distinct `commentattribute`.`commenttime`) from `commentattribute` where ((`commentattribute`.`commenterid` = `u`.`id`) and (`commentattribute`.`commenttime` >= (now() - interval 0.5 year)))) AS `H_CComplex`,(select count(0) from `literature` where ((`literature`.`creatorid` = `u`.`id`) and (`literature`.`createtime` >= (now() - interval 1 year)))) AS `Y_Cliterature`,(select count(0) from `attachment` where ((`attachment`.`creatorid` = `u`.`id`) and (`attachment`.`createtime` >= (now() - interval 1 year)))) AS `Y_CAttachment`,(select count(0) from `comment` where ((`comment`.`commenterid` = `u`.`id`) and (`comment`.`commenttime` >= (now() - interval 1 year)))) AS `Y_CSimple`,(select count(distinct `commentattribute`.`commenttime`) from `commentattribute` where ((`commentattribute`.`commenterid` = `u`.`id`) and (`commentattribute`.`commenttime` >= (now() - interval 1 year)))) AS `Y_CComplex` from `user` `u`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -446,4 +501,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-05 16:28:28
+-- Dump completed on 2014-01-05 22:34:03
