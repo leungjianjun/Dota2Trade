@@ -7,6 +7,7 @@ import com.dota2trade.model.ComplexComment;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -37,7 +38,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
         final int literatureId=comment.getLiteratureId();
         final int commenterId=comment.getCommenterId();
         final int score=comment.getScore();
-        Date commentTime=comment.getCommentTime();
+        String commentTime=comment.getCommentTime();
         final int status=comment.getStatus();
         /**判断是否已经存在**/
         if(id>0){
@@ -92,7 +93,10 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         comment.setId(rs.getInt("id"));
                         comment.setStatus(rs.getInt("status"));
                         comment.setLiteratureId(rs.getInt("literatureid"));
-                        comment.setCommentTime(rs.getTime("commentTime"));
+                        comment.setLiteratureTitle(getLiteratureTitleById(rs.getInt("literatureid")));
+                        Date temp=rs.getTimestamp("commentTime");
+                        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        comment.setCommentTime(format.format(temp));
                         comment.setCommenterId(rs.getInt("commenterid"));
                         comment.setScore(rs.getInt("score"));
                         comment.setCommenter(getAccountById(rs.getInt("commenterid")));
@@ -114,7 +118,10 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         comment.setId(rs.getInt("id"));
                         comment.setStatus(rs.getInt("status"));
                         comment.setLiteratureId(rs.getInt("literatureid"));
-                        comment.setCommentTime(rs.getTime("commentTime"));
+                        comment.setLiteratureTitle(getLiteratureTitleById(rs.getInt("literatureid")));
+                        Date temp=rs.getTimestamp("commentTime");
+                        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        comment.setCommentTime(format.format(temp));
                         comment.setCommenterId(rs.getInt("commenterid"));
                         comment.setScore(rs.getInt("score"));
                         comment.setCommenter(getAccountById(rs.getInt("commenterid")));
@@ -136,7 +143,10 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         comment.setId(rs.getInt("id"));
                         comment.setStatus(rs.getInt("status"));
                         comment.setLiteratureId(rs.getInt("literatureid"));
-                        comment.setCommentTime(rs.getTime("commentTime"));
+                        comment.setLiteratureTitle(getLiteratureTitleById(rs.getInt("literatureid")));
+                        Date temp=rs.getTimestamp("commentTime");
+                        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        comment.setCommentTime(format.format(temp));
                         comment.setCommenterId(rs.getInt("commenterid"));
                         comment.setScore(rs.getInt("score"));
                         comment.setCommenter(getAccountById(rs.getInt("commenterid")));
@@ -162,7 +172,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
         final int attributeId=commentAttribute.getAttributeId();
         final String attributeName=commentAttribute.getAttributeName();
         final String value=commentAttribute.getValue();
-        Date commentTime=commentAttribute.getCommentTime();
+        String commentTime=commentAttribute.getCommentTime();
         final int status=commentAttribute.getStatus();
         final String sql="INSERT into commentattribute (literatureid,attributeid,attributename,value,commenterid,status) values(?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -199,7 +209,7 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
         int literatureId=complexComment.getLiteratureId();
         int commenterId=complexComment.getCommenterId();
         String commenter=complexComment.getCommenter();
-        Date commentTime=complexComment.getCommentTime();
+        String commentTime=complexComment.getCommentTime();
         int status=complexComment.getStatus();
         List<CommentAttribute> list=complexComment.getCommentAttributes();
         //判断是否是已经存在的复杂评论
@@ -247,9 +257,10 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
         for(int i=0;i<list.size();){
             ComplexComment complexComment=new ComplexComment();
             complexComment.setLiteratureId(literatureId);
+            complexComment.setLiteratureTitle(this.getLiteratureTitleById(literatureId));
             complexComment.setStatus(status);
             int userid=list.get(i).getCommenterId();
-            Date commentTime=list.get(i).getCommentTime();
+            String commentTime=list.get(i).getCommentTime();
             complexComment.setCommenterId(userid);
             complexComment.setCommenter(this.getAccountById(userid));
             complexComment.addCommentAttribute(list.get(i));
@@ -259,10 +270,10 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                 if(list.get(j).getCommenterId()==userid && list.get(j).getCommentTime().equals(commentTime))
                     complexComment.addCommentAttribute(list.get(j));
                 else{
-                    complexCommentList.add(complexComment);
                     break;
                 }
             }
+            complexCommentList.add(complexComment);
             i=j;
         }
         return complexCommentList;
@@ -276,8 +287,9 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
             ComplexComment complexComment=new ComplexComment();
             int literatureId=list.get(i).getLiteratureId();
             complexComment.setLiteratureId(literatureId);
+            complexComment.setLiteratureTitle(this.getLiteratureTitleById(literatureId));
             complexComment.setStatus(status);
-            Date commentTime=list.get(i).getCommentTime();
+            String commentTime=list.get(i).getCommentTime();
             complexComment.setCommenterId(userId);
             complexComment.setCommenter(this.getAccountById(userId));
             complexComment.addCommentAttribute(list.get(i));
@@ -287,10 +299,10 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                 if(list.get(j).getLiteratureId()==literatureId && list.get(j).getCommentTime().equals(commentTime))
                     complexComment.addCommentAttribute(list.get(j));
                 else{
-                    complexCommentList.add(complexComment);
                     break;
                 }
             }
+            complexCommentList.add(complexComment);
             i=j;
         }
         return complexCommentList;
@@ -304,8 +316,9 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
         for(int i=0;i<list.size();){
             ComplexComment complexComment=new ComplexComment();
             complexComment.setLiteratureId(literatureId);
+            complexComment.setLiteratureTitle(this.getLiteratureTitleById(literatureId));
             complexComment.setStatus(status);
-            Date commentTime=list.get(i).getCommentTime();
+            String commentTime=list.get(i).getCommentTime();
             complexComment.setCommenterId(userId);
             complexComment.setCommenter(this.getAccountById(userId));
             complexComment.addCommentAttribute(list.get(i));
@@ -337,7 +350,9 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         commentAttribute.setLiteratureId(rs.getInt("literatureid"));
                         commentAttribute.setAttributeId(rs.getInt("attributeid"));
                         commentAttribute.setAttributeName(rs.getString("attributename"));
-                        commentAttribute.setCommentTime(rs.getTime("commentTime"));
+                        Date temp=rs.getTimestamp("commentTime");
+                        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        commentAttribute.setCommentTime(format.format(temp));
                         commentAttribute.setCommenterId(rs.getInt("commenterid"));
                         commentAttribute.setValue(rs.getString("value"));
                         commentAttribute.setCommenter(getAccountById(rs.getInt("commenterid")));
@@ -360,7 +375,9 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         commentAttribute.setLiteratureId(rs.getInt("literatureid"));
                         commentAttribute.setAttributeId(rs.getInt("attributeid"));
                         commentAttribute.setAttributeName(rs.getString("attributename"));
-                        commentAttribute.setCommentTime(rs.getTime("commentTime"));
+                        Date temp=rs.getTimestamp("commentTime");
+                        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        commentAttribute.setCommentTime(format.format(temp));
                         commentAttribute.setCommenterId(rs.getInt("commenterid"));
                         commentAttribute.setValue(rs.getString("value"));
                         commentAttribute.setCommenter(getAccountById(rs.getInt("commenterid")));
@@ -383,7 +400,9 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
                         commentAttribute.setLiteratureId(rs.getInt("literatureid"));
                         commentAttribute.setAttributeId(rs.getInt("attributeid"));
                         commentAttribute.setAttributeName(rs.getString("attributename"));
-                        commentAttribute.setCommentTime(rs.getTime("commentTime"));
+                        Date temp=rs.getTimestamp("commentTime");
+                        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        commentAttribute.setCommentTime(format.format(temp));
                         commentAttribute.setCommenterId(rs.getInt("commenterid"));
                         commentAttribute.setValue(rs.getString("value"));
                         commentAttribute.setCommenter(getAccountById(rs.getInt("commenterid")));
@@ -396,6 +415,16 @@ public class CommentDaoImpl extends JdbcDaoSupport implements CommentDao {
 
     private String getAccountById(int id){
         String sql = "SELECT account FROM user WHERE id='"+id+"'";
+        List<String> strLst  = getJdbcTemplate().query(sql,
+                new RowMapper(){
+                    public Object mapRow(ResultSet rs, int rowNum) throws SQLException{
+                        return rs.getString(1);
+                    }
+                });
+        return strLst.get(0);
+    }
+    private String getLiteratureTitleById(int literatureId){
+        String sql = "SELECT title FROM literaturemeta where literatureid='"+literatureId+"'";
         List<String> strLst  = getJdbcTemplate().query(sql,
                 new RowMapper(){
                     public Object mapRow(ResultSet rs, int rowNum) throws SQLException{

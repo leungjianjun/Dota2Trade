@@ -9,10 +9,11 @@ import java.util.List;
  */
 public class ComplexComment {
     private int literatureId;
+    private String literatureTitle;
     private List<CommentAttribute> commentAttributes=new ArrayList<CommentAttribute>();
     private int commenterId;
     private String commenter;
-    private Date commentTime;
+    private String commentTime;
     private int status;
 
     public void setLiteratureId(int literatureId){this.literatureId=literatureId;}
@@ -40,16 +41,19 @@ public class ComplexComment {
     public void setStatus(int status){this.status=status;}
     public int getStatus(){return this.status;}
 
-    public void setCommentTime(Date commentTime){
+    public void setCommentTime(String commentTime){
         this.commentTime=commentTime;
     }
 
-    public Date getCommentTime(){
+    public String getCommentTime(){
         return this.commentTime;
     }
 
-    public String getCommentTimeString(){
-        java.text.DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        return format.format(this.commentTime);
+    public void setLiteratureTitle(String literatureTitle) {
+        this.literatureTitle = literatureTitle;
+    }
+
+    public String getLiteratureTitle() {
+        return literatureTitle;
     }
 }

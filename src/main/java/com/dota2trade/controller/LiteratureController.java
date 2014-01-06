@@ -260,6 +260,16 @@ public class LiteratureController {
         }
         model.addAttribute("score",score);
         model.addAttribute("literatureList",literatureList);
+        //正式简单评论
+        model.addAttribute("simpleComment",commentDao.getAllSimpleCommentByUserId(userid,1));
+        // 简单评论草稿
+        model.addAttribute("simpleDraft",commentDao.getAllSimpleCommentByUserId(userid,0));
+        //正式复杂评论
+        System.out.println(commentDao.getAllComplexCommentByUserId(userid,1).get(0).getCommentTime());
+        model.addAttribute("complexComment",commentDao.getAllComplexCommentByUserId(userid,1));
+        //复杂评论草稿
+        System.out.println(commentDao.getAllComplexCommentByUserId(userid,0));
+        model.addAttribute("complexDraft",commentDao.getAllComplexCommentByUserId(userid,0));
         return "profile";
     }
     @RequestMapping(value = "/doEditInfo",method = RequestMethod.POST)
@@ -855,9 +865,9 @@ public class LiteratureController {
         complexComment.setCommenterId(userid);
         complexComment.setLiteratureId(literatureid);
         complexComment.setStatus(status);
-        Date ud = new java.util.Date();
-        Date sd = new java.sql.Date(ud.getTime());
-        complexComment.setCommentTime(sd);
+//        Date ud = new java.util.Date();
+//        Date sd = new java.sql.Date(ud.getTime());
+//        complexComment.setCommentTime(sd);
         for(int i=0;i<attributeList.size();i++){
             Attribute attribute = attributeList.get(i);
             int commentAttributeId = Integer.parseInt(request.getParameter("commentAttribute"+attribute.getId()));

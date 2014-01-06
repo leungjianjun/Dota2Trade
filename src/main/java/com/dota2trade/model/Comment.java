@@ -13,10 +13,11 @@ public class Comment {
     private int commenterId;
     private String commenter;
     private int literatureId;
+    private String literatureTitle;
     private String shortContent;
     private int score;
     private int status;// 0 draft 1 normal
-    private Date commentTime;
+    private String commentTime;
 
     public void setId(int id){this.id=id;}
     public int getId(){return this.id;}
@@ -39,11 +40,11 @@ public class Comment {
     public void setStatus(int status){this.status=status;}
     public int getStatus(){return this.status;}
 
-    public void setCommentTime(Date commentTime){
+    public void setCommentTime(String commentTime){
         this.commentTime=commentTime;
     }
 
-    public Date getCommentTime(){
+    public String getCommentTime(){
         return this.commentTime;
     }
 
@@ -52,4 +53,10 @@ public class Comment {
         return format.format(this.commentTime);
     }
 
+    public void setLiteratureTitle(String literatureTitle) {
+        this.literatureTitle = literatureTitle;
+    }
+    public String getLiteratureTitle(){
+        return this.literatureTitle;
+    }
 }
