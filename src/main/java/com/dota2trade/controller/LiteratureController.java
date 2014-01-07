@@ -382,7 +382,7 @@ public class LiteratureController {
            @RequestParam("link") String link,
            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
            MultipartHttpServletRequest request,
-            Model model) throws IOException {
+            ModelMap model) throws IOException {
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         LiteratureMeta literatureMeta=literatureDao.getLiteratureMetaByLiteratureId(literatureid);
        // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
@@ -426,29 +426,14 @@ public class LiteratureController {
             }
         }
         Literature literature=literatureDao.getLiteratureById(literatureid);
-        //literature.setCreatorid(userid);
         literature.setUpdaterid(userid);
-        //literature.setStatus(0);
-        //literature.setLiteraturetypeid(literaturetypeid);
         literature.setLiteratureMeta(literatureMeta);
         literature.setPublisher(publisher);
         literature.setAttachmentList(attachmentList);
         literature.setLiteratureAttributeList(newLiteratureAttributeList);
         literatureDao.updateLiterature(literature);
 
-        //文献类型
-        List typeList=new ArrayList();
-        typeList=configDao.getAllLiteratureTypes();
-        model.addAttribute("typeList",typeList);
-        List<LiteratureMeta> list = literatureDao.getAllLiteratureMetaByUserid(userid);
-        List<Literature> literatureList = new ArrayList<Literature>();
-        for(int i=0;i<list.size();i++){
-            LiteratureMeta meta = list.get(i);
-            Literature literature1 = literatureDao.getLiteratureById(meta.getLiteratureid());
-            literatureList.add(literature1);
-        }
-        model.addAttribute("literatureList",literatureList);
-        return "listLiterature";
+        return listLiterature(model);
     }
     @RequestMapping(value="/searchLiterature.html",method=RequestMethod.GET)
     public String searchLiterature(ModelMap model){
@@ -518,7 +503,7 @@ public class LiteratureController {
     public String literatureDetail(
             @RequestParam("id")int literatureid,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
-            HttpServletRequest request,
+            @RequestParam("sign") int sign,
             ModelMap model){
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         Map<Integer,String> cite_name = new HashMap<Integer,String>();
@@ -577,7 +562,7 @@ public class LiteratureController {
         else{
             complexComment0.setStatus(-1);
         }
-        if(Integer.parseInt(request.getParameter("sign"))==1){
+        if(sign==1){
             model.addAttribute("sign",true);
         }else{
             model.addAttribute("sign",false);
@@ -604,13 +589,11 @@ public class LiteratureController {
     /**文献修改*/
     @RequestMapping(value="/listLiterature.html", method= RequestMethod.GET)
     public String listLiterature(
-            @ModelAttribute("sauthentication") SAuthentication sAuthentication,
-            Model model){
+            ModelMap model){
         //文献类型
         List typeList=new ArrayList();
         typeList=configDao.getAllLiteratureTypes();
         model.addAttribute("typeList",typeList);
-        //int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         List<LiteratureMeta> list = literatureDao.getAllLiteratureMeta();
         List<Literature> literatureList = new ArrayList<Literature>();
         for(int i=0;i<list.size();i++){
@@ -629,7 +612,7 @@ public class LiteratureController {
     public String addCite(
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             HttpServletRequest request,
-            Model model){
+            ModelMap model){
         int citeNum=Integer.parseInt(request.getParameter("citeNum"));
         int literatureid = Integer.parseInt(request.getParameter("literatureid"));
         ArrayList<CiteRelationship> list = new ArrayList<CiteRelationship>();
@@ -647,20 +630,7 @@ public class LiteratureController {
             }
         }
         literatureDao.updateCiteRelationship(list);
-        //文献类型
-        List typeList=new ArrayList();
-        typeList=configDao.getAllLiteratureTypes();
-        model.addAttribute("typeList",typeList);
-        int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
-        List<LiteratureMeta> list1 = literatureDao.getAllLiteratureMetaByUserid(userid);
-        List<Literature> literatureList = new ArrayList<Literature>();
-        for(int i=0;i<list1.size();i++){
-            LiteratureMeta meta = list1.get(i);
-            Literature literature = literatureDao.getLiteratureById(meta.getLiteratureid());
-            literatureList.add(literature);
-        }
-        model.addAttribute("literatureList",literatureList);
-        return "listLiterature";
+        return listLiterature(model);
     }
 
     /**
@@ -671,7 +641,7 @@ public class LiteratureController {
             @RequestParam("literatureid")int literatureid,
             @RequestParam("tags") String tags,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
-            Model model) throws IOException{
+            ModelMap model) throws IOException{
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         String[] args = tags.split("\\;|\\；");
         for(int i=0;i<args.length;i++){
@@ -687,79 +657,7 @@ public class LiteratureController {
                 boolean addLabelResult = labelDao.addLiteratureLabel(labelLiterature);
             }
         }
-        Map<Integer,String> cite_name = new HashMap<Integer,String>();
-        Map<Integer,String> cited_name = new HashMap<Integer,String>();
-        List<CiteRelationship> cite = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
-        for(int i=0;i<cite.size();i++){
-            CiteRelationship cr = cite.get(i);
-            cite_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
-        }
-        List<CiteRelationship> cited = literatureDao.getAllCiteRelationshipByCitedById(literatureid);
-        for(int i=0;i<cited.size();i++){
-            CiteRelationship cr = cited.get(i);
-            cited_name.put(cr.getLiteratureid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getLiteratureid()).getTitle());
-        }
-        //上传人，修改人
-        Literature literature = literatureDao.getLiteratureById(literatureid);
-        String creator = userDao.getAccountById(literature.getCreatorid());
-        String updater = "";
-        if(literature.getUpdaterid()==0){
-            updater = creator;
-        }else{
-            updater = userDao.getAccountById(literature.getUpdaterid());
-        }
-        //文献类型
-        List typeList=new ArrayList();
-        typeList=configDao.getAllLiteratureTypes();
-        //文献对应标签
-        List<Label> labelList = labelDao.getLabelListByLiteratureId(literatureid);
-        //我的标签
-        List<Label> myLabelList = labelDao.getLabelListByuserId(userid);
-        //常用标签
-        List<Label> commonLabelList = labelDao.getCommonLabelList();
-
-        //获得所有正式简单评论
-        List<Comment> simpleComments = commentDao.getAllSimpleCommentByLiteratureId(literatureid,1);
-        //获得用户该文献的草稿
-        List<Comment> simpleDraftList = commentDao.getAllSimpleCommentByUserIdAndLiteratureId(userid,literatureid,0);
-        Comment comment = new Comment();
-        if(simpleDraftList.size()!=0){
-            comment = simpleDraftList.get(0);
-        }
-        else{
-            comment.setShortContent("");
-            comment.setId(-1);
-            comment.setScore(0);
-        }
-        //获得所有正式复杂评论
-        List<ComplexComment> complexComments = commentDao.getAllComplexCommentByLiteratureId(literatureid,1);
-        //获得用户该文献的复杂评论草稿
-        List<ComplexComment> complexDraftList = commentDao.getAllComplexCommentByUserIdAndLiteratureId(userid,literatureid,0);
-
-        ComplexComment complexComment0 = new ComplexComment();
-        if(complexDraftList.size()!=0){
-            complexComment0 = complexDraftList.get(0);
-        }
-        else{
-            complexComment0.setStatus(-1);
-        }
-        model.addAttribute("simpleComments",simpleComments);
-        model.addAttribute("complexComments",complexComments);
-        model.addAttribute("simpleDraft",comment);
-        model.addAttribute("complexDraft",complexComment0);
-        model.addAttribute("labelList",labelList);
-        model.addAttribute("myLabelList",myLabelList);
-        model.addAttribute("commonLabelList",commonLabelList);
-        model.addAttribute("typeList",typeList);
-        model.addAttribute("creator",creator);
-        model.addAttribute("updater",updater);
-        model.addAttribute("citelist",cite_name);
-        model.addAttribute("citedlist",cited_name);
-        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
-        model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
-        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
-        model.addAttribute("average_score",commentDao.getScoreByLiteratureId(literatureid));
-        return "literatureDetail";
+        return literatureDetail(literatureid,sAuthentication,0,model);
     }
     /**
      * 添加简单评论
@@ -772,7 +670,7 @@ public class LiteratureController {
             @RequestParam("comment") String comment_text,
             @RequestParam("status") int status,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
-            Model model) throws IOException{
+            ModelMap model) throws IOException{
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         Comment new_comment = new Comment();
         new_comment.setId(commentid);
@@ -782,79 +680,7 @@ public class LiteratureController {
         new_comment.setShortContent(comment_text);
         new_comment.setStatus(status);
         commentDao.addSimpleComment(new_comment);
-
-        Map<Integer,String> cite_name = new HashMap<Integer,String>();
-        Map<Integer,String> cited_name = new HashMap<Integer,String>();
-        List<CiteRelationship> cite = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
-        for(int i=0;i<cite.size();i++){
-            CiteRelationship cr = cite.get(i);
-            cite_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
-        }
-        List<CiteRelationship> cited = literatureDao.getAllCiteRelationshipByCitedById(literatureid);
-        for(int i=0;i<cited.size();i++){
-            CiteRelationship cr = cited.get(i);
-            cited_name.put(cr.getLiteratureid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getLiteratureid()).getTitle());
-        }
-        //上传人，修改人
-        Literature literature = literatureDao.getLiteratureById(literatureid);
-        String creator = userDao.getAccountById(literature.getCreatorid());
-        String updater = "";
-        if(literature.getUpdaterid()==0){
-            updater = creator;
-        }else{
-            updater = userDao.getAccountById(literature.getUpdaterid());
-        }
-        //文献类型
-        List typeList=new ArrayList();
-        typeList=configDao.getAllLiteratureTypes();
-        //文献对应标签
-        List<Label> labelList = labelDao.getLabelListByLiteratureId(literatureid);
-        //我的标签
-        List<Label> myLabelList = labelDao.getLabelListByuserId(userid);
-        //常用标签
-        List<Label> commonLabelList = labelDao.getCommonLabelList();
-        //获得所有正式简单评论
-        List<Comment> simpleComments = commentDao.getAllSimpleCommentByLiteratureId(literatureid,1);
-        //获得用户该文献的草稿
-        List<Comment> simpleDraftList = commentDao.getAllSimpleCommentByUserIdAndLiteratureId(userid,literatureid,0);
-        Comment comment = new Comment();
-        if(simpleDraftList.size()!=0){
-            comment = simpleDraftList.get(0);
-        }
-        else{
-            comment.setShortContent("");
-            comment.setId(-1);
-            comment.setScore(0);
-        }
-        //获得所有正式复杂评论
-        List<ComplexComment> complexComments = commentDao.getAllComplexCommentByLiteratureId(literatureid,1);
-        //获得用户该文献的复杂评论草稿
-        List<ComplexComment> complexDraftList = commentDao.getAllComplexCommentByUserIdAndLiteratureId(userid,literatureid,0);
-        ComplexComment complexComment0 = new ComplexComment();
-        if(complexDraftList.size()!=0){
-            complexComment0 = complexDraftList.get(0);
-        }
-        else{
-            complexComment0.setStatus(-1);
-        }
-
-        model.addAttribute("simpleComments",simpleComments);
-        model.addAttribute("complexComments",complexComments);
-        model.addAttribute("simpleDraft",comment);
-        model.addAttribute("complexDraft",complexComment0);
-        model.addAttribute("labelList",labelList);
-        model.addAttribute("myLabelList",myLabelList);
-        model.addAttribute("commonLabelList",commonLabelList);
-        model.addAttribute("typeList",typeList);
-        model.addAttribute("creator",creator);
-        model.addAttribute("updater",updater);
-        model.addAttribute("citelist",cite_name);
-        model.addAttribute("citedlist",cited_name);
-        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
-        model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
-        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
-        model.addAttribute("average_score",commentDao.getScoreByLiteratureId(literatureid));
-        return "literatureDetail";
+        return literatureDetail(literatureid,sAuthentication,0,model);
     }
     /**
      * 添加复杂评论
@@ -865,7 +691,7 @@ public class LiteratureController {
             @RequestParam("status1") int status,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             HttpServletRequest request,
-            Model model) throws IOException{
+            ModelMap model) throws IOException{
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         List<Attribute> attributeList = configDao.getAllAttributeByType(2);
         ComplexComment complexComment = new ComplexComment();
@@ -890,78 +716,7 @@ public class LiteratureController {
             complexComment.addCommentAttribute(newAttribute);
         }
         commentDao.addComplexComment(complexComment);
-
-        Map<Integer,String> cite_name = new HashMap<Integer,String>();
-        Map<Integer,String> cited_name = new HashMap<Integer,String>();
-        List<CiteRelationship> cite = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
-        for(int i=0;i<cite.size();i++){
-            CiteRelationship cr = cite.get(i);
-            cite_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
-        }
-        List<CiteRelationship> cited = literatureDao.getAllCiteRelationshipByCitedById(literatureid);
-        for(int i=0;i<cited.size();i++){
-            CiteRelationship cr = cited.get(i);
-            cited_name.put(cr.getLiteratureid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getLiteratureid()).getTitle());
-        }
-        //上传人，修改人
-        Literature literature = literatureDao.getLiteratureById(literatureid);
-        String creator = userDao.getAccountById(literature.getCreatorid());
-        String updater = "";
-        if(literature.getUpdaterid()==0){
-            updater = creator;
-        }else{
-            updater = userDao.getAccountById(literature.getUpdaterid());
-        }
-        //文献类型
-        List typeList=new ArrayList();
-        typeList=configDao.getAllLiteratureTypes();
-        //文献对应标签
-        List<Label> labelList = labelDao.getLabelListByLiteratureId(literatureid);
-        //我的标签
-        List<Label> myLabelList = labelDao.getLabelListByuserId(userid);
-        //常用标签
-        List<Label> commonLabelList = labelDao.getCommonLabelList();
-        //获得所有正式简单评论
-        List<Comment> simpleComments = commentDao.getAllSimpleCommentByLiteratureId(literatureid,1);
-        //获得用户该文献的草稿
-        List<Comment> simpleDraftList = commentDao.getAllSimpleCommentByUserIdAndLiteratureId(userid,literatureid,0);
-        Comment comment = new Comment();
-        if(simpleDraftList.size()!=0){
-            comment = simpleDraftList.get(0);
-        }
-        else{
-            comment.setShortContent("");
-            comment.setId(-1);
-            comment.setScore(0);
-        }
-        //获得所有正式复杂评论
-        List<ComplexComment> complexComments = commentDao.getAllComplexCommentByLiteratureId(literatureid,1);
-        //获得用户该文献的复杂评论草稿
-        List<ComplexComment> complexDraftList = commentDao.getAllComplexCommentByUserIdAndLiteratureId(userid,literatureid,0);
-        ComplexComment complexComment0 = new ComplexComment();
-        if(complexDraftList.size()!=0){
-            complexComment0 = complexDraftList.get(0);
-        }
-        else{
-            complexComment0.setStatus(-1);
-        }
-        model.addAttribute("simpleComments",simpleComments);
-        model.addAttribute("complexComments",complexComments);
-        model.addAttribute("simpleDraft",comment);
-        model.addAttribute("complexDraft",complexComment0);
-        model.addAttribute("labelList",labelList);
-        model.addAttribute("myLabelList",myLabelList);
-        model.addAttribute("commonLabelList",commonLabelList);
-        model.addAttribute("typeList",typeList);
-        model.addAttribute("creator",creator);
-        model.addAttribute("updater",updater);
-        model.addAttribute("citelist",cite_name);
-        model.addAttribute("citedlist",cited_name);
-        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
-        model.addAttribute("attributeList",literatureDao.getLiteratureAttribute(literatureid));
-        model.addAttribute("commentAttributeList",configDao.getAllAttributeByType(2));
-        model.addAttribute("average_score",commentDao.getScoreByLiteratureId(literatureid));
-        return "literatureDetail";
+        return literatureDetail(literatureid,sAuthentication,0,model);
     }
 
     /**删除简单评论*/
