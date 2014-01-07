@@ -6,6 +6,7 @@ import com.dota2trade.model.search.ComplexCondition;
 import com.dota2trade.model.search.Indexer;
 import com.dota2trade.model.search.Searcher;
 import com.dota2trade.util.FileUploadHelper;
+import com.dota2trade.util.LogHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,6 +78,7 @@ public class LiteratureController {
             HttpServletRequest request,
             Model model
     ) throws IOException {
+        LogHelper.addLog(sAuthentication.getAccount(),"添加新的文献"+title);
         String idS=literaturetypeidS.substring(5);
         int index=Integer.parseInt(idS);
         System.out.println("index:"+index);
@@ -280,6 +282,7 @@ public class LiteratureController {
             @RequestParam("email") String email,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model){
+        LogHelper.addLog(sAuthentication.getAccount(),"修改个人信息"+name);
         UserInfo userInfo = new UserInfo();
         String account = sAuthentication.getAccount();
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
@@ -385,6 +388,7 @@ public class LiteratureController {
             ModelMap model) throws IOException {
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         LiteratureMeta literatureMeta=literatureDao.getLiteratureMetaByLiteratureId(literatureid);
+        LogHelper.addLog(sAuthentication.getAccount(),"修改文献"+literatureMeta.getTitle());
        // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         literatureMeta.setAuthor(new String(author.getBytes("iso-8859-1"), "UTF-8"));
         literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"), "UTF-8"));
@@ -671,6 +675,7 @@ public class LiteratureController {
             @RequestParam("status") int status,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             ModelMap model) throws IOException{
+        LogHelper.addLog(sAuthentication.getAccount(),"添加新评论");
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         Comment new_comment = new Comment();
         new_comment.setId(commentid);
@@ -692,6 +697,7 @@ public class LiteratureController {
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             HttpServletRequest request,
             ModelMap model) throws IOException{
+        LogHelper.addLog(sAuthentication.getAccount(),"添加复杂评论");
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         List<Attribute> attributeList = configDao.getAllAttributeByType(2);
         ComplexComment complexComment = new ComplexComment();
