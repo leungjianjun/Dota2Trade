@@ -36,7 +36,7 @@
             <ul>
                 #foreach($literature in $literatureList)
                     <li>
-                        <div class="name"><a href="/literatureDetail.html?id=$literature.id">$literature.literatureMeta.title</a></div>
+                        <div class="name"><a href="/literatureDetail.html?id=$literature.id&sign=0">$literature.literatureMeta.title</a></div>
                         <div class="author">$literature.literatureMeta.author - $literature.publisher.name, $literature.literatureMeta.published_year</div>
                         <div class="content">$literature.literatureMeta.literature_abstract</div>
                         <div class="info">关键词：$literature.literatureMeta.key_words</div>

@@ -15,7 +15,7 @@ public class CommentAttribute {
     private String value;
     private int commenterId;
     private String commenter;
-    private Date commentTime;
+    private String commentTime;
     private int status;
 
     public void setId(int id){this.id=id;}
@@ -42,18 +42,11 @@ public class CommentAttribute {
     public void setStatus(int status){this.status=status;}
     public int getStatus(){return this.status;}
 
-    public void setCommentTime(Date commentTime){
+    public void setCommentTime(String commentTime){
         this.commentTime=commentTime;
     }
 
-    public Date getCommentTime(){
+    public String getCommentTime(){
         return this.commentTime;
     }
-
-    public String getCommentTimeString(){
-        java.text.DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        return format.format(this.commentTime);
-    }
-
-
 }

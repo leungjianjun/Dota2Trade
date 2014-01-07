@@ -72,7 +72,7 @@
                                                        #if($literature.literaturetypeid==$type.id)
                                                        <tr class="gradeX">
                                                            <td>$literature.literatureMeta.literatureid</td>
-                                                           <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid">$literature.literatureMeta.title</a></td>
+                                                           <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid&sign=0">$literature.literatureMeta.title</a></td>
                                                            <td>$literature.literatureMeta.published_year</td>
                                                            <td class="center">$score.get($literature.literatureMeta.literatureid)</td>
                                                        </tr>
@@ -92,103 +92,114 @@
                    <div class="widget widget-tabs widget-tabs-double-2">
                        <div class="widget-head">
                            <ul>
-                               <li class="active"><a class="glyphicons user" href="#tabComment" data-toggle="tab"><span>完成评论</span></a></li>
-                               <li ><a class="glyphicons list" href="#tabDraft" data-toggle="tab"><span>评论草稿</span></a></li>
-
+                               <li class="active"><a class="glyphicons" href="#tabComment" data-toggle="tab"><span>简单评论</span></a></li>
+                               <li><a class="glyphicons" href="#tabComplexComment" data-toggle="tab"><span>复杂评论</span></a></li>
+                               <li><a class="glyphicons" href="#tabDraft" data-toggle="tab"><span>简单评论草稿</span></a></li>
+                               <li><a class="glyphicons" href="#tabComplexDraft" data-toggle="tab"><span>复杂评论草稿</span></a></li>
                            </ul>
                        </div>
                        <div class="widget-body">
                            <div class="tab-content">
-                               <div id="tabDraft" class="tab-pane widget-body-regular">
-
+                               <div id="tabDraft" class="tab-pane widget-body-regular simpleComment">
                                    <div class="adv-table">
                                        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-other">
                                            <thead>
                                            <tr>
-
                                                <th>评论文献</th>
                                                <th>评论草稿</th>
                                                <th>操作</th>
                                            </tr>
                                            </thead>
                                            <tbody>
-
+                                           #foreach($draft in $simpleDraft)
                                            <tr>
-
-                                               <td><a href="#">大教堂与集市</a></td>
-                                               <td>啦啦啦啦啦lalalalalalaallalalala</td>
-                                               <td class="op"><div><button class="btn  btn-primary" type="">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
+                                               <td><a href="literatureDetail.html?id=$draft.literatureId&sign=0">$draft.literatureTitle</a></td>
+                                               <td>$draft.shortContent</td>
+                                               <td class="op"><div><a class="btn  btn-primary" href="literatureDetail.html?id=$draft.literatureId&sign=0#editComment">编辑</a><a class="btn  btn-primary delete">删除</a></div></td>
                                            </tr>
-                                           <tr>
-
-                                               <td><a href="#">人月神话</a></td>
-                                               <td>不错额</td>
-                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
-                                           </tr>
-                                           <tr>
-
-                                               <td><a href="#">编程珠玑</a></td>
-                                               <td>哈哈哈</td>
-                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
-                                           </tr>
-                                           <tr>
-
-                                               <td><a href="#">Thinking in Java</a></td>
-                                               <td>额。。。。</td>
-                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
-                                           </tr>
-
+                                           #end
                                            </tbody>
                                        </table>
-
                                    </div>
-
                                </div>
-                               <div id="tabComment" class="tab-pane active widget-body-regular">
+                               <div id="tabComplexDraft" class="tab-pane widget-body-regular">
                                    <div class="adv-table">
-                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-other">
                                            <thead>
                                            <tr>
-
                                                <th>评论文献</th>
+                                               <th>评论草稿</th>
+                                               <th>操作</th>
+                                           </tr>
+                                           </thead>
+                                           <tbody>
+                                           #foreach($c_draft in $complexDraft)
+                                           <tr>
+                                               <td><a href="literatureDetail.html?id=$c_draft.literatureId&sign=0">$c_draft.literatureTitle</a></td>
+                                               <td>
+                                                   <ul>
+                                                   #foreach($attribute in $c_draft.commentAttributes)
+                                                   <li>$attribute.attributeName：$attribute.value</li>
+                                                   #end
+                                                   </ul>
+                                               </td>
+                                               <td class="op"><div><a class="btn  btn-primary" href="literatureDetail.html?id=$c_draft.literatureId&sign=1#editComment">编辑</a><a class="btn  btn-primary">删除</a></div></td>
+                                           </tr>
+                                           #end
+                                           </tbody>
+                                       </table>
+                                   </div>
+                               </div>
+                               <div id="tabComment" class="tab-pane active widget-body-regular simpleComment">
+                                   <div class="adv-table">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered">
+                                           <thead>
+                                           <tr>
+                                               <th style="display: none"></th>
+                                               <th>评论文献</th>
+                                               <th>评论内容</th>
                                                <th>评论时间</th>
                                                <th>操作</th>
                                            </tr>
                                            </thead>
                                            <tbody>
-
+                                           #foreach($comment in $simpleComment)
                                            <tr>
-
-                                               <td><a href="/literatureDetail.html">云计算和世界</a></td>
-                                               <td>2012/12/18 10:00</td>
-                                               <td class="op"><div><button class="btn  btn-primary" type="">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
+                                               <td style="display: none">$comment.id</td>
+                                               <td><a href="/literatureDetail.html?id=$comment.literatureId&sign=0">$comment.literatureTitle</a></td>
+                                               <td>$comment.shortContent</td>
+                                               <td>$comment.commentTime</td>
+                                               <td class="op"><a class="btn  btn-primary delete">删除</a></td>
                                            </tr>
-                                           <tr>
-
-                                               <td><a href="#">人月神话</a></td>
-                                               <td>2012/12/18 11:00</td>
-                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
-                                           </tr>
-                                           <tr>
-
-                                               <td><a href="#">编程珠玑</a></td>
-                                               <td>2012/12/18 12:00</td>
-                                               <td class="op"><div><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
-                                           </tr>
-                                           <tr>
-
-                                               <td><a href="#">Thinking in Java</a></td>
-                                               <td>2012/12/18 13:00</td>
-                                               <td class="op"><button class="btn  btn-primary">编辑</button><button class="btn  btn-primary" type="">保存</button><button class="btn  btn-primary">删除</button></div></td>
-
-                                           </tr>
-
+                                           #end
                                            </tbody>
                                        </table>
-
                                    </div>
                                </div>
-
+                               <div id="tabComplexComment" class="tab-pane widget-body-regular">
+                                   <div class="adv-table">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                                           <thead>
+                                           <tr>
+                                               <th>评论文献</th>
+                                               <th>评论时间</th>
+                                               <th style="display: none;">内容</th>
+                                               <th>操作</th>
+                                           </tr>
+                                           </thead>
+                                           <tbody>
+                                           #foreach($c_comment in $complexComment)
+                                           <tr>
+                                               <td><a href="/literatureDetail.html?id=$c_comment.literatureId&sign=0">$c_comment.literatureTitle</a></td>
+                                               <td>$c_comment.commentTime</td>
+                                               <td style="display: none;">#foreach($c_attribute in $c_comment.commentAttributes)$c_attribute.attributeName:$c_attribute.value<br />#end</td>
+                                               <td class="op"><a class="btn  btn-primary">删除</a></div></td>
+                                           </tr>
+                                           #end
+                                           </tbody>
+                                       </table>
+                                   </div>
+                               </div>
                            </div>
                        </div>
                    </div>
@@ -230,7 +241,7 @@
                        <input type="text" value="$userInfo.major" name="major" />
                    </div>
                    <div class="submit">
-                         <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改</button>
+                         <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 35px;">修改</button>
                          <button class="btn btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
                    </div>
                  </form>
@@ -252,7 +263,7 @@
                            <span id="content" style="display:none;font-size: 12px; color:red;">两次输入的密码不一样</span>
                        </div>
                        <div class="submit">
-                           <button id="edit-login" class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">修改</button>
+                           <button id="edit-login" class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 35px;">修改</button>
                            <button class="btn btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
                        </div>
                    </form>
@@ -316,7 +327,35 @@
              } */
             return flag;
         });
+        $('.simpleComment a.delete').live('click', function (e) {
+            e.preventDefault();
 
+            if (confirm("你确定要删除该记录 ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            $.ajax({
+                type:'post',
+                url:"/doDeleSimpleComment",
+                data:{id:aData[1]},
+                success:function(data){
+                    if(data){
+                        oTable.fnDeleteRow(nRow);
+                        alert("已删除! :)");
+                    }
+                    else{
+                        alert("删除失败！");
+                    }
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+            });
+        });
     });
 </script>
 
@@ -358,8 +397,7 @@
         var aData = oTable.fnGetData( nTr );
         var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
         sOut += '<tr><td>评论对象:</td><td>'+aData[1]+' '+aData[2]+'</td></tr>';
-        sOut += '<tr><td>简要类型:</td><td>简要评价</td></tr>';
-        sOut += '<tr><td>评价内容:</td><td>And any further details here (images etc)</td></tr>';
+        sOut += '<tr><td>评价内容:</td><td>'+aData[3]+'</td></tr>';
         sOut += '</table>';
 
         return sOut;
@@ -416,9 +454,5 @@
 
 
     } );
-
-
 </script>
-
-
 </body>
