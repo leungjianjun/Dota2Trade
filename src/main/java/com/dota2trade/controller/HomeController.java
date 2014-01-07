@@ -1,14 +1,22 @@
 package com.dota2trade.controller;
 
+import com.dota2trade.dao.StatisticsDao;
+import com.dota2trade.model.Statistic;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,9 +28,11 @@ import java.io.*;
 
 @Controller
 public class HomeController {
+    private StatisticsDao statisticsDao;
 
     @RequestMapping(value="/index.html", method= RequestMethod.GET)
     public String home(ModelMap model){
+        model.addAttribute("statistics",statisticsDao.getStatisticsLimit1Week());
         return "index";
     }
 
@@ -30,11 +40,6 @@ public class HomeController {
     public String defaultHome(ModelMap model){
         return "redirect:/index.html";
     }
-
-   /* @RequestMapping(value="/profile.html",method= RequestMethod.GET)
-    public String group(ModelMap model){
-        return "profile";
-    }*/
 
     @RequestMapping(value="/login.html", method= RequestMethod.GET)
     public String login(ModelMap model){
@@ -44,6 +49,37 @@ public class HomeController {
     public String logout(HttpServletRequest request,ModelMap model){
         request.getSession().setAttribute("sauthentication",null);
         return "login";
+    }
+
+    @RequestMapping(value = "/doGetStatistics",method=RequestMethod.POST)
+    public void doGetStatistics(
+            @RequestParam("type") int type,
+            HttpServletResponse response,
+            Model model)throws IOException{
+        boolean success=true;
+        List list=new ArrayList();
+        switch (type){
+            case 1:
+                list=statisticsDao.getStatisticsLimit1Week();
+                break;
+            case 2:
+                list=statisticsDao.getStatisticsLimit1Month();
+                break;
+            case 3:
+                list=statisticsDao.getStatisticsLimitHalfYear();
+                break;
+            case 4:
+                list=statisticsDao.getStatisticsLimit1Year();
+                break;
+            default:
+                list=statisticsDao.getStatistics();
+                break;
+        }
+        JSONObject jsonobj = new JSONObject();
+        JSONArray jsonarray = JSONArray.fromObject(list);
+        jsonobj.put("success", success);
+        jsonobj.put("list",jsonarray);
+        response.getWriter().print(jsonobj);
     }
 
     @RequestMapping(value = "/testupload.html", method = RequestMethod.GET)
@@ -83,5 +119,9 @@ public class HomeController {
         System.out.println(s2);
         return new FileSystemResource(new File("attachment/paper/"+s2+"."+type));
     }
+
+    public StatisticsDao getStatisticsDao(){return this.statisticsDao;}
+    @Autowired
+    public void setStatisticsDao(StatisticsDao statisticsDao){this.statisticsDao=statisticsDao;}
 
 }

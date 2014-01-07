@@ -34,7 +34,7 @@
 <body>
     #include("header.vm")
     <div class="container0 clearfix">
-    <ul class="menu">
+        <ul class="menu">
         <li class="active"><a class="group" href="/index.html"><i></i><span>小组状态</span></a></li>
         <li><a class="search" href="/searchLiterature.html"><i></i><span>文献查询</span></a></li>
         <li><a class="add" href="/addLiterature.html"><i></i><span>文献录入</span></a></li>
@@ -139,60 +139,27 @@
                         <div class="panel-body">
                         <div class="adv-table">
                            <div class="table_filter" id="table_filter">
-                               <select class="form-control" size="1" name="table_filter" aria-controls="">
+                               <select id="period-select" class="form-control" size="1" name="table_filter" aria-controls="">
                                    <option value="1" selected="selected">最近一周</option>
                                    <option value="2">最近一月</option>
                                    <option value="3">最近半年</option>
-                                   <option value="4">半年以前</option>
+                                   <option value="4">最近一年</option>
+                                   <option value="5">全部</option>
                                </select>
                            </div>
-                            <table  class="display table table-bordered dataTable" id="example">
-                            <thead>
-                            <tr>
-                                <th><div>姓名</div></th>
-                                <th><div>录入文献</div></th>
-                                <th><div>上传附件</div></th>
-                                <th><div>简要评价</div></th>
-                                <th><div>详细评价</div></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><div><a href="#"> 李琰</a></div></td>
-                                <td><div>10</div></td>
-                                <td><div>5</div></td>
-                                <td><div>4</div></td>
-                                <td><div>8</div></td>
-                            </tr>
-                            <tr>
-                                <td><div><a href="#">梁建均</a></div></td>
-                                <td><div>20</div></td>
-                                <td><div>10</div></td>
-                                <td><div>2</div></td>
-                                <td><div>1</div></td>
-                            </tr>
-                            <tr>
-                                <td><div>笪笪</div></td>
-                                <td><div>100</div></td>
-                                <td><div>30</div></td>
-                                <td><div>153</div></td>
-                                <td><div>12</div></td>
-                            </tr>
-                            <tr>
-                                <td><div>Cancy</div></td>
-                                <td><div>60</div></td>
-                                <td><div>50</div></td>
-                                <td><div>6</div></td>
-                                <td><div>20</div></td>
-                            </tr>
-                            <tr>
-                                <td><div>Trident</div></td>
-                                <td><div>70</div></td>
-                                <td><div>76</div></td>
-                                <td><div>7</div></td>
-                                <td><div>30</div></td>
-                            </tr>
-                            </tbody>
+                            <table  class="display table table-bordered dataTable" id="statistic-table">
+                                <thead></thead>
+                                <tbody>
+                                    #foreach($statistic in $statistics)
+                                    <tr>
+                                        <td><a href="/profile.html&userid=$statistic.userId">$statistic.account</a></td>
+                                        <td>$statistic.literatureCount</td>
+                                        <td>$statistic.attachmentCount</td>
+                                        <td>$statistic.simpleCount</td>
+                                        <td>$statistic.complexCount</td>
+                                    </tr>
+                                    #end
+                                </tbody>
                             </table>
                         </div>
                         <div class="panel-footer revenue-foot"></div>
@@ -223,12 +190,12 @@
                             <ul class="ft-link">
                                 <li class="active">
                                     <a href="javascript:;">
-                                        总上传
+                                        总文献
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:;">
-                                        总下载
+                                        总附件
                                     </a>
                                 </li>
                                 <li>
@@ -247,213 +214,83 @@
                     <!--features carousel end-->
                 </div>
             </div>
-            <div class="row">
-            <div class="widget widget-tabs widget-tabs-double-2">
-                <div class="widget-head">
-                    <ul>
-                        <li class="active"><a class="glyphicons list" href="#tabBook" data-toggle="tab"><span>图&nbsp&nbsp书</span></a></li>
-                        <li><a class="glyphicons user" href="#tabChp" data-toggle="tab"><span>图书章节</span></a></li>
-                        <li><a class="glyphicons credit_card" href="#tabMag" data-toggle="tab"><span>期&nbsp&nbsp刊</span></a></li>
-                        <li><a class="glyphicons cogwheel" href="#tabMeeting" data-toggle="tab"><span>会&nbsp&nbsp议</span></a></li>
-                        <li><a class="glyphicons snowflake" href="#tabThesis" data-toggle="tab"><span>学位论文</span></a></li>
-                        <li><a class="glyphicons snowflake" href="#tabLecture" data-toggle="tab"><span>技术报告</span></a></li>
-                        <li><a class="glyphicons snowflake" href="#tabOnline" data-toggle="tab"><span>在线资源</span></a></li>
-                    </ul>
-                </div>
-                <div class="widget-body">
-                    <div class="tab-content">
-                        <div id="tabBook" class="tab-pane active widget-body-regular">
-                        <!-- Widget -->
-                        <div class="widget">
-
-                        <div class="widget-body">
-
-                        <!-- Table -->
-                        <table class="dynamicTable table table-striped table-bordered table-condensed">
-
-                        <!-- Table heading -->
-                        <thead>
-                        <tr>
-                            <th>SSN</th>
-                            <th>文献名称</th>
-                            <th>上传时间</th>
-                            <th>上传者</th>
-                            <th>评分</th>
-                        </tr>
-                        </thead>
-                        <!-- // Table heading END -->
-
-                        <!-- Table body -->
-                        <tbody>
-
-                        <!-- Table row -->
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td><a href="/literatureDetail.html">云计算与世界</a></td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">李琰</td>
-                            <td class="center">X</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeC">
-                            <td>2</td>
-                            <td>Internet Explorer 5.0</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">5</td>
-                            <td class="center">C</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>3</td>
-                            <td>Internet Explorer 5.5</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">5.5</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>4</td>
-                            <td>Internet Explorer 6</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">6</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>5</td>
-                            <td>Internet Explorer 7</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">7</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>5</td>
-                            <td>AOL browser (AOL desktop)</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">6</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>6</td>
-                            <td>Firefox 1.0</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">1.7</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>7</td>
-                            <td>Firefox 1.5</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">1.8</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>8</td>
-                            <td>Firefox 2.0</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">1.8</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>9</td>
-                            <td>Firefox 3.0</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">1.9</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-
-                        <!-- Table row -->
-                        <tr class="gradeA">
-                            <td>10</td>
-                            <td>Camino 1.0</td>
-                            <td>2013/12/17 16:58</td>
-                            <td class="center">1.8</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <!-- // Table row END -->
-                        </tbody>
-                        <!-- // Table body END -->
-
-                        </table>
-                        <!-- // Table END -->
-
-                        </div>
-                        </div>
-                        <!-- // Widget END -->
-                        </div>
-                        <div id="tabChp" class="tab-pane widget-body-regular">
-                            <h5>Account tab content</h5>
-                            <p>Donec at nunc dui. Integer eget sem sit amet arcu ...</p>
-                        </div>
-                        <div id="tabMag" class="tab-pane widget-body-regular">
-                            <h5>Payments tab content</h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ...</p>
-                        </div>
-                        <div id="tabMeeting" class="tab-pane widget-body-regular">
-                            <h5>Support tab content</h5>
-                            <p>Integer porttitor, enim eu egestas ullamcorper ...</p>
-                        </div>
-                        <div id="tabThesis" class="tab-pane widget-body-regular">
-                            <h5>Features tab content</h5>
-                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                        </div>
-                        <div id="tabLecture" class="tab-pane widget-body-regular">
-                            <h5>hello</h5>
-                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                        </div>
-                        <div id="tabOnline" class="tab-pane widget-body-regular">
-                            <h5>lalalalalalallalalaallalalala</h5>
-                            <p>Nunc aliquet lacus laoreet odio consectetur tempus ...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-         </div>
-   </div>
+    </div>
 
-    <script src="../resources/js/jquery-1.8.3.min.js"></script>
-    <!-- JQueryUI -->
-    <script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../resources/common/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Common Demo Script -->
-    <script src="../resources/common/theme/scripts/demo/common.js?1369753442"></script>
+<script src="../resources/js/jquery-1.8.3.min.js"></script>
+<!-- JQueryUI -->
+<script src="../resources/common/theme/scripts/plugins/system/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- Bootstrap -->
+<script src="../resources/common/bootstrap/js/bootstrap.min.js"></script>
+<!-- Common Demo Script -->
+<script src="../resources/common/theme/scripts/demo/common.js?1369753442"></script>
 
-    <!-- Holder Plugin -->
-    <script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
-    <!-- Bootstrap Extended -->
-    <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
-    <!--JS-->
+<!-- Holder Plugin -->
+<script src="../resources/common/theme/scripts/plugins/other/holder/holder.js"></script>
+<!-- Bootstrap Extended -->
+<script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
+<!--JS-->
+<script src="../resources/js/jquery.sparkline.js" type="text/javascript"></script>
+<script src="../resources/js/sparkline-chart.js" type="text/javascript"></script>
+<script src="../resources/common/theme/scripts/demo/common.js"></script>
+<script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
+<script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
+<!-- advanced-table-->
+<script src="../resources/common/advanced-table/js/jquery.dataTables.js"></script>
 
-    <script src="../resources/js/jquery.sparkline.js" type="text/javascript"></script>
-    <script src="../resources/js/sparkline-chart.js" type="text/javascript"></script>
-    <script src="../resources/common/theme/scripts/demo/common.js"></script>
-    <script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
-    <script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        var oTable=$('#statistic-table').dataTable( {
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bAutoWidth": true,
+            "bFilter": false,
+            "sScrollY": 200,
+            "sScrollX": "100%",
+            "aoColumns": [{ "sTitle": "姓名" },
+                { "sTitle": "录入文献数量" },
+                { "sTitle": "上传附件数量" },
+                { "sTitle": "简单评价数量" },
+                { "sTitle": "详细评价数量"}],
+            "bSort": false,
+            "aaSorting": [[ 0, "desc" ]]
+        } );
+
+        $("#period-select").change(function(){
+            changeData($(this).val());
+        });
+
+        function changeData(tag){
+            $.ajax({
+                type:'post',
+                url:"/doGetStatistics",
+                data:{type:tag},
+                dataType:'json',
+                success:function(data){
+                    if(data.success){
+                        var list=data.list;
+                        for(var i=0;i<list.length;i++){
+                            oTable.fnUpdate('<a href="/profile.html&userid='+list[i].userId+'">'+list[i].account+'</a>',i,0,false);
+                            oTable.fnUpdate(list[i].literatureCount,i,1,false);
+                            oTable.fnUpdate(list[i].attachmentCount,i,2,false);
+                            oTable.fnUpdate(list[i].simpleCount,i,3,false);
+                            oTable.fnUpdate(list[i].complexCount,i,4,false);
+                        }
+                        oTable.fnDraw();
+                    }
+                    else alert("获取失败！");
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+
+            });
+        }
+    });
+
+</script>
 
 </body>

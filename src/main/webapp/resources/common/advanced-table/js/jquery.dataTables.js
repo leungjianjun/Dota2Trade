@@ -3462,7 +3462,7 @@
 			// Figure out if there are scrollbar present - if so then we need a the header and footer to
 			// provide a bit more space to allow "overflow" scrolling (i.e. past the scrollbar)
 			var bScrolling = $(o.nTable).height() > nScrollBody.clientHeight || $(nScrollBody).css('overflow-y') == "scroll";
-			nScrollHeadInner.style.paddingRight = bScrolling ? o.oScroll.iBarWidth+"px" : "0px";
+//			nScrollHeadInner.style.paddingRight = bScrolling ? o.oScroll.iBarWidth+"px" : "0px";
 			
 			if ( o.nTFoot !== null )
 			{
