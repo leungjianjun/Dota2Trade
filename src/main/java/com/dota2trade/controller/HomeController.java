@@ -1,5 +1,8 @@
 package com.dota2trade.controller;
 
+import com.dota2trade.model.LogContent;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +27,20 @@ import java.io.*;
 public class HomeController {
 
     @RequestMapping(value="/index.html", method= RequestMethod.GET)
-    public String home(ModelMap model){
+    public String home(ModelMap model) throws IOException {
+        File logFile = new File("loging.log");
+        BufferedReader buffer=new BufferedReader(new InputStreamReader(new FileInputStream(logFile)));
+        String line;
+        List<LogContent> contents = new ArrayList<LogContent>();
+        while ((line = buffer.readLine()) != null){
+            line = line.split(" - ")[1];
+            if (line.charAt(0) == '<'){
+                String[] con = line.split("&&");
+                contents.add(new LogContent(con[1],con[2],con[3]));
+                System.out.println(con[1]+" "+con[2]+" "+con[3]);
+            }
+        }
+        model.addAttribute("logcontents",contents);
         return "index";
     }
 
@@ -56,7 +74,7 @@ public class HomeController {
                                      @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
         File newFile = new File("attachment",file.getOriginalFilename());
         newFile.createNewFile();
-        OutputStream  outputStream = new FileOutputStream(newFile);
+        OutputStream outputStream = new FileOutputStream(newFile);
         InputStream inputStream = file.getInputStream();
         int read = 0;
         byte[] bytes = new byte[1024];
