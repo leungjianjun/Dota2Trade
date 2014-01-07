@@ -227,9 +227,12 @@ public class LiteratureController {
         Map<Integer,String> score = new HashMap<Integer,String>();
         String score_str = "";
         //文献类型
-        List typeList=new ArrayList();
-        typeList=configDao.getAllLiteratureTypes();
-        model.addAttribute("typeList",typeList);
+        List<LiteratureType> typeList=configDao.getAllLiteratureTypes();
+        Map<Integer,String> typeName = new HashMap<Integer, String>();
+        for(int i=0;i<typeList.size();i++){
+            typeName.put(typeList.get(i).getId(),typeList.get(i).getName());
+        }
+        model.addAttribute("typeList",typeName);
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         List<LiteratureMeta> literatureMetaList=literatureDao.getAllLiteratureMetaByUserid(userid);
         List<Literature> literatureList = new ArrayList<Literature>();
@@ -975,6 +978,22 @@ public class LiteratureController {
             Model model
     ) throws IOException{
         boolean rs = commentDao.deleteSimpleComment(id);
+        response.getWriter().print(rs);
+    }
+    /**删除复杂评论*/
+    @RequestMapping(value = "/doDeleComplexComment",method = RequestMethod.POST)
+    public void deleteComplexComment(
+            @RequestParam("id") String id,
+            HttpServletResponse response,
+            Model model
+    )throws IOException{
+        String[] temp = id.split("/");
+        List<Integer> ids = new ArrayList<Integer>();
+        for(int i=0;i<temp.length;i++){
+            int id_temp = Integer.parseInt(temp[i]);
+            ids.add(id_temp);
+        }
+        boolean rs = commentDao.deleteComplexComment(ids);
         response.getWriter().print(rs);
     }
 
