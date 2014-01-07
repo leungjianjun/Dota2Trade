@@ -6,6 +6,7 @@ import com.dota2trade.model.Attribute;
 import com.dota2trade.model.LiteratureType;
 import com.dota2trade.model.LiteraturetypeAttribute;
 import com.dota2trade.model.User;
+import com.dota2trade.util.LogHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.Model;
@@ -64,6 +65,7 @@ public class AdminController {
             @RequestParam("typename") String typename,
             HttpServletResponse response,
             Model model)throws IOException{
+        LogHelper.addLog("管理员", "修改文献配置");
         boolean success=true;
         for(int i=0;i<args1.length;i++){
              success=configDao.changeAttributeIsmust(typename,args1[i],0);
@@ -87,6 +89,7 @@ public class AdminController {
             @RequestParam("typename") String typename,
             HttpServletResponse response,
             Model model)throws UnsupportedEncodingException,IOException{
+        LogHelper.addLog("管理员", "添加文献配置");
         boolean success=true;
         if(type.equals("types")){
             for(int i=0;i<args.length;i++){
@@ -144,6 +147,7 @@ public class AdminController {
             @RequestParam("typename") String typename,
             HttpServletResponse response,
             Model model)throws IOException{
+        LogHelper.addLog("管理员", "删除文献配置");
         boolean success=true;
         if(type.equals("types")){
             success=configDao.deleteLiteratureType(typename);
@@ -187,6 +191,7 @@ public class AdminController {
             @RequestParam("password") String password,
             HttpServletResponse response,
             Model model)throws UnsupportedEncodingException,IOException {
+        LogHelper.addLog("管理员", "修改用户信息"+account);
         boolean success=true;
         User user=new User();
         user.setId(id);
@@ -203,6 +208,7 @@ public class AdminController {
 
     @RequestMapping(value="/doDeleUser",method=RequestMethod.POST)
     public void doDeleUser(@RequestParam("account") String account,HttpServletResponse response,Model model)throws IOException{
+        LogHelper.addLog("管理员", "删除用户"+account);
         boolean success=false;
         success=userDao.deleteUser(account);
         JSONObject jsonobj = new JSONObject();
