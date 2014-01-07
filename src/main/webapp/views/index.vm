@@ -53,74 +53,25 @@
                             </div>
 
                             <div class="timeline">
-                                <article class="timeline-item">
+                                #foreach($logcontent in $logcontents)
+                                    #if ($foreach.index % 2 ==0)
+                                    <article class="timeline-item alt">
+                                    #else
+                                    <article class="timeline-item">
+                                    #end
                                     <div class="timeline-desk">
                                         <div class="panel">
                                             <div class="panel-body">
                                                 <span class="arrow"></span>
                                                 <span class="timeline-icon red"></span>
-                                                <span class="timeline-date">08:25 am</span>
-                                                <h1 class="red">8月12日 | 星期天</h1>
-                                                <p><a href="#">李琰</a> 上传了论文 <span><a href="#" class="red">《大教堂与集市》</a></span></p>
+                                                <span class="timeline-date"></span>
+                                                <h1 class="red">$logcontent.time</h1>
+                                                <p>$logcontent.name $logcontent.action</p>
                                             </div>
                                         </div>
                                     </div>
                                 </article>
-                                <article class="timeline-item alt">
-                                    <div class="timeline-desk">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <span class="arrow-alt"></span>
-                                                <span class="timeline-icon green"></span>
-                                                <span class="timeline-date">10:00 am</span>
-                                                <h1 class="green">7月10日 | 星期三</h1>
-                                                <p><a href="#">Jonathan Smith</a> 添加了 <span><a href="#" class="green">ERP</a></span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="timeline-item">
-                                    <div class="timeline-desk">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <span class="arrow"></span>
-                                                <span class="timeline-icon blue"></span>
-                                                <span class="timeline-date">11:35 am</span>
-                                                <h1 class="blue">7月15日 | 星期一</h1>
-                                                <p><a href="#">梁建均</a>  添加了新的网上资源 <span><a href="#" class="blue">PARTY TIME</a></span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="timeline-item alt">
-                                    <div class="timeline-desk">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <span class="arrow-alt"></span>
-                                                <span class="timeline-icon purple"></span>
-                                                <span class="timeline-date">3:20 pm</span>
-                                                <h1 class="purple">6月29日  | 星期六</h1>
-                                                <p>很多很多评论呢</p>
-                                                <div class="notification">
-                                                    <i class=" icon-exclamation-sign"></i> 有人给 <a href="#">笪笪</a> 上传的书添加了新的评论
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="timeline-item">
-                                    <div class="timeline-desk">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <span class="arrow"></span>
-                                                <span class="timeline-icon light-green"></span>
-                                                <span class="timeline-date">07:49 pm</span>
-                                                <h1 class="light-green">6月10日  | 星期五</h1>
-                                                <p><a href="#">管理员</a> 添加了新的组员 <span><a href="#" class="light-green">Cancy</a></span> 大家欢迎她！</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
+                                #end
                             </div>
                             <div class="more"><h4 style="text-align: center;color:#C8CCD7;margin-bottom: 5px;">加载更多>>></h4></div>
                             <!--

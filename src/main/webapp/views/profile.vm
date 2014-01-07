@@ -41,52 +41,31 @@
            <div class="doc-relate">
                <div class="upload-doc">
                    <div class="title">已录入文献</div>
-                   <div class="widget widget-tabs widget-tabs-double-2">
-                       <div class="widget-head">
-                           <ul>
-                               #set($i=0)
-                               #foreach($type in $typeList)
-                                   #set($i=$i+1)
-                                   <li #if($i==1)class="active"#end><a class="glyphicons" href="#tab$type.id" data-toggle="tab"><span>$type.name</span></a></li>
-                               #end
-                           </ul>
-                       </div>
-                       <div class="widget-body">
-                           <div class="tab-content">
-                               #set($j=0)
-                               #foreach($type in $typeList)
-                                   #set($j=$j+1)
-                                   <div id="tab$type.id" class="tab-pane #if($j==1)active#end widget-body-regular">
-                                       <div class="adv-table">
-                                           <table class="display table table-bordered table-striped" id="self_upload$type.id">
-                                               <thead>
-                                               <tr>
-                                                   <th>ID</th>
-                                                   <th>文献名称</th>
-                                                   <th>出版时间</th>
-                                                   <th>评分</th>
-                                               </tr>
-                                               </thead>
-                                               <tbody>
-                                                   #foreach($literature in $literatureList)
-                                                       #if($literature.literaturetypeid==$type.id)
-                                                       <tr class="gradeX">
-                                                           <td>$literature.literatureMeta.literatureid</td>
-                                                           <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid&sign=0">$literature.literatureMeta.title</a></td>
-                                                           <td>$literature.literatureMeta.published_year</td>
-                                                           <td class="center">$score.get($literature.literatureMeta.literatureid)</td>
-                                                       </tr>
-                                                       #end
-                                                   #end
-                                               </tbody>
-                                           </table>
-                                       </div>
-                                   </div>
-                               #end
+                       <div class="tab-pane widget-body-regular">
+                           <div class="adv-table">
+                               <table class="display table table-bordered table-striped" id="uploaded">
+                                   <thead>
+                                   <tr>
+                                       <th>文献名称</th>
+                                       <th>出版时间</th>
+                                       <th>文献类别</th>
+                                       <th>评分</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                       #foreach($literature in $literatureList)
+                                           <tr class="gradeX">
+                                               <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid&sign=0">$literature.literatureMeta.title</a></td>
+                                               <td>$literature.literatureMeta.published_year</td>
+                                               <td>$typeList.get($literature.literaturetypeid)</td>
+                                               <td class="center">$score.get($literature.literatureMeta.literatureid)</td>
+                                           </tr>
+                                       #end
+                                   </tbody>
+                               </table>
                            </div>
                        </div>
                    </div>
-               </div>
                <div class="comments">
                    <div class="title">评论箱</div>
                    <div class="widget widget-tabs widget-tabs-double-2">
@@ -102,9 +81,10 @@
                            <div class="tab-content">
                                <div id="tabDraft" class="tab-pane widget-body-regular simpleComment">
                                    <div class="adv-table">
-                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-other">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="s_draft">
                                            <thead>
                                            <tr>
+                                               <th style="display: none;"></th>
                                                <th>评论文献</th>
                                                <th>评论草稿</th>
                                                <th>操作</th>
@@ -113,6 +93,7 @@
                                            <tbody>
                                            #foreach($draft in $simpleDraft)
                                            <tr>
+                                               <td style="display: none">$draft.id</td>
                                                <td><a href="literatureDetail.html?id=$draft.literatureId&sign=0">$draft.literatureTitle</a></td>
                                                <td>$draft.shortContent</td>
                                                <td class="op"><div><a class="btn  btn-primary" href="literatureDetail.html?id=$draft.literatureId&sign=0#editComment">编辑</a><a class="btn  btn-primary delete">删除</a></div></td>
@@ -124,9 +105,10 @@
                                </div>
                                <div id="tabComplexDraft" class="tab-pane widget-body-regular">
                                    <div class="adv-table">
-                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-other">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="c_draft">
                                            <thead>
                                            <tr>
+                                               <th style="display: none;"></th>
                                                <th>评论文献</th>
                                                <th>评论草稿</th>
                                                <th>操作</th>
@@ -135,6 +117,7 @@
                                            <tbody>
                                            #foreach($c_draft in $complexDraft)
                                            <tr>
+                                               <td style="display: none;">#foreach($attribute in $c_draft.commentAttributes)$attribute.id/#end</td>
                                                <td><a href="literatureDetail.html?id=$c_draft.literatureId&sign=0">$c_draft.literatureTitle</a></td>
                                                <td>
                                                    <ul>
@@ -143,7 +126,7 @@
                                                    #end
                                                    </ul>
                                                </td>
-                                               <td class="op"><div><a class="btn  btn-primary" href="literatureDetail.html?id=$c_draft.literatureId&sign=1#editComment">编辑</a><a class="btn  btn-primary">删除</a></div></td>
+                                               <td class="op"><div><a class="btn  btn-primary" href="literatureDetail.html?id=$c_draft.literatureId&sign=1#editComment">编辑</a><a class="btn  btn-primary delete">删除</a></div></td>
                                            </tr>
                                            #end
                                            </tbody>
@@ -152,7 +135,7 @@
                                </div>
                                <div id="tabComment" class="tab-pane active widget-body-regular simpleComment">
                                    <div class="adv-table">
-                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered">
+                                       <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="s_comment">
                                            <thead>
                                            <tr>
                                                <th style="display: none"></th>
@@ -181,6 +164,7 @@
                                        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
                                            <thead>
                                            <tr>
+                                               <th style="display: none;"></th>
                                                <th>评论文献</th>
                                                <th>评论时间</th>
                                                <th style="display: none;">内容</th>
@@ -190,10 +174,11 @@
                                            <tbody>
                                            #foreach($c_comment in $complexComment)
                                            <tr>
+                                               <td style="display: none">#foreach($c_attribute in $c_comment.commentAttributes)$c_attribute.id/#end</td>
                                                <td><a href="/literatureDetail.html?id=$c_comment.literatureId&sign=0">$c_comment.literatureTitle</a></td>
                                                <td>$c_comment.commentTime</td>
                                                <td style="display: none;">#foreach($c_attribute in $c_comment.commentAttributes)$c_attribute.attributeName:$c_attribute.value<br />#end</td>
-                                               <td class="op"><a class="btn  btn-primary">删除</a></div></td>
+                                               <td class="op"><a class="btn  btn-primary delete">删除</a></div></td>
                                            </tr>
                                            #end
                                            </tbody>
@@ -271,13 +256,34 @@
                </div>
 
            </div>
-
        </div>
    </div>
-
 <!--JS-->
 <script src="../resources/js/jquery-1.8.3.min.js"></script>
 <script>
+    function show(id,obj)
+    {
+        if($(obj).hasClass('active')){
+            $(obj).removeClass('active');
+            $('#'+id).css('display','none');
+        }else{
+            $(obj).addClass('active');
+            $('#'+id).css('display','block');
+        }
+    }
+
+    /* Formating function for row details */
+    function fnFormatDetails ( oTable, nTr )
+    {
+        var aData = oTable.fnGetData( nTr );
+        var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+        sOut += '<tr><td>评论对象:</td><td>'+aData[1]+' '+aData[2]+'</td></tr>';
+        sOut += '<tr><td>评价内容:</td><td>'+aData[3]+'</td></tr>';
+        sOut += '</table>';
+
+        return sOut;
+    }
+
     $(document).ready(function(){
         var oldPass = $("#oldPassword");
         var pass = $("#password");
@@ -327,32 +333,165 @@
              } */
             return flag;
         });
-        $('.simpleComment a.delete').live('click', function (e) {
+        /**已上传文件*/
+        var uploadTable = $("#uploaded").dataTable({
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }
+            ],
+            "aaSorting": [[1, 'asc']]
+        });
+        /**简单评论删除*/
+        var oTable1 = $('#s_comment').dataTable( {
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }
+            ],
+            "aaSorting": [[1, 'asc']]
+        });
+        $('#tabComment a.delete').live('click', function (e) {
             e.preventDefault();
-
             if (confirm("你确定要删除该记录 ?") == false) {
                 return;
             }
-
             var nRow = $(this).parents('tr')[0];
-            var aData = oTable.fnGetData(nRow);
+            var aData = oTable1.fnGetData(nRow);
             $.ajax({
                 type:'post',
                 url:"/doDeleSimpleComment",
-                data:{id:aData[1]},
+                data:{id:aData[0]},
                 success:function(data){
                     if(data){
-                        oTable.fnDeleteRow(nRow);
+                        oTable1.fnDeleteRow(nRow);
                         alert("已删除! :)");
                     }
                     else{
                         alert("删除失败！");
                     }
-                },
-                error:function(XMLHttpRequest, textStatus, errorThrown){
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
+                }
+            });
+        });
+        /**简单评论草稿删除*/
+        var oTable3 = $('#s_draft').dataTable( {
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }
+            ],
+            "aaSorting": [[1, 'asc']]
+        });
+        $('#tabDraft a.delete').live('click', function (e) {
+            e.preventDefault();
+            if (confirm("你确定要删除该记录 ?") == false) {
+                return;
+            }
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable3.fnGetData(nRow);
+            $.ajax({
+                type:'post',
+                url:"/doDeleSimpleComment",
+                data:{id:aData[0]},
+                success:function(data){
+                    if(data){
+                        oTable3.fnDeleteRow(nRow);
+                        alert("已删除! :)");
+                    }
+                    else{
+                        alert("删除失败！");
+                    }
+                }
+            });
+        });
+        /**复杂评论部分JS*/
+        /*
+         * Insert a 'details' column to the table
+         */
+        var nCloneTh = document.createElement( 'th' );
+        var nCloneTd = document.createElement( 'td' );
+        nCloneTd.innerHTML = '<img src="../resources/common/advanced-table/support/details_open.png">';
+        nCloneTd.className = "center";
+
+        $('#hidden-table-info thead tr').each( function () {
+            this.insertBefore( nCloneTh, this.childNodes[0] );
+        } );
+
+        $('#hidden-table-info tbody tr').each( function () {
+            this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+        } );
+
+        /*
+         * Initialse DataTables, with no sorting on the 'details' column
+         */
+        var oTable2 = $('#hidden-table-info').dataTable( {
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }
+            ],
+            "aaSorting": [[1, 'asc']]
+        });
+
+        /* Add event listener for opening and closing details
+         * Note that the indicator for showing which row is open is not controlled by DataTables,
+         * rather it is done here
+         */
+        $('#hidden-table-info tbody td img').live('click', function () {
+            var nTr = $(this).parents('tr')[0];
+            if ( oTable2.fnIsOpen(nTr) )
+            {
+                /* This row is already open - close it */
+                this.src = "../resources/common/advanced-table/support/details_open.png";
+                oTable2.fnClose( nTr );
+            }
+            else
+            {
+                /* Open this row */
+                this.src = "../resources/common/advanced-table/support/details_close.png";
+                oTable2.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+            }
+        } );
+        $('#hidden-table-info a.delete').live('click',function(e){
+            e.preventDefault();
+            if (confirm("你确定要删除该记录 ?") == false) {
+                return;
+            }
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable2.fnGetData(nRow);
+            $.ajax({
+                type:'post',
+                url:"/doDeleComplexComment",
+                data:{id:aData[1]},
+                success:function(data){
+                    if(data){
+                        oTable2.fnDeleteRow(nRow);
+                        alert("已删除! :)");
+                    }
+                    else{
+                        alert("删除失败！");
+                    }
+                }
+            });
+        });
+        //复杂评论草稿删除
+        var oTable4 = $('#c_draft').dataTable( {
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }
+            ],
+            "aaSorting": [[1, 'asc']]
+        });
+        $('#c_draft a.delete').live('click',function(e){
+            e.preventDefault();
+            if (confirm("你确定要删除该记录 ?") == false) {
+                return;
+            }
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable4.fnGetData(nRow);
+            $.ajax({
+                type:'post',
+                url:"/doDeleComplexComment",
+                data:{id:aData[0]},
+                success:function(data){
+                    if(data){
+                        oTable4.fnDeleteRow(nRow);
+                        alert("已删除! :)");
+                    }
+                    else{
+                        alert("删除失败！");
+                    }
                 }
             });
         });
@@ -377,82 +516,4 @@
 
 <!-- advanced-table-->
 <script src="../resources/common/advanced-table/js/jquery.dataTables.js"></script>
-
-<script type="text/javascript">
-
-    function show(id,obj)
-    {
-        if($(obj).hasClass('active')){
-            $(obj).removeClass('active');
-            $('#'+id).css('display','none');
-        }else{
-            $(obj).addClass('active');
-            $('#'+id).css('display','block');
-        }
-    }
-
-    /* Formating function for row details */
-    function fnFormatDetails ( oTable, nTr )
-    {
-        var aData = oTable.fnGetData( nTr );
-        var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-        sOut += '<tr><td>评论对象:</td><td>'+aData[1]+' '+aData[2]+'</td></tr>';
-        sOut += '<tr><td>评价内容:</td><td>'+aData[3]+'</td></tr>';
-        sOut += '</table>';
-
-        return sOut;
-    }
-
-    $(document).ready(function() {
-        /*
-         * Insert a 'details' column to the table
-         */
-        var nCloneTh = document.createElement( 'th' );
-        var nCloneTd = document.createElement( 'td' );
-        nCloneTd.innerHTML = '<img src="../resources/common/advanced-table/support/details_open.png">';
-        nCloneTd.className = "center";
-
-        $('#hidden-table-info thead tr').each( function () {
-            this.insertBefore( nCloneTh, this.childNodes[0] );
-        } );
-
-        $('#hidden-table-info tbody tr').each( function () {
-            this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
-        } );
-
-        /*
-         * Initialse DataTables, with no sorting on the 'details' column
-         */
-        var oTable = $('#hidden-table-info').dataTable( {
-            "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [ 0 ] }
-            ],
-            "aaSorting": [[1, 'asc']]
-        });
-
-        /* Add event listener for opening and closing details
-         * Note that the indicator for showing which row is open is not controlled by DataTables,
-         * rather it is done here
-         */
-        $('#hidden-table-info tbody td img').live('click', function () {
-            var nTr = $(this).parents('tr')[0];
-            if ( oTable.fnIsOpen(nTr) )
-            {
-                /* This row is already open - close it */
-                this.src = "../resources/common/advanced-table/support/details_open.png";
-                oTable.fnClose( nTr );
-            }
-            else
-            {
-                /* Open this row */
-                this.src = "../resources/common/advanced-table/support/details_close.png";
-                oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
-            }
-        } );
-
-
-
-
-    } );
-</script>
 </body>
