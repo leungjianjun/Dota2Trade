@@ -47,7 +47,7 @@
                 <ul>
                     #foreach($literatureMeta in $literatureMetaList)
                         <li>
-                            <a class="desc" href="literatureDetail.html?id=$literatureMeta.literatureid">$literatureMeta.title -$literatureMeta.author $literatureMeta.published_year</a>
+                            <a class="desc" href="literatureDetail.html?id=$literatureMeta.literatureid&sign=0">$literatureMeta.title -$literatureMeta.author $literatureMeta.published_year</a>
                             <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cite',this,$literatureMeta.literatureid)"></a>
                         </li>
                     #end
@@ -63,7 +63,7 @@
                         #foreach($key in $title.keySet())
                             #set($i=$i+1)
                         <li>
-                            <a href="literatureDetail.html?id=$key">$title.get($key)</a>
+                            <a href="literatureDetail.html?id=$key&sign=0">$title.get($key)</a>
                             <div class="type_checkbox">
                                 <input name="cite$i" type="hidden" value="$key">
                                 <label>引用关系类型：</label>

@@ -4,7 +4,7 @@ body{
     background: none repeat scroll 0% 0% rgb(253, 253, 253);
     color: #333;
 }
-.container0{margin: 30px auto;width: 94%;overflow: hidden;}
+.container0{margin: 30px auto;width: 94%;}
 ul,li,dd,dl{padding:0;margin:0;list-style:none;text-align:left;}
 .clear:after{content:'\20';display:block;height:0;clear:both;}
 .clear{*zoom:1;font-size:0;clear:both;height:0;}

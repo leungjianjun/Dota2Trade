@@ -265,10 +265,8 @@ public class LiteratureController {
         // 简单评论草稿
         model.addAttribute("simpleDraft",commentDao.getAllSimpleCommentByUserId(userid,0));
         //正式复杂评论
-        System.out.println(commentDao.getAllComplexCommentByUserId(userid,1).get(0).getCommentTime());
         model.addAttribute("complexComment",commentDao.getAllComplexCommentByUserId(userid,1));
         //复杂评论草稿
-        System.out.println(commentDao.getAllComplexCommentByUserId(userid,0));
         model.addAttribute("complexDraft",commentDao.getAllComplexCommentByUserId(userid,0));
         return "profile";
     }
@@ -517,6 +515,7 @@ public class LiteratureController {
     public String literatureDetail(
             @RequestParam("id")int literatureid,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
+            HttpServletRequest request,
             ModelMap model){
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         Map<Integer,String> cite_name = new HashMap<Integer,String>();
@@ -574,6 +573,11 @@ public class LiteratureController {
         }
         else{
             complexComment0.setStatus(-1);
+        }
+        if(Integer.parseInt(request.getParameter("sign"))==1){
+            model.addAttribute("sign",true);
+        }else{
+            model.addAttribute("sign",false);
         }
         model.addAttribute("simpleComments",simpleComments);
         model.addAttribute("complexComments",complexComments);
@@ -957,6 +961,16 @@ public class LiteratureController {
         return "literatureDetail";
     }
 
+    /**删除简单评论*/
+    @RequestMapping(value="/doDeleSimpleComment",method = RequestMethod.POST)
+    public void deleteSimpleComment(
+            @RequestParam("id") int id,
+            HttpServletResponse response,
+            Model model
+    ) throws IOException{
+        boolean rs = commentDao.deleteSimpleComment(id);
+        response.getWriter().print(rs);
+    }
 
     public LiteratureDao getLiteratureDao() {
         return literatureDao;

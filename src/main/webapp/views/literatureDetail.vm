@@ -53,19 +53,20 @@
                         </span>
                     </li>
                 </ul>
+                <a name="editComment"></a>
                 <div class="comment">
                     <div class="t">我来评论</div>
                     <div class="widget widget-tabs widget-tabs-double-2">
                         <div class="widget-head">
                             <ul>
-                                <li class="active"><a class="glyphicons user" href="#tabSimple" data-toggle="tab"><span>简单评论</span></a></li>
-                                <li ><a class="glyphicons list" href="#tabDetail" data-toggle="tab"><span>详细评论</span></a></li>
+                                <li #if(!$sign)class="active"#end><a class="glyphicons user" href="#tabSimple" data-toggle="tab"><span>简单评论</span></a></li>
+                                <li #if($sign)class="active"#end><a class="glyphicons list" href="#tabDetail" data-toggle="tab"><span>详细评论</span></a></li>
                                 <li><a class="glyphicons" href="#tabTag" data-toggle="tab"><span>添加标签</span></a></li>
                             </ul>
                         </div>
                         <div class="widget-body">
                             <div class="tab-content">
-                                <div id="tabSimple" class="active tab-pane widget-body-regular">
+                                <div id="tabSimple" class="#if(!$sign)active#end tab-pane widget-body-regular">
                                     <form name="simple" action="/doSimpleComment" method="POST">
                                         <input type="hidden" name="literatureid" value="$literature.id" />
                                         <div class="rating clearfix">
@@ -91,7 +92,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div id="tabDetail" class="tab-pane widget-body-regular">
+                                <div id="tabDetail" class="#if($sign)active#end tab-pane widget-body-regular">
                                     <form name="complexComment" action="/doAddComplexComment" method="POST">
                                         <input name="literatureid" type="hidden" value="$literature.id" />
                                         #foreach($commentAttribute in $commentAttributeList)
@@ -213,6 +214,8 @@
                     </ul>
             </div>
     </div>
+</div>
+</div>
 </div>
     <script>
         var sign = 0;

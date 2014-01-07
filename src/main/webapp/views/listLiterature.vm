@@ -66,7 +66,7 @@
                                     #if($literature.literaturetypeid==$type.id)
                                     <tr class="gradeX">
                                         <td>$literature.literatureMeta.literatureid</td>
-                                        <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid">$literature.literatureMeta.title</a></td>
+                                        <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid&sign=0">$literature.literatureMeta.title</a></td>
                                         <td>$literature.literatureMeta.published_year</td>
                                         <td class="center">6</td>
                                         <td><div class="op">

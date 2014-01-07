@@ -1,9 +1,7 @@
 .menu {
     width: 19%;
     float: left;
-    min-height: 670px;
-    padding-bottom:9999px;
-    margin-bottom: -9999px;
+    min-height: 760px;
     background: none repeat scroll 0% 0% rgb(242, 243, 244);
     box-shadow: 0px 0px 3px 2px rgb(240, 240, 240);
     border-right: 1px solid rgb(216, 216, 216);

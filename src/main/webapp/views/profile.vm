@@ -72,7 +72,7 @@
                                                        #if($literature.literaturetypeid==$type.id)
                                                        <tr class="gradeX">
                                                            <td>$literature.literatureMeta.literatureid</td>
-                                                           <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid">$literature.literatureMeta.title</a></td>
+                                                           <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid&sign=0">$literature.literatureMeta.title</a></td>
                                                            <td>$literature.literatureMeta.published_year</td>
                                                            <td class="center">$score.get($literature.literatureMeta.literatureid)</td>
                                                        </tr>
@@ -100,7 +100,7 @@
                        </div>
                        <div class="widget-body">
                            <div class="tab-content">
-                               <div id="tabDraft" class="tab-pane widget-body-regular">
+                               <div id="tabDraft" class="tab-pane widget-body-regular simpleComment">
                                    <div class="adv-table">
                                        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-other">
                                            <thead>
@@ -113,9 +113,9 @@
                                            <tbody>
                                            #foreach($draft in $simpleDraft)
                                            <tr>
-                                               <td><a href="literatureDetail?id=$draft.literatureId">$draft.literatureTitle</a></td>
+                                               <td><a href="literatureDetail.html?id=$draft.literatureId&sign=0">$draft.literatureTitle</a></td>
                                                <td>$draft.shortContent</td>
-                                               <td class="op"><div><button class="btn  btn-primary" type="">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
+                                               <td class="op"><div><a class="btn  btn-primary" href="literatureDetail.html?id=$draft.literatureId&sign=0#editComment">编辑</a><a class="btn  btn-primary delete">删除</a></div></td>
                                            </tr>
                                            #end
                                            </tbody>
@@ -135,7 +135,7 @@
                                            <tbody>
                                            #foreach($c_draft in $complexDraft)
                                            <tr>
-                                               <td><a href="literatureDetail?id=$c_draft.literatureId">$c_draft.literatureTitle</a></td>
+                                               <td><a href="literatureDetail.html?id=$c_draft.literatureId&sign=0">$c_draft.literatureTitle</a></td>
                                                <td>
                                                    <ul>
                                                    #foreach($attribute in $c_draft.commentAttributes)
@@ -143,18 +143,19 @@
                                                    #end
                                                    </ul>
                                                </td>
-                                               <td class="op"><div><button class="btn  btn-primary" type="">编辑</button><button class="btn  btn-primary">发表</button><button class="btn  btn-primary">删除</button></div></td>
+                                               <td class="op"><div><a class="btn  btn-primary" href="literatureDetail.html?id=$c_draft.literatureId&sign=1#editComment">编辑</a><a class="btn  btn-primary">删除</a></div></td>
                                            </tr>
                                            #end
                                            </tbody>
                                        </table>
                                    </div>
                                </div>
-                               <div id="tabComment" class="tab-pane active widget-body-regular">
+                               <div id="tabComment" class="tab-pane active widget-body-regular simpleComment">
                                    <div class="adv-table">
                                        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered">
                                            <thead>
                                            <tr>
+                                               <th style="display: none"></th>
                                                <th>评论文献</th>
                                                <th>评论内容</th>
                                                <th>评论时间</th>
@@ -164,10 +165,11 @@
                                            <tbody>
                                            #foreach($comment in $simpleComment)
                                            <tr>
-                                               <td><a href="/literatureDetail.html?id=$comment.literatureId">$comment.literatureTitle</a></td>
+                                               <td style="display: none">$comment.id</td>
+                                               <td><a href="/literatureDetail.html?id=$comment.literatureId&sign=0">$comment.literatureTitle</a></td>
                                                <td>$comment.shortContent</td>
                                                <td>$comment.commentTime</td>
-                                               <td class="op"><div><button class="btn  btn-primary">删除</button></div></td>
+                                               <td class="op"><a class="btn  btn-primary delete">删除</a></td>
                                            </tr>
                                            #end
                                            </tbody>
@@ -188,10 +190,10 @@
                                            <tbody>
                                            #foreach($c_comment in $complexComment)
                                            <tr>
-                                               <td><a href="/literatureDetail.html?id=$c_comment.literatureId">$c_comment.literatureTitle</a></td>
+                                               <td><a href="/literatureDetail.html?id=$c_comment.literatureId&sign=0">$c_comment.literatureTitle</a></td>
                                                <td>$c_comment.commentTime</td>
                                                <td style="display: none;">#foreach($c_attribute in $c_comment.commentAttributes)$c_attribute.attributeName:$c_attribute.value<br />#end</td>
-                                               <td class="op"><div><button class="btn  btn-primary">删除</button></div></td>
+                                               <td class="op"><a class="btn  btn-primary">删除</a></div></td>
                                            </tr>
                                            #end
                                            </tbody>
@@ -325,7 +327,35 @@
              } */
             return flag;
         });
+        $('.simpleComment a.delete').live('click', function (e) {
+            e.preventDefault();
 
+            if (confirm("你确定要删除该记录 ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            $.ajax({
+                type:'post',
+                url:"/doDeleSimpleComment",
+                data:{id:aData[1]},
+                success:function(data){
+                    if(data){
+                        oTable.fnDeleteRow(nRow);
+                        alert("已删除! :)");
+                    }
+                    else{
+                        alert("删除失败！");
+                    }
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+            });
+        });
     });
 </script>
 
