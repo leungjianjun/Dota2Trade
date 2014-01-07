@@ -101,9 +101,16 @@ var EditableTable = function () {
                     type:'post',
                     url:"/doDeleUser",
                     data:{account:aData[1]},
+                    dataType:'json',
                     success:function(data){
-                        oTable.fnDeleteRow(nRow);
-                        alert("已删除! :)");
+                        if(data.success){
+                            oTable.fnDeleteRow(nRow);
+                            alert("已删除! :)");
+                        }
+                       else{
+                            alert("删除出错啦！");
+                        }
+
                     },
                     error:function(XMLHttpRequest, textStatus, errorThrown){
                         alert(XMLHttpRequest.status);
@@ -148,8 +155,9 @@ var EditableTable = function () {
                         type:'post',
                         url:"/doUpdateUser",
                         data:{id:aData[0],account:aData[1],password:aData[2]},
+                        dataType:'json',
                         success:function(data){
-                            if(true){
+                            if(data.success){
                                 saveRow(oTable, nEditing);
                                 alert("更新成功! :)");
                                 nEditing = null;
