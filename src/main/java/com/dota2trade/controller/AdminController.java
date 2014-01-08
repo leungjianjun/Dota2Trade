@@ -191,16 +191,19 @@ public class AdminController {
             @RequestParam("password") String password,
             HttpServletResponse response,
             Model model)throws UnsupportedEncodingException,IOException {
-        LogHelper.addLog("管理员", "修改用户信息"+account);
         boolean success=true;
         User user=new User();
         user.setId(id);
         user.setAccount(new String (account.getBytes ("iso-8859-1"), "UTF-8"));
         user.setPassword(new String (password.getBytes ("iso-8859-1"), "UTF-8"));
-        if(id==-1)
+        if(id==-1){
+            LogHelper.addLog("管理员", "添加用户 "+account);
             success=userDao.addUser(user);
-        else
+        }
+        else{
+            LogHelper.addLog("管理员", "修改 "+account+" 信息");
             success=userDao.updateUser(user);
+        }
         JSONObject jsonobj = new JSONObject();
         jsonobj.put("success", success);
         response.getWriter().print(jsonobj);
@@ -208,7 +211,7 @@ public class AdminController {
 
     @RequestMapping(value="/doDeleUser",method=RequestMethod.POST)
     public void doDeleUser(@RequestParam("account") String account,HttpServletResponse response,Model model)throws IOException{
-        LogHelper.addLog("管理员", "删除用户"+account);
+        LogHelper.addLog("管理员", "删除用户 "+account);
         boolean success=false;
         success=userDao.deleteUser(account);
         JSONObject jsonobj = new JSONObject();

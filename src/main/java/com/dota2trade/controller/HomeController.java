@@ -45,8 +45,8 @@ public class HomeController {
             line = line.split(" - ")[1];
             if (line.charAt(0) == '<'){
                 String[] con = line.split("&&");
-                contents.add(new LogContent(con[1],con[2],con[3]));
-                System.out.println(con[1]+" "+con[2]+" "+con[3]);
+                contents.add(new LogContent(con[1],con[2],con[3],con[4]));
+                System.out.println(con[1]+" "+con[2]+" "+con[3]+" "+con[4]);
             }
         }
         model.addAttribute("logcontents",contents);
