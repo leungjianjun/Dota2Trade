@@ -204,8 +204,8 @@
                        </div>
 
                        <ul class="nav nav-pills nav-stacked">
-                           <li><a href="#" onclick="show('edit-info',this)"> <i class="icon-user"></i> 编辑个人信息</a></li>
-                           <li><a href="#" onclick="show('edit-login',this)"> <i class="icon-edit"></i> 编辑登录信息</a></li>
+                           <li><a href="#" onclick="show('edit-info')"> <i class="icon-user"></i> 编辑个人信息</a></li>
+                           <li><a href="#" onclick="show('edit-login')"> <i class="icon-edit"></i> 编辑登录信息</a></li>
                        </ul>
 
                    </section>
@@ -227,13 +227,13 @@
                    </div>
                    <div class="submit">
                          <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 35px;">修改</button>
-                         <button class="btn btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+                         <a class="btn btn-primary" style="display: inline-block;margin-left: 50px;" onclick="show('edit-info')">取消</a>
                    </div>
                  </form>
                </div>
                <div class="edit-info" id="edit-login" style="display:none;">
                    <div class="edit-head">登录密码修改</div>
-                   <form class="info-form" action="/doEditPw" method="post">
+                   <form class="info-form" onsubmit="return checkPassword()" action="/doEditPw" method="post">
                        <div>
                            <label>旧密码：</label>
                            <input type="password" id="oldPassword" name="oldpassword" />
@@ -248,8 +248,8 @@
                            <span id="content" style="display:none;font-size: 12px; color:red;">两次输入的密码不一样</span>
                        </div>
                        <div class="submit">
-                           <button id="edit-login" class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 35px;">修改</button>
-                           <button class="btn btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
+                           <button class="btn btn-primary" type="submit" style="display: inline-block;margin-left: 35px;">修改</button>
+                           <a class="btn btn-primary" type="reset" style="display: inline-block;margin-left: 50px;" onclick="show('edit-login')">取消</a>
                        </div>
                    </form>
 
@@ -261,13 +261,11 @@
 <!--JS-->
 <script src="../resources/js/jquery-1.8.3.min.js"></script>
 <script>
-    function show(id,obj)
+    function show(id)
     {
-        if($(obj).hasClass('active')){
-            $(obj).removeClass('active');
+        if($('#'+id).css('display')=='block'){
             $('#'+id).css('display','none');
         }else{
-            $(obj).addClass('active');
             $('#'+id).css('display','block');
         }
     }
@@ -284,55 +282,55 @@
         return sOut;
     }
 
-    $(document).ready(function(){
+    function checkPassword(){
         var oldPass = $("#oldPassword");
         var pass = $("#password");
         var rePass = $("#rePassword");
         //$("#content").hide("slow");
         //检查要提交的修改密码表单
-        $("#edit-login").submit(function() {
-            //flag用于判断是否提交表单
-            var flag = false;
-            if(oldPass.val() == '') {
-                alert("请输入您的原始密码！");
-                oldPass[0].focus();
-                return false;
-            }else if(rePass.val() != pass.val()){
-                $("#content").show("slow");
-                rePass[0].focus();
-                return false;
-            }else if(rePass.val() == '' || pass.val() == ''){
-                alert("请输入您的新密码！");
-                return false;
-            }else{
-                $.ajax({
-                    type : 'POST',
-                    url : '/checkPw',
-                    data: 'oldPass=' + oldPass.val(),
-                    dataType : 'text',
-                    //同步
-                    async : false,
-                    success : function(data) {
-                        if("false" == data) {
-                            alert("原始密码输入错误！");
-                            oldPass.val('');
-                            oldPass[0].focus();
-                            flag = false;
-                        }else if("true" == data) {
-                            flag = true;
-                        }
-                    },
-                    error : function() {
-                        alert("修改密码错误，请重新输入");
+        // flag用于判断是否提交表单
+        var flag = false;
+        if(oldPass.val() == '') {
+            alert("请输入您的原始密码！");
+            oldPass[0].focus();
+            return false;
+        }else if(rePass.val() != pass.val()){
+            $("#content").show("slow");
+            rePass[0].focus();
+            return false;
+        }else if(rePass.val() == '' || pass.val() == ''){
+            alert("请输入您的新密码！");
+            return false;
+        }else{
+            $.ajax({
+                type : 'POST',
+                url : '/checkPw',
+                data: 'oldPass=' + oldPass.val(),
+                dataType : 'text',
+                //同步
+                async : false,
+                success : function(data) {
+                    if("false" == data) {
+                        alert("原始密码输入错误！");
+                        oldPass.val('');
+                        oldPass[0].focus();
                         flag = false;
+                    }else if("true" == data) {
+                        flag = true;
                     }
-                });
-            }
-            /*  if(flag) {
-                alert("密码修改成功，请您重新登录！");
-             } */
-            return flag;
-        });
+                },
+                error : function() {
+                    alert("修改密码错误，请重新输入");
+                    flag = false;
+                }
+            });
+        }
+        /*  if(flag) {
+            alert("密码修改成功，请您重新登录！");
+         } */
+        return flag;
+    }
+    $(document).ready(function(){
         /**已上传文件*/
         var uploadTable = $("#uploaded").dataTable({
             "aoColumnDefs": [
