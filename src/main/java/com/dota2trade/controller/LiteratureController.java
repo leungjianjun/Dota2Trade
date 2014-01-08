@@ -78,7 +78,7 @@ public class LiteratureController {
             HttpServletRequest request,
             Model model
     ) throws IOException {
-        LogHelper.addLog(sAuthentication.getAccount(),"添加新的文献"+title);
+        LogHelper.addLog(sAuthentication.getAccount(),"添加新的文献"+new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         String idS=literaturetypeidS.substring(5);
         int index=Integer.parseInt(idS);
         System.out.println("index:"+index);
