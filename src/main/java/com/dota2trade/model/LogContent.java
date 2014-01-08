@@ -9,14 +9,19 @@ package com.dota2trade.model;
  */
 public class LogContent {
     private String time;
+    private String date;
     private String name;
     private String action;
 
-    public LogContent(String time, String name, String action) {
+    public LogContent(String date,String time, String name, String action) {
+        this.date=date;
         this.time = time;
         this.name = name;
         this.action = action;
     }
+
+    public String getDate(){return this.date;}
+    public void setDate(String date){this.date=date;}
 
     public String getTime() {
         return time;

@@ -64,8 +64,8 @@
                                             <div class="panel-body">
                                                 <span class="arrow"></span>
                                                 <span class="timeline-icon red"></span>
-                                                <span class="timeline-date"></span>
-                                                <h1 class="red">$logcontent.time</h1>
+                                                <span class="timeline-date">$logcontent.time</span>
+                                                <h1 class="red">$logcontent.date</h1>
                                                 <p>$logcontent.name $logcontent.action</p>
                                             </div>
                                         </div>

@@ -3,6 +3,8 @@ package com.dota2trade.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -18,6 +20,8 @@ public class LogHelper {
     public static void addLog(String name, String action){
         Calendar cal = Calendar.getInstance();
         cal.getTime();
-        log.warn("<&&2014-01-06 15:22&&"+name+"&&"+action+"&&>");
+        SimpleDateFormat format=new SimpleDateFormat("HH:mm");
+
+        log.warn("<&&"+DateFormat.getDateInstance(DateFormat.FULL).format(cal.getTime())+"&&"+format.format(cal.getTime())+"&&"+name+"&&"+action+"&&>");
     }
 }
