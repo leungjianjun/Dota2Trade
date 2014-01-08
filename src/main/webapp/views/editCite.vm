@@ -112,17 +112,15 @@
     }
     function checkModify(){
         if(temp!=0){
-            alert(temp);
-            for(var i=1;i<=temp;i++){
-                var obj=document.getElementsByName("type"+i);  //选择所有name="'type'"的对象，返回数组
-                alert(obj.length);
+            for(var j=1;j<=temp;j++){
+                var obj=document.getElementsByName("type"+j);  //选择所有name="'type'"的对象，返回数组
                 //取到对象数组后，我们来循环检测它是不是被选中
                 var s='';
                 for(var i=0; i<obj.length; i++){
                     if(obj[i].checked) s+=obj[i].value+',';  //如果选中，将value添加到变量s中
                 }
                 //那么现在来检测s的值就知道选中的复选框的值了
-                if(s=''){
+                if(s==''){
                     alert("您还没有为所有文献添加引用关系类型！")
                     return false;
                 }else{
