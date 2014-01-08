@@ -59,8 +59,8 @@
                     <div class="widget widget-tabs widget-tabs-double-2">
                         <div class="widget-head">
                             <ul>
-                                <li #if(!$sign)class="active"#end><a class="glyphicons user" href="#tabSimple" data-toggle="tab"><span>简单评论</span></a></li>
-                                <li #if($sign)class="active"#end><a class="glyphicons list" href="#tabDetail" data-toggle="tab"><span>详细评论</span></a></li>
+                                <li #if(!$sign)class="active"#end><a class="glyphicons user" href="#tabSimple" data-toggle="tab" onclick="showComment(0)"><span>简单评论</span></a></li>
+                                <li #if($sign)class="active"#end><a class="glyphicons list" href="#tabDetail" data-toggle="tab" onclick="showComment(1)"><span>详细评论</span></a></li>
                                 <li><a class="glyphicons" href="#tabTag" data-toggle="tab"><span>添加标签</span></a></li>
                             </ul>
                         </div>
@@ -164,11 +164,23 @@
                 </div>
                 <div class="otherComments">
                     <div class="t">其他人的评论</div>
-                    <ul>
+                    <ul id="otherSimple">
                         #foreach($comment in $simpleComments)
                             <li>
                                 <div class="info"><a class="name">$comment.commenter</a><span>评分：$comment.score</span><span>$comment.commentTime</span></div>
                                 <div>$comment.shortContent</div>
+                            </li>
+                        #end
+                    </ul>
+                    <ul id="otherComplex" style="display: none;">
+                        #foreach($c_comment in $complexComments)
+                            <li>
+                                <div class="info"><a class="name">$c_comment.commenter</a><span>$c_comment.commentTime</span></div>
+                                <div>
+                                    #foreach($attribute in $c_comment.commentAttributes)
+                                        $attribute.attributeName：$attribute.value<br />
+                                    #end
+                                </div>
                             </li>
                         #end
                     </ul>
@@ -251,6 +263,15 @@
                 $("#"+id).val(0);
             }else{
                 $("#"+id).val(1);
+            }
+        }
+        function showComment(sign){
+            if(sign){//复杂
+                $("#otherSimple").hide();
+                $("#otherComplex").show();
+            }else{
+                $("#otherComplex").hide();
+                $("#otherSimple").show();
             }
         }
     </script>
