@@ -76,7 +76,11 @@ public class LiteratureController {
             MultipartHttpServletRequest request,
             ModelMap model
     ) throws IOException {
+<<<<<<< HEAD
+        LogHelper.addLog(sAuthentication.getAccount(),"添加新的文献"+new String (title.getBytes ("iso-8859-1"), "UTF-8"));
+=======
         LogHelper.addLog(sAuthentication.getAccount(),"添加新的文献 "+new String (title.getBytes ("iso-8859-1"), "UTF-8"));
+>>>>>>> 8ce6d6aea5a12bac2d737053311791047924fd78
         String idS=literaturetypeidS.substring(5);
         int index=Integer.parseInt(idS);
         System.out.println("index:"+index);
