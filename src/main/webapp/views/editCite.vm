@@ -31,24 +31,24 @@
         <li><a class="info" href="/profile.html"><i></i><span>个人信息</span></a></li>
     </ul>
     <div class="edit_right">
-    <form name="cite" action="/doaddCite" method="POST">
+    <form name="cite" onsubmit="return checkModify()" action="/doaddCite" method="POST">
         #set($citeNum=$title.size())
         <div class="title">文献修改<span>编辑引用关系</span></div>
         <div class="main clearfix">
             <div class="e_left">
                 <div class="widget-body collapse in">
                     <div class="input-append">
-                        <input class="span6" id="appendedInputButtons" type="text" placeholder="查找已有文献">
-                        <button class="btn btn-default" type="button"><i class="icon-search"></i></button>
+                        <input class="span6" id="searchKeyword" type="text" placeholder="查找已有文献">
+                        <button class="btn btn-default" type="button" id="searchButton"><i class="icon-search"></i></button>
                     </div>
                 </div>
                 <div style="font-weight: bold;font-size: 14px;">可能相关的文献：</div>
                 <div class="cite_type"><span>添加引用</span></div>
-                <ul>
-                    #foreach($literatureMeta in $literatureMetaList)
+                <ul id="search_cite_list">
+                    #foreach($literature in $literatureList)
                         <li>
-                            <a class="desc" href="literatureDetail.html?id=$literatureMeta.literatureid&sign=0">$literatureMeta.title -$literatureMeta.author $literatureMeta.published_year</a>
-                            <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cite',this,$literatureMeta.literatureid)"></a>
+                            <a class="desc" href="literatureDetail.html?id=$literature.literatureMeta.literatureid&sign=0">$literature.literatureMeta.title -$literature.literatureMeta.author $literature.literatureMeta.published_year</a>
+                            <a class="add_cite" href="javascript:void(0)" onclick="add_cite('cite',this,$literature.literatureMeta.literatureid)"></a>
                         </li>
                     #end
                 </ul>
@@ -98,7 +98,7 @@
             $("#nonecite")[0].style.display="none";
         }
         $("#"+id).append(
-             '<li><a href="#">'+$(e).parent().children('.desc').text()+'</a>'+
+             '<li><a href="#">'+$(e).parent().children(                                                                                                                                                                                                                         '.desc').text()+'</a>'+
                   '<input name="cite'+temp+'" type="hidden" value="'+literatureid+'" />'+
                   '<div class="type_checkbox"><label style="margin-right: 4px;">引用关系类型：</label>' +
                     #foreach($citeType in $citeTypeList)
@@ -110,6 +110,57 @@
     function deleteCite(e){
         $(e).parent().remove();
     }
+    function checkModify(){
+        if(temp!=0){
+            alert(temp);
+            for(var i=1;i<=temp;i++){
+                var obj=document.getElementsByName("type"+i);  //选择所有name="'type'"的对象，返回数组
+                alert(obj.length);
+                //取到对象数组后，我们来循环检测它是不是被选中
+                var s='';
+                for(var i=0; i<obj.length; i++){
+                    if(obj[i].checked) s+=obj[i].value+',';  //如果选中，将value添加到变量s中
+                }
+                //那么现在来检测s的值就知道选中的复选框的值了
+                if(s=''){
+                    alert("您还没有为所有文献添加引用关系类型！")
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }else{
+            alert("您还没有选择任何文献添加引用！")
+            return false;
+        }
+    }
+    $(document).ready(function(){
+        $("#searchButton").click(function(){
+            $("#search_cite_list li").remove();
+            $.ajax({
+                type:'post',
+                url:"/doSearchCiteLiterature",
+                dataType:'json',
+                data:{keyword:$("#searchKeyword").val()},
+                success:function(data){
+                    if(data.success){
+                        var list = data.list;
+                        for(var i=0;i<list.length;i++){
+                            $("#search_cite_list").append(
+                                '<li>'+
+                                   '<a class="desc" href="literatureDetail.html?id='+list[i].literatureMeta.literatureid+'&sign=0">'+list[i].literatureMeta.title+' -'+list[i].literatureMeta.author+' '+list[i].literatureMeta.published_year+'</a>'+
+                                   '<a class="add_cite" href="javascript:void(0)" onclick="add_cite(\'cite\',this,'+list[i].literatureMeta.literatureid+')"></a>'+
+                                '</li>'
+                            );
+                        }
+                    }
+                    else{
+                        $("#search_cite_list").append('<li>没有相关文献</li>')
+                    }
+                }
+            });
+        })
+    })
 </script>
 <!-- JQuery -->
 <script src="../resources/common/theme/scripts/plugins/system/jquery.min.js"></script>

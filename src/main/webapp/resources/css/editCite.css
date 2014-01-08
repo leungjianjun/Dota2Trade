@@ -9,6 +9,7 @@
 }
 .edit_right .title span{font-size: 16px;font-weight: normal;margin-left: 20px;}
 .edit_right .main .e_left{float:left;width: 45%;}
+.edit_right .main .e_left li{overflow: hidden;}
 .edit_right .main .e_left .cite_type{margin-left: 68%;margin-bottom: 8px;}
 .edit_right .main .e_left .cite_type span{color: #333;}
 .edit_right .main .e_left .cite_type span.first{margin-right: 15px;}

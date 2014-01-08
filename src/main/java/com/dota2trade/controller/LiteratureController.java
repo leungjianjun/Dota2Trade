@@ -29,6 +29,8 @@ import java.util.HashMap;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -283,8 +285,11 @@ public class LiteratureController {
     public String editCite(@RequestParam("literatureid")int literatureid,ModelMap model){
         Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
         Map<Integer,String> map_name = new HashMap<Integer,String>();
-        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
-        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+        Literature literature = literatureDao.getLiteratureById(literatureid);
+        model.addAttribute("literature",literature);
+        //可能相关的文献
+        List<Literature> literatureList = searcher.simpleSearch(literature.getLiteratureMeta().getTitle());
+        model.addAttribute("literatureList",literatureList);
         List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
         for(int i=0;i<temp.size();i++){
             CiteRelationship cr = temp.get(i);
@@ -705,6 +710,26 @@ public class LiteratureController {
         }
         boolean rs = commentDao.deleteComplexComment(ids);
         response.getWriter().print(rs);
+    }
+    /**引用关系处文献搜索*/
+    @RequestMapping(value = "doSearchCiteLiterature",method = RequestMethod.POST)
+    public void SearchCiteLiterature(
+            @RequestParam("keyword") String keyword,
+            HttpServletResponse response,
+            ModelMap model
+    )throws IOException{
+        List<Literature> list = searcher.simpleSearch(keyword);
+        JSONObject jsonobj = new JSONObject();
+        JSONArray jsonarray = JSONArray.fromObject(list);
+        if(list.size()==0){
+            jsonobj.put("success",false);
+        }else{
+            jsonobj.put("success",true);
+        }
+        jsonobj.put("list",jsonarray);
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print(jsonobj);
     }
 
     public LiteratureDao getLiteratureDao() {
