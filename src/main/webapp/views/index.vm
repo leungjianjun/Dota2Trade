@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <!--timeline start-->
-                    <section class="panel">
+                    <section class="panel" style="height: 760px;overflow-y: scroll">
                         <div class="panel-body">
                             <div class="text-center mbot30">
                                 <h3 class="timeline-title">文献动态</h3>
@@ -63,17 +63,35 @@
                                         <div class="panel">
                                             <div class="panel-body">
                                                 <span class="arrow"></span>
-                                                <span class="timeline-icon red"></span>
                                                 <span class="timeline-date">$logcontent.time</span>
-                                                <h1 class="red">$logcontent.date</h1>
-                                                <p>$logcontent.name $logcontent.action</p>
+                                                  #if ($foreach.index % 5 ==0)
+                                                    <span class="timeline-icon red"></span>
+                                                    <h1 class="red">$logcontent.date</h1>
+                                                    <p><span><a class="red">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==1)
+                                                      <span class="timeline-icon green"></span>
+                                                      <h1 class="green">$logcontent.date</h1>
+                                                      <p><span><a class="green">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==2)
+                                                      <span class="timeline-icon blue"></span>
+                                                      <h1 class="blue">$logcontent.date</h1>
+                                                      <p><span><a class="blue">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==3)
+                                                      <span class="timeline-icon light-green"></span>
+                                                      <h1 class="light-green">$logcontent.date</h1>
+                                                      <p><span><a class="light-green">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==4)
+                                                      <span class="timeline-icon purple"></span>
+                                                      <h1 class="purple">$logcontent.date</h1>
+                                                      <p><span><a class="purple">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #end
                                             </div>
                                         </div>
                                     </div>
                                 </article>
                                 #end
                             </div>
-                            <div class="more"><h4 style="text-align: center;color:#C8CCD7;margin-bottom: 5px;">加载更多>>></h4></div>
+
                             <!--
                             <div class="clearfix">&nbsp;</div>
                             -->
