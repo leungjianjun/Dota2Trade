@@ -50,7 +50,12 @@ public class HomeController {
             }
         }
         model.addAttribute("logcontents",contents);
-            model.addAttribute("statistics",statisticsDao.getStatisticsLimit1Week());
+        model.addAttribute("statistics",statisticsDao.getStatisticsLimit1Week());
+        model.addAttribute("literature_count",statisticsDao.getSum("Cliterature"));
+        model.addAttribute("attachment_count",statisticsDao.getSum("CAttachment"));
+        model.addAttribute("simple_count",statisticsDao.getSum("CSimple"));
+        model.addAttribute("complex_count",statisticsDao.getSum("CComplex"));
+
         return "index";
     }
 

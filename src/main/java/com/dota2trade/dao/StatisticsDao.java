@@ -13,4 +13,5 @@ public interface StatisticsDao {
     public List<Statistic> getStatisticsLimit1Month();
     public List<Statistic> getStatisticsLimitHalfYear();
     public List<Statistic> getStatisticsLimit1Year();
+    public List<Integer> getSum(String column);
 }
