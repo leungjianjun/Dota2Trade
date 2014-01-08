@@ -1,0 +1,26 @@
+create view statistics as (
+select u.id Userid,
+       u.account Account,
+       (select us.name from user_info us where us.userid=u.id) Name,
+       (select count(*) from literature where creatorid=u.id) Cliterature,
+       (select count(*) from attachment where creatorid=u.id) CAttachment,
+       (select count(*) from comment where commenterid=u.id) CSimple,
+       (select count(distinct commenttime) from commentattribute where commenterid=u.id) CComplex,
+       (select count(*) from literature where creatorid=u.id and createtime>=SUBDATE(now(),interval 7 day)) W_Cliterature,
+       (select count(*) from attachment where creatorid=u.id and createtime>=SUBDATE(now(),interval 7 day)) W_CAttachment,
+       (select count(*) from comment where commenterid=u.id and commenttime>=SUBDATE(now(),interval 7 day)) W_CSimple,
+       (select count(distinct commenttime) from commentattribute where commenterid=u.id and commenttime>=SUBDATE(now(),interval 7 day)) W_CComplex,
+       (select count(*) from literature where creatorid=u.id and createtime>=SUBDATE(now(),interval 1 month)) M_Cliterature,
+       (select count(*) from attachment where creatorid=u.id and createtime>=SUBDATE(now(),interval 1 month)) M_CAttachment,
+       (select count(*) from comment where commenterid=u.id and commenttime>=SUBDATE(now(),interval 1 month)) M_CSimple,
+       (select count(distinct commenttime) from commentattribute where commenterid=u.id and commenttime>=SUBDATE(now(),interval 1 month)) M_CComplex,
+       (select count(*) from literature where creatorid=u.id and createtime>=SUBDATE(now(),interval 0.5 year)) H_Cliterature,
+       (select count(*) from attachment where creatorid=u.id and createtime>=SUBDATE(now(),interval 0.5 year)) H_CAttachment,
+       (select count(*) from comment where commenterid=u.id and commenttime>=SUBDATE(now(),interval 0.5 year)) H_CSimple,
+       (select count(distinct commenttime) from commentattribute where commenterid=u.id and commenttime>=SUBDATE(now(),interval 0.5 year)) H_CComplex,
+       (select count(*) from literature where creatorid=u.id and createtime>=SUBDATE(now(),interval 1 year)) Y_Cliterature,
+       (select count(*) from attachment where creatorid=u.id and createtime>=SUBDATE(now(),interval 1 year)) Y_CAttachment,
+       (select count(*) from comment where commenterid=u.id and commenttime>=SUBDATE(now(),interval 1 year)) Y_CSimple,
+       (select count(distinct commenttime) from commentattribute where commenterid=u.id and commenttime>=SUBDATE(now(),interval 1 year)) Y_CComplex
+       from user u 
+)

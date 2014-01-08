@@ -29,6 +29,8 @@ import java.util.HashMap;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -70,15 +72,15 @@ public class LiteratureController {
             @RequestParam("publisher_name") String publisher_name,
             @RequestParam("link") String link,
             @RequestParam("fileAttachment") MultipartFile fileAttachment,
-            @RequestParam("otherAttachment1") MultipartFile otherAttachment1,
-            @RequestParam("otherAttachment2") MultipartFile otherAttachment2,
-            @RequestParam("otherAttachment3") MultipartFile otherAttachment3,
-            @RequestParam("otherAttachment4") MultipartFile otherAttachment4,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
-            HttpServletRequest request,
-            Model model
+            MultipartHttpServletRequest request,
+            ModelMap model
     ) throws IOException {
+<<<<<<< HEAD
         LogHelper.addLog(sAuthentication.getAccount(),"添加新的文献"+new String (title.getBytes ("iso-8859-1"), "UTF-8"));
+=======
+        LogHelper.addLog(sAuthentication.getAccount(),"添加新的文献 "+new String (title.getBytes ("iso-8859-1"), "UTF-8"));
+>>>>>>> 8ce6d6aea5a12bac2d737053311791047924fd78
         String idS=literaturetypeidS.substring(5);
         int index=Integer.parseInt(idS);
         System.out.println("index:"+index);
@@ -86,9 +88,8 @@ public class LiteratureController {
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
 
         List<Attachment> attachmentList=new ArrayList<Attachment>();
-        Attachment paper,attachment1,attachment2,attachment3,attachment4;
 
-        paper=new Attachment();
+        Attachment paper=new Attachment();
         System.out.println(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         String attachmentName = new String (fileAttachment.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
         paper.setName(attachmentName);
@@ -99,52 +100,21 @@ public class LiteratureController {
         paper.setType(0);
         attachmentList.add(paper);
 
-        if (!otherAttachment1.isEmpty()){
-            String other1Name = new String (otherAttachment1.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
-            String otherFile1Name = System.currentTimeMillis()+other1Name;
-            FileUploadHelper.uploadFile(otherAttachment1, otherFile1Name,"other");
-            attachment1=new Attachment();
-            attachment1.setName(other1Name);
-            attachment1.setLink(LINK_PREFIX + "other/" + otherFile1Name);
-            attachment1.setCreatorid(userid);
-            attachment1.setType(1);
-            attachmentList.add(attachment1);
-        }
-
-        if (!otherAttachment2.isEmpty()){
-            String other2Name = new String (otherAttachment2.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
-            String otherFile2Name = System.currentTimeMillis()+other2Name;
-            FileUploadHelper.uploadFile(otherAttachment2, otherFile2Name,"other");
-            attachment2=new Attachment();
-            attachment2.setName(other2Name);
-            attachment2.setLink(LINK_PREFIX+"other/"+otherFile2Name);
-            attachment2.setCreatorid(userid);
-            attachment2.setType(1);
-            attachmentList.add(attachment2);
-        }
-
-        if (!otherAttachment3.isEmpty()){
-            String other3Name = new String (otherAttachment3.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
-            String otherFile3Name = System.currentTimeMillis()+other3Name;
-            FileUploadHelper.uploadFile(otherAttachment3, otherFile3Name,"other");
-            attachment3=new Attachment();
-            attachment3.setName(other3Name);
-            attachment3.setLink(LINK_PREFIX+"other/"+otherFile3Name);
-            attachment3.setCreatorid(userid);
-            attachment3.setType(1);
-            attachmentList.add(attachment3);
-        }
-
-        if (!otherAttachment4.isEmpty()){
-            String other4Name = new String (otherAttachment4.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
-            String otherFile4Name = System.currentTimeMillis()+other4Name;
-            FileUploadHelper.uploadFile(otherAttachment4, otherFile4Name,"other");
-            attachment4=new Attachment();
-            attachment4.setName(other4Name);
-            attachment4.setLink(LINK_PREFIX+"other/"+otherFile4Name);
-            attachment4.setCreatorid(userid);
-            attachment4.setType(1);
-            attachmentList.add(attachment4);
+        //其他附件
+        int num = Integer.parseInt(request.getParameter("attachment_num"));
+        if(num!=0){
+            for(int i=1;i<=num;i++){
+                MultipartFile attachment = request.getFile("otherAttachment"+i);
+                String other1Name = new String (attachment.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");
+                String otherFile1Name = System.currentTimeMillis()+other1Name;
+                FileUploadHelper.uploadFile(attachment, otherFile1Name,"other");
+                Attachment otherAttachment = new Attachment();
+                otherAttachment.setName(other1Name);
+                otherAttachment.setLink(LINK_PREFIX+"other/"+otherFile1Name);
+                otherAttachment.setCreatorid(userid);
+                otherAttachment.setType(1);
+                attachmentList.add(otherAttachment);
+            }
         }
 
         LiteratureMeta literatureMeta=new LiteratureMeta();
@@ -196,28 +166,7 @@ public class LiteratureController {
         indexer.indexPaper(paperFileName,id);
 
         System.out.println("result:"+id);
-        Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
-        Map<Integer,String> map_name = new HashMap<Integer,String>();
-        List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(id);
-        for(int i=0;i<temp.size();i++){
-            CiteRelationship cr = temp.get(i);
-            if(!(map.containsKey(cr.getCitedbyid()))){
-                ArrayList<Integer> typeList = new ArrayList<Integer>();
-                typeList.add(cr.getCitedtypeid());
-                map.put(cr.getCitedbyid(),typeList);
-            }
-            else{
-                ArrayList<Integer> typeList = map.get(cr.getCitedbyid());
-                typeList.add(cr.getCitedtypeid());
-                map.put(cr.getCitedbyid(),typeList);
-            }
-            map_name.put(cr.getCitedbyid(),literatureDao.getLiteratureMetaByLiteratureId(cr.getCitedbyid()).getTitle());
-        }
-        model.addAttribute("citeTypeList",configDao.getAllAttributeByType(3));
-        model.addAttribute("type",map);
-        model.addAttribute("title",map_name);
-
-        return "/editCite";
+        return editCite(id,model);
     }
 
     /**个人信息*/
@@ -282,7 +231,7 @@ public class LiteratureController {
             @RequestParam("email") String email,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             Model model){
-        LogHelper.addLog(sAuthentication.getAccount(),"修改个人信息"+name);
+        LogHelper.addLog(sAuthentication.getAccount(),"修改个人信息 将名字设为了 "+name);
         UserInfo userInfo = new UserInfo();
         String account = sAuthentication.getAccount();
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
@@ -340,8 +289,11 @@ public class LiteratureController {
     public String editCite(@RequestParam("literatureid")int literatureid,ModelMap model){
         Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
         Map<Integer,String> map_name = new HashMap<Integer,String>();
-        model.addAttribute("literature",literatureDao.getLiteratureById(literatureid));
-        model.addAttribute("literatureMetaList",literatureDao.getAllLiteratureMeta());
+        Literature literature = literatureDao.getLiteratureById(literatureid);
+        model.addAttribute("literature",literature);
+        //可能相关的文献
+        List<Literature> literatureList = searcher.simpleSearch(literature.getLiteratureMeta().getTitle());
+        model.addAttribute("literatureList",literatureList);
         List<CiteRelationship> temp = literatureDao.getAllCiteRelationshipByLiteratureId(literatureid);
         for(int i=0;i<temp.size();i++){
             CiteRelationship cr = temp.get(i);
@@ -388,7 +340,7 @@ public class LiteratureController {
             ModelMap model) throws IOException {
         int userid=userDao.getIdByUserAccount(sAuthentication.getAccount());
         LiteratureMeta literatureMeta=literatureDao.getLiteratureMetaByLiteratureId(literatureid);
-        LogHelper.addLog(sAuthentication.getAccount(),"修改文献"+literatureMeta.getTitle());
+        LogHelper.addLog(sAuthentication.getAccount(),"修改文献 "+literatureMeta.getTitle());
        // literatureMeta.setTitle(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         literatureMeta.setAuthor(new String(author.getBytes("iso-8859-1"), "UTF-8"));
         literatureMeta.setPublished_year(new String(published_year.getBytes("iso-8859-1"), "UTF-8"));
@@ -594,6 +546,9 @@ public class LiteratureController {
     @RequestMapping(value="/listLiterature.html", method= RequestMethod.GET)
     public String listLiterature(
             ModelMap model){
+        //评分
+        Map<Integer,String> score = new HashMap<Integer,String>();
+        String score_str = "";
         //文献类型
         List typeList=new ArrayList();
         typeList=configDao.getAllLiteratureTypes();
@@ -604,7 +559,16 @@ public class LiteratureController {
             LiteratureMeta meta = list.get(i);
             Literature literature = literatureDao.getLiteratureById(meta.getLiteratureid());
             literatureList.add(literature);
+            int temp = commentDao.getScoreByLiteratureId(meta.getLiteratureid());
+            if(temp==0){
+                score_str="-";
+            }
+            else{
+                score_str=Integer.toString(temp);
+            }
+            score.put(meta.getLiteratureid(),score_str);
         }
+        model.addAttribute("score",score);
         model.addAttribute("literatureList",literatureList);
         return "listLiterature";
     }
@@ -675,7 +639,7 @@ public class LiteratureController {
             @RequestParam("status") int status,
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             ModelMap model) throws IOException{
-        LogHelper.addLog(sAuthentication.getAccount(),"添加新评论");
+        LogHelper.addLog(sAuthentication.getAccount(),"添加了新评论");
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         Comment new_comment = new Comment();
         new_comment.setId(commentid);
@@ -697,7 +661,7 @@ public class LiteratureController {
             @ModelAttribute("sauthentication") SAuthentication sAuthentication,
             HttpServletRequest request,
             ModelMap model) throws IOException{
-        LogHelper.addLog(sAuthentication.getAccount(),"添加复杂评论");
+        LogHelper.addLog(sAuthentication.getAccount(),"添加了复杂评论");
         int userid = userDao.getIdByUserAccount(sAuthentication.getAccount());
         List<Attribute> attributeList = configDao.getAllAttributeByType(2);
         ComplexComment complexComment = new ComplexComment();
@@ -750,6 +714,26 @@ public class LiteratureController {
         }
         boolean rs = commentDao.deleteComplexComment(ids);
         response.getWriter().print(rs);
+    }
+    /**引用关系处文献搜索*/
+    @RequestMapping(value = "doSearchCiteLiterature",method = RequestMethod.POST)
+    public void SearchCiteLiterature(
+            @RequestParam("keyword") String keyword,
+            HttpServletResponse response,
+            ModelMap model
+    )throws IOException{
+        List<Literature> list = searcher.simpleSearch(keyword);
+        JSONObject jsonobj = new JSONObject();
+        JSONArray jsonarray = JSONArray.fromObject(list);
+        if(list.size()==0){
+            jsonobj.put("success",false);
+        }else{
+            jsonobj.put("success",true);
+        }
+        jsonobj.put("list",jsonarray);
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print(jsonobj);
     }
 
     public LiteratureDao getLiteratureDao() {

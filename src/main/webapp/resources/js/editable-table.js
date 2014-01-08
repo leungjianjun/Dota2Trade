@@ -34,12 +34,11 @@ var EditableTable = function () {
             }
 
             function cancelEditRow(oTable, nRow) {
-                alert("cancel");
                 var jqInputs = $('input', nRow);
-                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-                oTable.fnUpdate('<a class="edit" href="">修改</a>', nRow, 2, false);
-                oTable.fnUpdate('<a class="delete" href="">删除</a>', nRow, 3, false);
+                oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 2, false);
+                oTable.fnUpdate('<a class="edit" href="">修改</a>', nRow, 3, false);
+                oTable.fnUpdate('<a class="delete" href="">删除</a>', nRow, 4, false);
                 oTable.fnDraw();
             }
 
@@ -126,7 +125,8 @@ var EditableTable = function () {
                     var nRow = $(this).parents('tr')[0];
                     oTable.fnDeleteRow(nRow);
                 } else {
-                    restoreRow(oTable, nEditing);
+                    cancelEditRow(oTable, nEditing);
+                    //restoreRow(oTable, nEditing);
                     nEditing = null;
                 }
             });

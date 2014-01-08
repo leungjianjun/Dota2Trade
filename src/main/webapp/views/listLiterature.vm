@@ -68,7 +68,7 @@
                                         <td>$literature.literatureMeta.literatureid</td>
                                         <td><a href="literatureDetail.html?id=$literature.literatureMeta.literatureid&sign=0">$literature.literatureMeta.title</a></td>
                                         <td>$literature.literatureMeta.published_year</td>
-                                        <td class="center">6</td>
+                                        <td class="center">$score.get($literature.literatureMeta.literatureid)</td>
                                         <td><div class="op">
                                             <button alt-data="$literature.literatureMeta.literatureid" class="btn  edit_literature btn-primary">编辑文献内容及附件</button>
                                             <button alt-data="$literature.literatureMeta.literatureid" class="btn  edit_cite btn-primary">编辑引用关系</button>

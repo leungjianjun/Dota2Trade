@@ -45,12 +45,17 @@ public class HomeController {
             line = line.split(" - ")[1];
             if (line.charAt(0) == '<'){
                 String[] con = line.split("&&");
-                contents.add(new LogContent(con[1],con[2],con[3]));
-                System.out.println(con[1]+" "+con[2]+" "+con[3]);
+                contents.add(new LogContent(con[1],con[2],con[3],con[4]));
+                System.out.println(con[1]+" "+con[2]+" "+con[3]+" "+con[4]);
             }
         }
         model.addAttribute("logcontents",contents);
-            model.addAttribute("statistics",statisticsDao.getStatisticsLimit1Week());
+        model.addAttribute("statistics",statisticsDao.getStatisticsLimit1Week());
+        model.addAttribute("literature_count",statisticsDao.getSum("Cliterature"));
+        model.addAttribute("attachment_count",statisticsDao.getSum("CAttachment"));
+        model.addAttribute("simple_count",statisticsDao.getSum("CSimple"));
+        model.addAttribute("complex_count",statisticsDao.getSum("CComplex"));
+
         return "index";
     }
 

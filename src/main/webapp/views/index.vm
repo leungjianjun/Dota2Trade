@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <!--timeline start-->
-                    <section class="panel">
+                    <section class="panel" style="height: 760px;overflow-y: scroll">
                         <div class="panel-body">
                             <div class="text-center mbot30">
                                 <h3 class="timeline-title">文献动态</h3>
@@ -63,17 +63,35 @@
                                         <div class="panel">
                                             <div class="panel-body">
                                                 <span class="arrow"></span>
-                                                <span class="timeline-icon red"></span>
-                                                <span class="timeline-date"></span>
-                                                <h1 class="red">$logcontent.time</h1>
-                                                <p>$logcontent.name $logcontent.action</p>
+                                                <span class="timeline-date">$logcontent.time</span>
+                                                  #if ($foreach.index % 5 ==0)
+                                                    <span class="timeline-icon red"></span>
+                                                    <h1 class="red">$logcontent.date</h1>
+                                                    <p><span><a class="red">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==1)
+                                                      <span class="timeline-icon green"></span>
+                                                      <h1 class="green">$logcontent.date</h1>
+                                                      <p><span><a class="green">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==2)
+                                                      <span class="timeline-icon blue"></span>
+                                                      <h1 class="blue">$logcontent.date</h1>
+                                                      <p><span><a class="blue">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==3)
+                                                      <span class="timeline-icon light-green"></span>
+                                                      <h1 class="light-green">$logcontent.date</h1>
+                                                      <p><span><a class="light-green">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #elseif($foreach.index % 5 ==4)
+                                                      <span class="timeline-icon purple"></span>
+                                                      <h1 class="purple">$logcontent.date</h1>
+                                                      <p><span><a class="purple">$logcontent.name</a></span> $logcontent.action</p>
+                                                  #end
                                             </div>
                                         </div>
                                     </div>
                                 </article>
                                 #end
                             </div>
-                            <div class="more"><h4 style="text-align: center;color:#C8CCD7;margin-bottom: 5px;">加载更多>>></h4></div>
+
                             <!--
                             <div class="clearfix">&nbsp;</div>
                             -->
@@ -123,38 +141,39 @@
                                 <div class="panel green-chart">
                                     <div class="panel-body">
                                         <div class="chart">
-                                            <div class="heading">
-                                                <span>2012 年</span>
-                                                <strong>1 月 - 12 月</strong>
-                                            </div>
                                             <div id="barchart"></div>
+                                            <div id="linechart"></div>
+                                            <div id="pie-chart"></div>
+                                            <div id="work-progress"></div>
                                         </div>
                                     </div>
                                     <div class="chart-tittle">
-                                        <span class="title">总上传量</span>
-                                        <span class="value">500</span>
+                                        <div id="barchart-title">
+                                            <span class="title"></span>
+                                            <span class="value"></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--total earning end-->
                         </div>
                         <div class="panel-body">
                             <ul class="ft-link">
-                                <li class="active">
+                                <li class="active" data-type="literature">
                                     <a href="javascript:;">
                                         总文献
                                     </a>
                                 </li>
-                                <li>
+                                <li data-type="attachment">
                                     <a href="javascript:;">
                                         总附件
                                     </a>
                                 </li>
-                                <li>
+                                <li data-type="simple">
                                     <a href="javascript:;">
                                         总简评
                                     </a>
                                 </li>
-                                <li>
+                                <li data-type="complex">
                                     <a href="javascript:;">
                                         总详评
                                     </a>
@@ -182,7 +201,6 @@
 <script src="../resources/common/bootstrap/extend/bootstrap-select/bootstrap-select.js"></script>
 <!--JS-->
 <script src="../resources/js/jquery.sparkline.js" type="text/javascript"></script>
-<script src="../resources/js/sparkline-chart.js" type="text/javascript"></script>
 <script src="../resources/common/theme/scripts/demo/common.js"></script>
 <script src="../resources/common/theme/scripts/plugins/other/jquery.slimscroll.min.js"></script>
 <script src="../resources/common/theme/scripts/plugins/system/modernizr.js"></script>
@@ -207,10 +225,100 @@
             "bSort": false,
             "aaSorting": [[ 0, "desc" ]]
         } );
+        //默认显示总文献数
+        changeChart("literature");
 
         $("#period-select").change(function(){
             changeData($(this).val());
         });
+
+        $(".ft-link li").click(function(e){
+            e.preventDefault();
+            $(".ft-link li").removeClass("active");
+            $(this).addClass("active");
+            var type=$(this).attr("data-type");
+            changeChart(type);
+        });
+
+
+        function changeChart(type){
+            $(".chart div").css('display','none');
+            var data=[];
+            if(type=="literature"){
+                #set($total=0)
+                #foreach($num in $literature_count)
+                    data.push($num);
+                    #set($total=$total+$num)
+                #end
+                $("#barchart").css('display','block');
+                $("#barchart").sparkline(data, {
+                    type: 'bar',
+                    height: '95',
+                    barWidth: 20,
+                    barSpacing: 5,
+                    barColor: '#fff'
+                });
+                $("#barchart-title .title").html("总上传文献");
+                $("#barchart-title .value").html($total);
+            }else if(type=="attachment"){
+                #set($total=0)
+                #foreach($num in $attachment_count)
+                    data.push($num);
+                    #set($total=$total+$num)
+                #end
+                $("#linechart").css('display','block');
+                $("#linechart").sparkline(data, {
+                    type: 'line',
+                    width: '300',
+                    height: '95',
+                    fillColor: '',
+                    lineColor: '#fff',
+                    lineWidth: 2,
+                    spotColor: '#fff',
+                    minSpotColor: '#fff',
+                    maxSpotColor: '#fff',
+                    highlightSpotColor: '#fff',
+                    highlightLineColor: '#ffffff',
+                    spotRadius: 4,
+                    highlightLineColor: '#ffffff'
+                });
+                $("#barchart-title .title").html("总上传附件");
+                $("#barchart-title .value").html($total);
+            }else if(type=="simple"){
+                #set($total=0)
+                #foreach($num in $simple_count)
+                    data.push($num);
+                    #set($total=$total+$num)
+                #end
+                $("#pie-chart").css('display','block');
+                $("#pie-chart").sparkline(data, {
+                    type: 'pie',
+                    width: '120',
+                    height: '120',
+                    borderColor: '#00bf00',
+                    sliceColors: ['#41CAC0', '#A8D76F', '#F8D347', '#EF6F66']
+                });
+                $("#barchart-title .title").html("总简单评论");
+                $("#barchart-title .value").html($total);
+            }else if(type=="complex"){
+                #set($total=0)
+                #foreach($num in $complex_count)
+                    data.push($num);
+                    #set($total=$total+$num)
+                #end
+                $("#work-progress").css('display','block');
+                $("#work-progress").sparkline(data, {
+                    type: 'bar',
+                    height: '95',
+                    barWidth: 20,
+                    barSpacing: 5,
+                    barColor: '#5fbf00'
+                });
+                $("#barchart-title .title").html("总复杂评论");
+                $("#barchart-title .value").html($total);
+            }
+        }
+
 
         function changeData(tag){
             $.ajax({

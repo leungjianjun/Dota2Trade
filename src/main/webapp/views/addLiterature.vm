@@ -119,84 +119,19 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label>其他附件</label>
+                <div style="margin: 11px 0;">
+                    <label>添加附件</label>
                     <button class="btn btn-block" id="add-attachment" type="button" style="display: inline-block;font-weight: normal;">添加附件</button>
                 </div>
-                <div class="fileupload fileupload-new" id="fileupload-type1" data-provides="fileupload" style="display:none">
-                    <div class="input-append">
-                        <div class="uneditable-input span3" style="display: inline-table;">
-                            <i class="icon-file fileupload-exists"></i>
-                            <span class="fileupload-preview"></span>
-                        </div>
-                        <span class="btn btn-default btn-file">
-                            <span class="fileupload-new">选择文件</span>
-                            <span class="fileupload-exists">修改</span>
-                            <input type="file" name="otherAttachment1"/>
-                        </span>
-                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
-                    </div>
-                </div>
-                <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type2" style="display:none">
-                    <div class="input-append">
-                        <div class="uneditable-input span3" style="display: inline-table;">
-                            <i class="icon-file fileupload-exists"></i>
-                            <span class="fileupload-preview"></span>
-                        </div>
-                        <span class="btn btn-default btn-file">
-                            <span class="fileupload-new">选择文件</span>
-                            <span class="fileupload-exists">修改</span>
-                            <input type="file" name="otherAttachment2"/>
-                        </span>
-                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
-                    </div>
-                </div>
-                <div class="fileupload fileupload-new" data-provides="fileupload" id="fileupload-type3" style="display:none">
-                    <div class="input-append">
-                        <div class="uneditable-input span3" style="display: inline-table;">
-                            <i class="icon-file fileupload-exists"></i>
-                            <span class="fileupload-preview"></span>
-                        </div>
-                        <span class="btn btn-default btn-file">
-                            <span class="fileupload-new">选择文件</span>
-                            <span class="fileupload-exists">修改</span>
-                            <input type="file" name="otherAttachment3"/>
-                        </span>
-                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
-                    </div>
-                </div>
-                <div class="fileupload fileupload-new" data-provides="fileupload" style="display:none" id="fileupload-type4">
-                    <div class="input-append">
-                        <div class="uneditable-input span3" style="display: inline-table;">
-                            <i class="icon-file fileupload-exists"></i>
-                            <span class="fileupload-preview"></span>
-                        </div>
-                        <span class="btn btn-default btn-file">
-                            <span class="fileupload-new">选择文件</span>
-                            <span class="fileupload-exists">修改</span>
-                            <input type="file" name="otherAttachment4"/>
-                        </span>
-                        <a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>
-                    </div>
-                </div>
+                <ul id="attachment" style="margin-left: 103px;">
+                    <input type="hidden" value="0" name="attachment_num" id="num" >
+                </ul>
                 <div class="submit">
                     <button class="btn btn-block btn-primary" type="submit" style="display: inline-block;margin-left: 105px;">录入文献</button>
                     <button class="btn btn-block btn-primary" style="display: inline-block;margin-left: 50px;">取消</button>
                 </div>
             </form>
         </div>
-    </div>
-</div>
-<div class="widget" id="widget" style="display: none;position: absolute;z-index: 1002;left: 400px;top: 300px;">
-    <!-- Widget heading -->
-    <div class="widget-head">
-        <h4 class="heading">上传成功</h4>
-    </div>
-    <!-- // Widget heading END -->
-    <div class="widget-body center" style="padding: 40px;">
-        <span>要立即编辑引用关系么？</span>
-        <a href="/editCite.html"><span class="btn btn-default" data-layout="topLeft" data-type="primary" data-toggle="notyfy">编辑引用关系</span></a>
-        <span class="btn btn-default" data-layout="centerLeft" data-type="primary" data-toggle="notyfy" onclick="hidehint();">取消</span>
     </div>
 </div>
 
@@ -229,31 +164,29 @@
         #end
         document.getElementById(value).style.display="block";
     }
+    var num = 0;
     $(document).ready(function(){
-
-        $(".fake-delete").click(function(){
-            $(this).parent().parent().hide();
-        })
         $("#add-attachment").click(function(){
-            if(!$("#fileupload-type1").is(":visible")){
-                $("#fileupload-type1").show();
-                return;
-            }
-
-            if(!$("#fileupload-type2").is(":visible")){
-                $("#fileupload-type2").show();
-                return;
-            }
-
-            if(!$("#fileupload-type3").is(":visible")){
-                $("#fileupload-type3").show();
-                return;
-            }
-
-            if(!$("#fileupload-type4").is(":visible")){
-                $("#fileupload-type4").show();
-                return;
-            }
+            num = num +1;
+            $("#attachment").append('<li>' +
+                    '<div class="fileupload fileupload-new" id="fileupload-type'+num+'" data-provides="fileupload">'+
+                    '<div class="input-append">'+
+                    '<div class="uneditable-input span3" style="display: inline-table;">'+
+                    '<i class="icon-file fileupload-exists"></i>'+
+                    '<span class="fileupload-preview"></span>'+
+                    '</div>'+
+                    '<span class="btn btn-default btn-file">'+
+                    '<span class="fileupload-new">选择文件</span>'+
+                    '<span class="fileupload-exists">修改</span>'+
+                    '<input type="file" name="otherAttachment'+num+'"/>'+
+                    '</span>'+
+                    '<a href="javascript:;" class="btn fake-delete" data-dismiss="fileupload">删除</a>'+
+                    '</div>'+
+                    '</div></li>');
+            $("#num").val(num);
+        })
+        $(".fake-delete").click(function(){
+            $(this).parent().parent().parent().hide();
         })
     })
 

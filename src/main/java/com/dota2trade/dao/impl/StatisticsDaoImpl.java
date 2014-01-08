@@ -116,4 +116,11 @@ public class StatisticsDaoImpl extends JdbcDaoSupport implements StatisticsDao {
         return list;
     }
 
+    @Override
+    public List<Integer> getSum(String column) {
+        String sql="select sum("+column+") from statistics where Account<>'admin' group by Account Order by UserId";
+        List list=this.getJdbcTemplate().queryForList(sql,Integer.class);
+        return list;
+    }
+
 }
