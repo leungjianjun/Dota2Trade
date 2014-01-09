@@ -13,6 +13,7 @@ public class Util {
 	public static String TXT_DIR="index/temptxt/";
 	public static String PAPER_INDEX_DIR="index/paperindex/";
 	public static String DB_INDEX_DIR="index/dbindex/";
+    public static String OTHER_DIR="attachment/other/";
 
     public static int SEARCH_RESULT=10;//查询结果数
 
@@ -138,5 +139,29 @@ public class Util {
             list.add(str);
         }
         return list;
+    }
+
+    /**
+     * 判断文件夹是否存在，不存在则创建
+     * */
+    public static void isFilePathExisted(String filePath){
+        File file =new File(filePath);
+        //如果文件夹不存在则创建
+        if  (!file .exists()  && !file .isDirectory())
+        {
+            System.out.println(filePath+"//不存在");
+            file .mkdir();
+        } else
+        {
+            System.out.println(filePath+"//目录存在");
+        }
+    }
+
+    public static void initPath(){
+        isFilePathExisted(DB_INDEX_DIR);
+        isFilePathExisted(PAPER_DIR);
+        isFilePathExisted(TXT_DIR);
+        isFilePathExisted(PAPER_INDEX_DIR);
+        isFilePathExisted(OTHER_DIR);
     }
 }
