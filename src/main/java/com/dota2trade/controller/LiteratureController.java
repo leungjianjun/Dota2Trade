@@ -5,6 +5,7 @@ import com.dota2trade.model.*;
 import com.dota2trade.model.search.ComplexCondition;
 import com.dota2trade.model.search.Indexer;
 import com.dota2trade.model.search.Searcher;
+import com.dota2trade.model.search.Util;
 import com.dota2trade.util.FileUploadHelper;
 import com.dota2trade.util.LogHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,7 @@ public class LiteratureController {
 
         List<Attachment> attachmentList=new ArrayList<Attachment>();
 
+        Util.initPath();
         Attachment paper=new Attachment();
         System.out.println(new String (title.getBytes ("iso-8859-1"), "UTF-8"));
         String attachmentName = new String (fileAttachment.getOriginalFilename().getBytes ("iso-8859-1"), "UTF-8");

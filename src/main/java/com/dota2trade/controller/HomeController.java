@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
@@ -53,6 +55,7 @@ public class HomeController {
                 System.out.println(con[1]+" "+con[2]+" "+con[3]+" "+con[4]);
             }
         }
+        Collections.reverse(contents);
         model.addAttribute("logcontents",contents);
         model.addAttribute("statistics",statisticsDao.getStatisticsLimit1Week());
         model.addAttribute("literature_count",statisticsDao.getSum("Cliterature"));
