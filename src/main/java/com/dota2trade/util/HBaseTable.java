@@ -45,6 +45,11 @@ public class HBaseTable {
         //修改数据
 
         getAllRecord("user");
+        System.out.println(getTableCount("user"));
+    }
+
+    public static String uuid(){
+        return UUID.randomUUID().toString();
     }
 
     public static boolean createTable(String tableName, String[] columnFamily) throws IOException {
@@ -77,16 +82,61 @@ public class HBaseTable {
         }
     }
 
-    public static void insert(String tableName, String rowKey, String columnFamily, String qualifier, byte[] value) throws IOException {
-        HTable table = new HTable(cfg, tableName);
-        Put p = new Put(Bytes.toBytes(rowKey));
-        p.add(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier), value);
-        table.put(p);
+    /**
+     *
+     * @param tableName
+     * @param rowKey
+     * @param columnFamily
+     * @param qualifier
+     * @param value
+     * @throws IOException
+     */
+    public static void insert(String tableName, String rowKey, String columnFamily, String qualifier, byte[] value) {
+        try {
+            HTable table = new HTable(cfg, tableName);
+            Put p = new Put(Bytes.toBytes(rowKey));
+            p.add(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier), value);
+            table.put(p);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void delete(String tableName, String column) throws IOException {
-        HBaseAdmin admin = new HBaseAdmin(cfg);
+    public static void insert(String tableName, String rowKey, String columnFamily, String qualifier, String value){
+        insert(tableName,rowKey,columnFamily,qualifier,Bytes.toBytes(value));
+    }
 
+    /**
+     * 这个方法可以得到表的行数，用来作为插入数据的ID。这是一种极其shit的做法。
+     * @param tableName
+     * @return
+     */
+    public static int getTableCount(String tableName){
+        int number = 0;
+        try {
+            HTable table = new HTable(cfg, tableName);
+            Scan s = new Scan();
+            ResultScanner ss = table.getScanner(s);
+            for (Result rs = ss.next(); rs != null; rs = ss.next()) {
+                number++;
+            }
+            return number;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     *
+     * @param tableName
+     * @param rowKey
+     * @throws IOException
+     */
+    public static void delete(String tableName, String rowKey) throws IOException {
+        HTable table = new HTable(cfg, tableName);
+        Delete d = new Delete(Bytes.toBytes(rowKey));
+        table.delete(d);
     }
 
     /**

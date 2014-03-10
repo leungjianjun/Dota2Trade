@@ -3,6 +3,8 @@ package com.dota2trade.dao.impl;
 import com.dota2trade.dao.UserDao;
 import com.dota2trade.model.User;
 import com.dota2trade.model.UserInfo;
+import com.dota2trade.util.HBaseTable;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -30,6 +32,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         setDataSource(dataSource);
     }
 
+    /*
     @Override
     public boolean addUser(User user) {
         String exist="SELECT COUNT(*) FROM user WHERE account='"+user.getAccount()+"'";
@@ -43,6 +46,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
             return (r>0)?true:false;
         }
     }
+    */
 
     @Override
     public boolean deleteUser(String account) {
@@ -137,4 +141,24 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
             return (r>0)?true:false;
         }
     }
+    /**
+     * MySQL数据库迁移到HBase。DAO方法需要重新实现。应该新建DAO的实现类UserDaoHbaseImpl，然后使用spring注入配置。
+     * 这里由于时间关系就用quick and dirty做法，在原来的基础上快速修改一下就好。调用HBaseTable工具类快速实现。
+     */
+
+    String userTable = "user";
+    String user_base_column = "user_base";
+    String user_info_column = "user_info";
+
+    @Override
+    public boolean addUser(User user) {
+        String rowKey = HBaseTable.uuid();
+        int sqlId = HBaseTable.getTableCount(userTable);
+        HBaseTable.insert(userTable,rowKey,user_base_column,"id", Bytes.toBytes(sqlId));
+        HBaseTable.insert(userTable,rowKey,user_base_column,"account",user.getAccount());
+        HBaseTable.insert(userTable,rowKey,user_base_column,"password",user.getPassword());
+        return true;
+    }
+
+    
 }
