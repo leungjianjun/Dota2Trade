@@ -6,6 +6,9 @@ import com.dota2trade.model.Statistic;
 import com.dota2trade.model.LogContent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.*;
+import org.apache.hadoop.io.IOUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -131,23 +135,74 @@ public class HomeController {
 
     @RequestMapping(value = "/attachment/other/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
     @ResponseBody
-    public FileSystemResource getOtherFile(@PathVariable String fileName,@PathVariable String type) throws UnsupportedEncodingException {
+    public FileSystemResource getOtherFile(@PathVariable String fileName, @PathVariable String type) throws Exception {
         byte[] bytes = fileName.getBytes("UTF-8");
         String s2 = new String(bytes, "UTF-8");
         System.out.println(s2);
-        return new FileSystemResource(new File("attachment/other/"+s2+"."+type));
+        String uri = "hdfs://localhost:9000/attachment/other"+s2+"."+type;
+        String local_src = s2+"."+type;
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(URI.create(uri),conf);
+        InputStream in =null;
+        File file = null;
+        try{
+            in = fs.open(new Path(uri));
+            file = this.file_put_contents(local_src,in);
+        }finally {
+            IOUtils.closeStream(in);
+        }
+        return new FileSystemResource(file);
     }
     @RequestMapping(value = "/attachment/paper/{fileName}.{type}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE )
     @ResponseBody
-    public FileSystemResource getPaperFile(@PathVariable String fileName,@PathVariable String type) throws UnsupportedEncodingException {
+    public FileSystemResource getPaperFile(@PathVariable String fileName,@PathVariable String type) throws Exception {
         byte[] bytes = fileName.getBytes("UTF-8");
         String s2 = new String(bytes, "UTF-8");
         System.out.println(s2);
-        return new FileSystemResource(new File("attachment/paper/"+s2+"."+type));
+        String uri = "hdfs://localhost:9000/attachment/paper"+s2+"."+type;
+        String local_src = s2+"."+type;
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(URI.create(uri),conf);
+        InputStream in =null;
+        File file = null;
+        try{
+            in = fs.open(new Path(uri));
+            file = this.file_put_contents(local_src,in);
+        }finally {
+            IOUtils.closeStream(in);
+        }
+        return new FileSystemResource(file);
     }
 
     public StatisticsDao getStatisticsDao(){return this.statisticsDao;}
     @Autowired
     public void setStatisticsDao(StatisticsDao statisticsDao){this.statisticsDao=statisticsDao;}
+
+    private File file_put_contents(String file_name,InputStream is){
+        File file=new File(file_name);
+        OutputStream os=null;
+        try{
+            os=new FileOutputStream(file);
+            byte buffer[]=new byte[4*1024];
+            int length = 0;
+            while((length=(is.read(buffer)))!=-1){
+                os.write(buffer,0,length);
+            }
+            os.flush();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            try{
+                os.close();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return file;
+    }
+
 
 }

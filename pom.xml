@@ -127,10 +127,10 @@
         </dependency>
         <!--JSON JDK15-->
         <dependency>
-            	    <groupId>net.sf.json-lib</groupId>
-            	    <artifactId>json-lib</artifactId>
-            	    <version>2.4</version>
-            	    <classifier>jdk15</classifier>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
         </dependency>
         <!--hbase-->
         <dependency>
@@ -177,6 +177,11 @@
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-assembly</artifactId>
             <version>0.96.1-hadoop2</version>
+        </dependency>
+	    <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>2.3.0</version>
         </dependency>
     </dependencies>
     <build>
