@@ -3,7 +3,11 @@ package com.dota2trade.util;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.CompareFilter;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.filter.BinaryComparator;
+import org.apache.hadoop.hbase.filter.FilterList;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -42,10 +46,15 @@ public class HBaseTable {
         String uuid = UUID.randomUUID().toString();
         //插入和修改是一样的
         insert("user", uuid, "user_base","account",Bytes.toBytes("test2"));
+        insert("user", UUID.randomUUID().toString(), "user_base","account",Bytes.toBytes("test3"));
+        insert("user", UUID.randomUUID().toString(), "user_base","account",Bytes.toBytes("test4"));
+        insert("user", UUID.randomUUID().toString(), "user_base","account",Bytes.toBytes("test5"));
         //修改数据
 
         getAllRecord("user");
         System.out.println(getTableCount("user"));
+
+        find("user");
     }
 
     public static String uuid(){
@@ -69,17 +78,24 @@ public class HBaseTable {
     /**
      * Delete a table
      */
-    public static void deleteTable(String tableName) throws IOException {
+    public static boolean deleteTable(String tableName) throws IOException {
         try {
             HBaseAdmin admin = new HBaseAdmin(cfg);
-            admin.disableTable(tableName);
-            admin.deleteTable(tableName);
-            System.out.println("delete table " + tableName + " ok.");
+            if (!admin.tableExists(tableName)) {
+                return false;
+            }else{
+                admin.disableTable(tableName);
+                admin.deleteTable(tableName);
+                System.out.println("delete table " + tableName + " ok.");
+                return true;
+            }
         } catch (MasterNotRunningException e) {
             e.printStackTrace();
+
         } catch (ZooKeeperConnectionException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**
@@ -174,6 +190,42 @@ public class HBaseTable {
             }
         } catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    /** SQL中select语句，但是HBase没有。所以查找要用filter方法。下面只是个参考例子而已，详细参考下面例子
+     * 参考 https://hbase.apache.org/book/client.filter.html
+     * @param tableName
+     * @throws IOException
+     */
+    public static void find(String tableName) throws IOException {
+        FilterList list = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+        SingleColumnValueFilter filter1 = new SingleColumnValueFilter(
+                Bytes.toBytes("user_base"),Bytes.toBytes("account"),
+                CompareFilter.CompareOp.EQUAL,
+                Bytes.toBytes("test2")
+        );
+        list.addFilter(filter1);
+        SingleColumnValueFilter filter2 = new SingleColumnValueFilter(
+                Bytes.toBytes("user_base"),Bytes.toBytes("account"),
+                CompareFilter.CompareOp.EQUAL,
+                Bytes.toBytes("test4")
+        );
+        list.addFilter(filter2);
+
+        HTable table = new HTable(cfg, tableName);
+        Scan scan = new Scan();
+        scan.setFilter(list);
+        ResultScanner ss = table.getScanner(scan);
+
+        for(Result r:ss){
+            for(KeyValue kv : r.raw()){
+                System.out.print(new String(kv.getRow()) + " ");
+                System.out.print(new String(kv.getFamily()) + ":");
+                System.out.print(new String(kv.getQualifier()) + " ");
+                System.out.print(kv.getTimestamp() + " ");
+                System.out.println(new String(kv.getValue()));
+            }
         }
     }
 
